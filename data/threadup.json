@@ -1,0 +1,956 @@
+[
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Adidas Gazelle Bold",
+    "description": "J Sneakers",
+    "price": 71.99,
+    "url": "https://www.thredup.com/product/women-adidas-pink-sneakers/1501066431",
+    "scrapedAt": "2026-04-04T16:35:16.161Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Adidas VL Court",
+    "description": "Bold Platform Sneakers",
+    "price": 71.99,
+    "url": "https://www.thredup.com/product/women-adidas-multi-color-sneakers/1501066425",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "London Fog Jacket",
+    "description": "",
+    "price": 59.99,
+    "url": "https://www.thredup.com/product/women-london-fog-gray-jacket/1501056237",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Nike Air Force",
+    "description": "1 LE Sneakers",
+    "price": 71.99,
+    "url": "https://www.thredup.com/product/women-leather-nike-white-sneakers/1501056227",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Adidas",
+    "description": "Samba OG white green gum sole Sneakers",
+    "price": 95.99,
+    "url": "https://www.thredup.com/product/women-leather-adidas-white-sneakers/1501018107",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Samba OG",
+    "description": "Sneakers",
+    "price": 95.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas",
+    "description": "Samba OG blue pink gum sole Sneakers",
+    "price": 95.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas VL Court",
+    "description": "Bold J Platform Black with Rhinestone Stripe Sneakers",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Samba OG",
+    "description": "Sneakers",
+    "price": 95.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Juicy Couture Shoulder",
+    "description": "Bag",
+    "price": 48.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Sanrio Wallet",
+    "description": "",
+    "price": 11.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Hello Kitty Wallet",
+    "description": "",
+    "price": 24.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Lululemon Athletica Everywhere",
+    "description": "Belt Bag Belt Bag",
+    "price": 48.99,
+    "url": "https://www.thredup.com/product/women-lululemon-athletica-white-belt-bag/1500910268",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Coach Black/Grey Signature",
+    "description": "C Jacquard Buckle Flap Wallet",
+    "price": 71.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Ugg K Lo",
+    "description": "Lowmel Ankle Boots",
+    "price": 71.99,
+    "url": "https://www.thredup.com/product/women-ugg-brown-ankle-boots/1500901447",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Coach F13034 Leather",
+    "description": "Satchel",
+    "price": 94.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Nike Dunk Low",
+    "description": "Indigo Haze Sneakers",
+    "price": 71.99,
+    "url": "https://www.thredup.com/product/women-nike-purple-sneakers/1500898934",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Nike Court Borough",
+    "description": "Low Sneakers",
+    "price": 48.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Nike Tech Windrunner",
+    "description": "Fleece Jacket Jacket",
+    "price": 71.99,
+    "url": "https://www.thredup.com/product/women-cotton-nike-red-jacket/1500898920",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Coach Black with",
+    "description": "Chain Detail – F19722 Leather Crossbody Bag",
+    "price": 132.99,
+    "url": "https://www.thredup.com/product/women-coach-black-leather-crossbody-bag/1500895919",
+    "scrapedAt": "2026-04-04T16:35:16.162Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Coach F16751 Metallic",
+    "description": "Bronze Leather Tote",
+    "price": 130.99,
+    "url": "https://www.thredup.com/product/women-leather-coach-brown-leather-tote/1500894534",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Rebecca Taylor Pot",
+    "description": "Paisley Trench Coat",
+    "price": 243.99,
+    "url": "https://www.thredup.com/product/women-cotton-rebecca-taylor-black-coat/1500888629",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Nike Air Max",
+    "description": "Plus “Light Bone / Sail” Running Sneakers",
+    "price": 95.99,
+    "url": "https://www.thredup.com/product/women-nike-white-sneakers/1500857987",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Nike AF1 Air",
+    "description": "Force 1 Low (GS) – White / Pink Blast Sneakers",
+    "price": 59.99,
+    "url": "https://www.thredup.com/product/women-nike-white-sneakers/1500852625",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Nike Dunk Low",
+    "description": "(GS) “Pink Foam” Sneakers",
+    "price": 71.99,
+    "url": "https://www.thredup.com/product/women-nike-pink-sneakers/1500852616",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Nike Court Borough",
+    "description": "Low RC BG (Nike Refurbished) Sneakers",
+    "price": 60.99,
+    "url": "https://www.thredup.com/product/women-nike-multi-color-sneakers/1500852611",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Nike Dunk Low",
+    "description": "“Peach Cream” (GS) - Peach Cream / Light Grey / Orang Sneakers",
+    "price": 95.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Nike Dunk Low",
+    "description": "Next Nature - Pink Dark Pony / Light Soft Pink Sneakers",
+    "price": 71.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Nike AM1 Air",
+    "description": "Max 1 Premium Suede Sneakers",
+    "price": 95.99,
+    "url": "https://www.thredup.com/product/women-nike-gray-sneakers/1500849478",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Cushion Aire Hip",
+    "description": "Cozy Ankle Boots",
+    "price": 36.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Cushion Aire Hippy",
+    "description": "Cozy Platform Ankle Boots",
+    "price": 36.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Cushion Aire Sasha",
+    "description": "Chelsea Boots",
+    "price": 36.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Cushion Aire Hope",
+    "description": "Slip-on Cozy Ankle Boots",
+    "price": 23.99,
+    "url": "https://www.thredup.com/product/women-cushion-aire-brown-ankle-boots/1500844888",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Cushion Aire Hope",
+    "description": "Slip-on Cozy Boots",
+    "price": 36.99,
+    "url": "https://www.thredup.com/product/women-cushion-aire-multi-color-boots/1500844825",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Cushion Aire Hip",
+    "description": "Cozy Ankle Boots",
+    "price": 36.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Nike AF1 Air",
+    "description": "Force 1 Mid ’07 GS White Leather Sneakers",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Nike AF1 Air",
+    "description": "Force 1 Wild Low - Phantom / Phantom / Light Orewood Brown Sneakers",
+    "price": 95.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.163Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Nike Court Borough",
+    "description": "Mid 2 GS Leather Panda Sneakers",
+    "price": 59.99,
+    "url": "https://www.thredup.com/product/women-leather-nike-black-sneakers/1500834294",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Ugg Lowmel Suede",
+    "description": "Low-Top Sneaker – Tan Sneakers",
+    "price": 83.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Nike Air Force",
+    "description": "1 LV8 Low GS – Red White Pink Sneakers",
+    "price": 95.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Tyshawn Low",
+    "description": "Suede Skate Sneaker – Maroon Sneakers",
+    "price": 71.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Nike AF1 Air",
+    "description": "Force 1 (GS) Sneakers",
+    "price": 71.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Nike Sneakers",
+    "description": "",
+    "price": 71.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Nike Air Force",
+    "description": "1 '07 Next Nature Women's \"Pale Ivory/Apricot Agate/White/Sail\" Sneakers",
+    "price": 71.99,
+    "url": "https://www.thredup.com/product/women-leather-nike-ivory-sneakers/1500820655",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "For Sale",
+    "brand": "Converse X Missoni",
+    "description": "Chuck Taylor All Star High-Top Knit Sneakers",
+    "price": 82.99,
+    "url": "https://www.thredup.com/product/women-converse-x-missoni-multi-color-sneakers/1500808801",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Nike Dunk Low",
+    "description": "GS “Desert Khaki / Pink” Leather Sneakers",
+    "price": 71.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Nike Dunk Low",
+    "description": "GS “Pink Blast / White” Leather Sneakers",
+    "price": 71.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Nike Dunk Low",
+    "description": "GS “Emerald Rise / White” Leather Sneakers",
+    "price": 83.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Ugg W Scuffette",
+    "description": "II Mule/Clog",
+    "price": 95.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Nike Dunk Low",
+    "description": "Retro PRM “Pink Rise/Black” Translucent Sneakers",
+    "price": 106.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Converse Sneakers",
+    "description": "",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Sneakers",
+    "description": "",
+    "price": 83.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Monsac Leather Crossbody",
+    "description": "Bag",
+    "price": 71.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Sneakers",
+    "description": "",
+    "price": 71.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Sneakers",
+    "description": "",
+    "price": 83.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Sneakers",
+    "description": "",
+    "price": 83.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Nike Pacific Pink",
+    "description": "Retro Gum Sole Trainer Sneakers",
+    "price": 83.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Sneakers",
+    "description": "",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Break Start",
+    "description": "Low W Court-Style | Beige Neutral Sneakers",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Sneakers",
+    "description": "",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas VL Court",
+    "description": "Bold J Black / White / Rhinestone Sneakers",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Sneakers",
+    "description": "",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Hello Kitty Clutch",
+    "description": "",
+    "price": 22.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.164Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Disney x Primark",
+    "description": "Mickey Mouse Logo Strap Crossbody Bag",
+    "price": 36.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Disney Crossbody Bag",
+    "description": "",
+    "price": 36.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Sneakers",
+    "description": "",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Coach Leather Shoulder",
+    "description": "Bag",
+    "price": 132.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Coach Leather Crossbody",
+    "description": "Bag",
+    "price": 132.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "New Balance 550",
+    "description": "Sneakers",
+    "price": 71.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Samba Messi",
+    "description": "Indoor Soccer Sneakers",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Nike Sneakers",
+    "description": "",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Sneakers",
+    "description": "",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Sneakers",
+    "description": "",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Sneakers",
+    "description": "",
+    "price": 83.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Sneakers",
+    "description": "",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Puma Sneakers",
+    "description": "",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Coach Belt",
+    "description": "",
+    "price": 21.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Coach Vintage Small",
+    "description": "Flap, Made in USA (September 1993), creed F8G-S930 Leather Crossbody Bag",
+    "price": 132.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Pelle Studio Leather",
+    "description": "Clutch",
+    "price": 36.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Coach Hamptons Multicolor",
+    "description": "Stripe Canvas – Style 10704 Tote",
+    "price": 132.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Coach Soho Buckle",
+    "description": "Flap Baby Blue 00s Y2K Leather Crossbody Bag",
+    "price": 83.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Badgley Mischka Messenger",
+    "description": "",
+    "price": 71.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Kate Spade New York",
+    "description": "x Target Beaded Floral Bucket Bag",
+    "price": 83.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Coach Leather Crossbody",
+    "description": "Bag",
+    "price": 132.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Coach Leather Crossbody",
+    "description": "Bag",
+    "price": 132.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Coach Card Holder",
+    "description": "",
+    "price": 36.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Samba LT",
+    "description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Sneakers",
+    "description": "",
+    "price": 48.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Samba LT",
+    "description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
+    "price": 71.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Samba LT",
+    "description": "Fold-Over Tongue Indoor – White/Black Gum Sneakers",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Cole Haan Alexa",
+    "description": "Buckle Leather Wristlet",
+    "price": 36.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Vera Bradley Fanfare",
+    "description": "Framel | Rainbow Trim | Bold Boho Print + Turnlock Classic | VB Collector Favorite Satchel",
+    "price": 48.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.165Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Monsac Leather Shoulder",
+    "description": "Bag",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.166Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Hobo International Quilted",
+    "description": "Lauren Convertible Clutch Leather Crossbody Bag",
+    "price": 71.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.166Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Brahmin Leather Clutch",
+    "description": "",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.166Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Juicy Couture Wristlet",
+    "description": "",
+    "price": 28.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.166Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Sneakers",
+    "description": "",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.166Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Gazelle Bold",
+    "description": "J Sneakers",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.166Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Coach Signature C",
+    "description": "Jacquard Black – F15068 Shoulder Bag",
+    "price": 132.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.166Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Coach Crossbody Bag",
+    "description": "",
+    "price": 83.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.166Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Adidas Sneakers",
+    "description": "",
+    "price": 59.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.166Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Disney Crossbody Bag",
+    "description": "",
+    "price": 36.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.166Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Marc Jacobs Clutch",
+    "description": "",
+    "price": 28.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.166Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Coach Soho East",
+    "description": "West Baguette Signature C Shoulder Bag",
+    "price": 132.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.166Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Coach Shoulder Bag",
+    "description": "",
+    "price": 132.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.166Z"
+  },
+  {
+    "platform": "ThreadUp",
+    "status": "Sold",
+    "brand": "Coach Leather Satchel",
+    "description": "",
+    "price": 132.99,
+    "url": "",
+    "scrapedAt": "2026-04-04T16:35:16.166Z"
+  }
+]
