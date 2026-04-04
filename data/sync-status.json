@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-04T16:32:53.543Z",
+  "lastUpdated": "2026-04-04T16:35:16.166Z",
   "platforms": {
     "depop": {
       "count": 60,
@@ -7,6 +7,13 @@
       "listedCount": 28,
       "revenue": 1637.2999999999997,
       "updatedAt": "2026-04-04T16:32:53.543Z"
+    },
+    "threadup": {
+      "count": 106,
+      "soldCount": 84,
+      "listedCount": 22,
+      "revenue": 6005.159999999988,
+      "updatedAt": "2026-04-04T16:35:16.166Z"
     }
   }
 }
