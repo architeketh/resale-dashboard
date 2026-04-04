@@ -34,7 +34,7 @@
   function buildOverlay() {
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;top:20px;right:20px;z-index:2147483647;max-width:360px;padding:18px 20px;border-radius:16px;background:#111827;color:#f8fafc;box-shadow:0 20px 40px rgba(15,23,42,.35);font:14px/1.5 Arial,sans-serif';
-    overlay.innerHTML = '<strong style="display:block;font-size:15px;margin-bottom:8px;">Depop Sync</strong><div id="resale-sync-status">Starting scrape...</div>';
+    overlay.innerHTML = '<strong style="display:block;font-size:15px;margin-bottom:8px;">depop Sync</strong><div id="resale-sync-status">Starting scrape...</div>';
     document.body.appendChild(overlay);
     return overlay;
   }
@@ -71,7 +71,7 @@
     try {
       setStatus('Collecting items from the current page...');
       const items = scrapeItems();
-      if (!items.length) throw new Error('No Depop items were found. Make sure you are on the profile grid and scroll to load the listings first.');
+      if (!items.length) throw new Error('No depop items were found. Make sure you are on the profile grid and scroll to load the listings first.');
       setStatus(`Found ${items.length} items. Syncing to Supabase...`);
       const response = await fetch(FUNCTION_URL, {
         method: 'POST',
@@ -91,3 +91,4 @@
 
   main();
 })();
+
