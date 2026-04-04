@@ -31,8 +31,8 @@
       <h2 style="margin:0;font-size:28px;letter-spacing:-.04em;">How it works now</h2>
       <div class="setupGrid">
         <article class="setupCard"><h3>1. Save the token once</h3><p>The first time either scraper runs it asks for a GitHub personal access token with repo write access. The token is stored only in your browser on your device.</p></article>
-        <article class="setupCard"><h3>2. Run the scraper on the source site</h3><p>Open ThreadUp or Depop, paste the matching scraper into DevTools, and let it push data directly to GitHub.</p><ol><li>ThreadUp writes <code>data/threadup.json</code></li><li>Depop writes <code>data/depop.json</code></li><li>Both update <code>data/sync-status.json</code></li></ol></article>
-        <article class="setupCard"><h3>3. Refresh the dashboard</h3><p>The site loads public JSON from GitHub Pages. If Pages has not rebuilt yet, wait a few seconds and refresh again.</p><p><a href="#" class="inlineLink" onclick="loadData(); return false;">Refresh dashboard data</a></p></article>
+        <article class="setupCard"><h3>2. Install the scraper buttons</h3><p>Drag each button below to your bookmarks bar once. After that, open ThreadUp or Depop and click the matching bookmark to run the scraper.</p><p><a id="threadup-bookmarklet" class="inlineLink" href="#">Install ThreadUp Scraper</a></p><p><a id="depop-bookmarklet" class="inlineLink" href="#">Install Depop Scraper</a></p></article>
+        <article class="setupCard"><h3>3. Run and refresh</h3><p>On ThreadUp or Depop, click the matching bookmarklet. It writes directly to GitHub, then you come back here and refresh.</p><ol><li>ThreadUp writes <code>data/threadup.json</code></li><li>Depop writes <code>data/depop.json</code></li><li>Both update <code>data/sync-status.json</code></li></ol><p><a href="#" class="inlineLink" onclick="loadData(); return false;">Refresh dashboard data</a></p></article>
       </div>
     </section>
 
@@ -69,6 +69,10 @@
   <script>
     const state = { threadup: [], depop: [], syncStatus: null, filters: { threadup: 'all', depop: 'all' } };
     const DATA_FILES = { threadup: ['data/threadup.json', 'threadup.json'], depop: ['data/depop.json', 'depop.json'], syncStatus: ['data/sync-status.json'] };
+    const BOOKMARKLETS = {
+      threadup: "javascript:(function(){const s=document.createElement('script');s.src='https://architeketh.github.io/resale-dashboard/threadup_scraper_github.js?t='+Date.now();document.body.appendChild(s);})();",
+      depop: "javascript:(function(){const s=document.createElement('script');s.src='https://architeketh.github.io/resale-dashboard/depop_scraper_github.js?t='+Date.now();document.body.appendChild(s);})();"
+    };
 
     function currency(value) { return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(value || 0)); }
     function formatDate(value) { if (!value) return 'No sync yet'; const date = new Date(value); return Number.isNaN(date.getTime()) ? value : date.toLocaleString(); }
@@ -174,6 +178,8 @@
       const button = event.target.closest('.filterBtn'); if (!button) return;
       state.filters.depop = button.dataset.filter; updateFilterButtons('depop-filters', state.filters.depop); renderPlatform('depop');
     });
+    document.getElementById('threadup-bookmarklet').setAttribute('href', BOOKMARKLETS.threadup);
+    document.getElementById('depop-bookmarklet').setAttribute('href', BOOKMARKLETS.depop);
     loadData();
   </script>
 </body>
