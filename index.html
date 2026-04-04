@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resale Dashboard</title>
   <style>
-    :root{--paper:rgba(255,250,243,.9);--ink:#1f2933;--muted:#6b7280;--line:rgba(31,41,51,.1);--accent:#7c2d12;--accentSoft:#f59e0b;--teal:#0f766e;--rose:#9f1239;--shadow:0 24px 60px rgba(68,39,12,.12);--radius:24px;--mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;--sans:"Avenir Next","Segoe UI",Arial,sans-serif}
+    :root{--paper:rgba(255,250,243,.92);--ink:#1f2933;--muted:#6b7280;--line:rgba(31,41,51,.1);--accent:#7c2d12;--accent-soft:#f59e0b;--teal:#0f766e;--rose:#9f1239;--shadow:0 24px 60px rgba(68,39,12,.12);--radius:24px;--mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;--sans:"Avenir Next","Segoe UI",Arial,sans-serif}
     *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:var(--sans);color:var(--ink);background:radial-gradient(circle at top left,rgba(245,158,11,.24),transparent 35%),radial-gradient(circle at bottom right,rgba(15,118,110,.18),transparent 32%),linear-gradient(180deg,#f7f2ea 0%,#efe6d8 100%)}
     .shell{width:min(1180px,calc(100% - 32px));margin:24px auto 48px}.hero,.panel,.platform{background:var(--paper);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.6);box-shadow:var(--shadow)}
-    .hero{padding:36px;border-radius:32px;display:grid;grid-template-columns:1.6fr 1fr;gap:24px}.eyebrow{font:600 12px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}h1{margin:0;font-size:clamp(34px,5vw,58px);line-height:.98;letter-spacing:-.04em;max-width:10ch}.hero p{margin:16px 0 0;max-width:58ch;color:var(--muted);font-size:16px;line-height:1.6}.statusStack{display:grid;gap:14px}.statusCard,.setupCard,.statCard{padding:22px;border-radius:20px;background:rgba(255,255,255,.62);border:1px solid var(--line)}.statusLabel,.statLabel{color:var(--muted);font:600 12px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}.statusValue{font-size:22px;font-weight:700}.panel,.platform{margin-top:22px;border-radius:var(--radius);padding:28px}.statsGrid,.setupGrid{display:grid;gap:16px}.setupGrid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:18px}.setupCard h3,.platformTitle{margin:0 0 10px;font-size:20px}.setupCard p,.setupCard li,.muted{color:var(--muted);line-height:1.55}.setupCard ol{margin:14px 0 0;padding-left:18px}.inlineLink{color:var(--accent);text-decoration:none;font-weight:600}.statsGrid{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-top:16px}.statCard{position:relative;overflow:hidden}.statCard::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(180deg,var(--accentSoft),var(--accent))}.statValue{font-size:34px;font-weight:700;letter-spacing:-.04em}.statFoot{margin-top:10px;color:#4b5563;font-size:18px;font-weight:600;line-height:1.35}.collapsibleSummary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px}.collapsibleSummary::-webkit-details-marker{display:none}.chev{font:700 22px/1 Arial,sans-serif;color:var(--accent);transition:transform .2s ease;display:inline-block;min-width:18px;text-align:center}.collapsible[open] .chev{transform:rotate(45deg)}.workflowBody{padding-top:18px}.platform{padding:0;overflow:hidden}.platform[open]{padding:0}.platformSummary{padding:24px 28px}.platformBody{padding:0 28px 28px}.platformHead{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.titleWrap{display:flex;flex-direction:column;gap:10px}.meta{display:flex;flex-wrap:wrap;gap:8px}.pill{border-radius:999px;padding:8px 12px;background:rgba(255,255,255,.82);border:1px solid var(--line);font:600 12px/1 var(--mono);color:var(--muted)}.pillStrong{color:var(--accent)}.weeklyBlock{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end}.weeklyBlock .pill{margin-left:auto}.captureBtn,.filterBtn{border:1px solid rgba(124,45,18,.18);background:rgba(255,255,255,.78);color:var(--accent);border-radius:999px;padding:10px 14px;cursor:pointer;font:600 13px/1 var(--mono)}.captureBtn{background:var(--accent);color:#fff;border-color:var(--accent)}.captureBtn.secondary{background:rgba(255,255,255,.78);color:var(--accent)}.filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.filterBtn.active{background:var(--accent);color:#fff;border-color:var(--accent)}.tableWrap{overflow-x:auto;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.76);margin-top:18px}table{width:100%;border-collapse:collapse}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid rgba(31,41,51,.08);vertical-align:top}th{font:600 12px/1.2 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);background:rgba(255,250,243,.9)}tbody tr:hover{background:rgba(180,83,9,.04)}.badge{display:inline-flex;align-items:center;border-radius:999px;padding:7px 11px;font:600 12px/1 var(--mono)}.sold{background:rgba(159,18,57,.12);color:var(--rose)}.listed{background:rgba(15,118,110,.12);color:var(--teal)}.money{font-weight:700;color:var(--teal)}.empty,.loading{padding:38px 20px;text-align:center;color:var(--muted)}.history{margin-top:16px;padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.62);border:1px solid var(--line)}.historyTitle{font:600 12px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}.historyRow{display:flex;flex-wrap:wrap;gap:12px;color:#4b5563;font-size:15px}.footer{margin-top:20px;color:var(--muted);font-size:13px}@media (max-width:900px){.hero{grid-template-columns:1fr}}@media (max-width:760px){.platformSummary,.platformBody,.panel{padding:20px}.platformHead{flex-direction:column}.hero{padding:20px}.shell{width:min(100% - 18px,1180px)}}
+    .hero{padding:36px;border-radius:32px;display:grid;grid-template-columns:1.6fr 1fr;gap:24px}.eyebrow{font:600 12px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}h1{margin:0;font-size:clamp(34px,5vw,58px);line-height:.98;letter-spacing:-.04em;max-width:10ch}.hero p{margin:16px 0 0;max-width:58ch;color:var(--muted);font-size:16px;line-height:1.6}.statusStack{display:grid;gap:14px}.statusCard,.setupCard,.statCard{padding:22px;border-radius:20px;background:rgba(255,255,255,.64);border:1px solid var(--line)}.statusLabel,.statLabel{color:var(--muted);font:600 12px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}.statusValue{font-size:22px;font-weight:700}.panel,.platform{margin-top:22px;border-radius:var(--radius)}.panel{padding:28px}.statsGrid,.setupGrid{display:grid;gap:16px}.setupGrid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:18px}.setupCard h3,.platformTitle{margin:0 0 10px;font-size:20px}.setupCard p,.setupCard li,.muted{color:var(--muted);line-height:1.55}.setupCard ol{margin:14px 0 0;padding-left:18px}.inlineLink{color:var(--accent);text-decoration:none;font-weight:600}.statsGrid{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-top:16px}.statCard{position:relative;overflow:hidden}.statCard::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(180deg,var(--accent-soft),var(--accent))}.statValue{font-size:34px;font-weight:700;letter-spacing:-.04em}.statFoot{margin-top:10px;color:#4b5563;font-size:18px;font-weight:600;line-height:1.35}.collapsibleSummary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 28px}.collapsibleSummary::-webkit-details-marker{display:none}.chev{font:700 22px/1 Arial,sans-serif;color:var(--accent);transition:transform .2s ease;display:inline-block;min-width:18px;text-align:center}.collapsible[open] .chev{transform:rotate(45deg)}.workflowBody{padding:0 28px 28px}.platform{overflow:hidden}.platformBody{padding:0 28px 28px}.platformHead{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;width:100%}.titleWrap{display:flex;flex-direction:column;gap:10px;min-width:0}.titleLine,.titleMeta,.statusBar,.controlsRow,.filters,.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.titleLine{gap:10px}.titleMeta{gap:8px}.statusBar{gap:8px}.controlsRow{justify-content:space-between;margin-top:8px;gap:14px}.actions{margin-left:auto;justify-content:flex-end}.pill{border-radius:999px;padding:8px 12px;background:rgba(255,255,255,.84);border:1px solid var(--line);font:600 12px/1 var(--mono);color:var(--muted);white-space:nowrap}.pillStrong{color:var(--accent)}.pillWide{min-width:94px;text-align:center}.pillUp{background:rgba(15,118,110,.12);border-color:rgba(15,118,110,.18);color:var(--teal)}.pillDown{background:rgba(159,18,57,.12);border-color:rgba(159,18,57,.18);color:var(--rose)}.pillFlat{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.18);color:var(--accent)}.btn,.filterBtn{border:1px solid rgba(124,45,18,.18);background:rgba(255,255,255,.8);color:var(--accent);border-radius:999px;padding:10px 14px;cursor:pointer;font:600 13px/1 var(--mono)}.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}.filterBtn.active{background:var(--accent);color:#fff;border-color:var(--accent)}.tableWrap{overflow-x:auto;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.78);margin-top:18px}table{width:100%;border-collapse:collapse}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid rgba(31,41,51,.08);vertical-align:top}th{font:600 12px/1.2 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);background:rgba(255,250,243,.92)}th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--accent)}tbody tr:hover{background:rgba(180,83,9,.04)}.badge{display:inline-flex;align-items:center;border-radius:999px;padding:7px 11px;font:600 12px/1 var(--mono)}.sold{background:rgba(159,18,57,.12);color:var(--rose)}.listed{background:rgba(15,118,110,.12);color:var(--teal)}.money{font-weight:700;color:var(--teal)}.empty,.loading{padding:38px 20px;text-align:center;color:var(--muted)}.history{margin-top:16px;padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.62);border:1px solid var(--line)}.historyTitle{font:600 12px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}.historyRow{display:flex;flex-wrap:wrap;gap:12px;color:#4b5563;font-size:15px}.footer{margin-top:20px;color:var(--muted);font-size:13px}
+    @media (max-width:900px){.hero{grid-template-columns:1fr}}
+    @media (max-width:760px){.shell{width:min(100% - 18px,1180px)}.hero,.panel{padding:20px}.collapsibleSummary,.workflowBody,.platformBody{padding-left:20px;padding-right:20px}.platformHead,.controlsRow{flex-direction:column;align-items:flex-start}.actions{margin-left:0;justify-content:flex-start}.titleLine,.titleMeta,.statusBar,.filters,.actions{width:100%}.btn,.filterBtn{padding:11px 14px}.tableWrap{margin-top:14px}.historyRow span{display:block}}
   </style>
 </head>
 <body>
@@ -17,22 +19,21 @@
       <div>
         <div class="eyebrow">Resale command center</div>
         <h1>ThreadUp and Depop inventory in one place.</h1>
-        <p>This dashboard reads public JSON from <a class="inlineLink" href="https://architeketh.github.io/resale-dashboard/" target="_blank" rel="noreferrer">architeketh/resale-dashboard</a>. The updated scrapers write directly into the repo, and the weekly capture tool lets you save a Sunday through Saturday sales snapshot for each platform.</p>
+        <p>This dashboard reads public JSON from <a class="inlineLink" href="https://architeketh.github.io/resale-dashboard/" target="_blank" rel="noreferrer">architeketh/resale-dashboard</a>. Scrapers write directly into the repo, and weekly capture saves Sunday through Saturday snapshots for each platform.</p>
       </div>
       <div class="statusStack">
         <div class="statusCard"><div class="statusLabel">Repo source</div><div class="statusValue">architeketh/resale-dashboard</div></div>
         <div class="statusCard"><div class="statusLabel">Last sync</div><div class="statusValue" id="last-updated">Checking...</div></div>
-        
       </div>
     </section>
 
     <details class="panel collapsible">
-      <summary class="collapsibleSummary"><div><div class="eyebrow" style="margin-bottom:6px;">Workflow</div><div style="font-size:28px;font-weight:700;letter-spacing:-.04em;">How it works now</div></div><span class="chev">›</span></summary>
+      <summary class="collapsibleSummary"><div><div class="eyebrow" style="margin-bottom:6px;">Workflow</div><div style="font-size:28px;font-weight:700;letter-spacing:-.04em;">How it works now</div></div><span class="chev">+</span></summary>
       <div class="workflowBody">
         <div class="setupGrid">
-          <article class="setupCard"><h3>1. Save the token once</h3><p>The first time either scraper or weekly capture runs it uses your GitHub token with repo write access. The token stays in your browser on your device.</p></article>
+          <article class="setupCard"><h3>1. Save the token once</h3><p>The first time either scraper or weekly capture runs it asks for your GitHub token with repo write access. The token is only stored in your browser on your device.</p></article>
           <article class="setupCard"><h3>2. Install the scraper buttons</h3><p>Drag these links to your bookmarks bar once, then click the matching bookmark while you are on ThreadUp or Depop.</p><p><a id="threadup-bookmarklet" class="inlineLink" href="#">Install ThreadUp Scraper</a></p><p><a id="depop-bookmarklet" class="inlineLink" href="#">Install Depop Scraper</a></p></article>
-          <article class="setupCard"><h3>3. Capture weekly sales</h3><p>Use the capture button in each platform header to save that platform's sold count and revenue for the current Sunday through Saturday week.</p><ol><li>ThreadUp writes <code>data/threadup.json</code></li><li>Depop writes <code>data/depop.json</code></li><li>Weekly snapshots write <code>data/weekly-sales.json</code></li></ol><p><a href="#" class="inlineLink" onclick="loadData(); return false;">Refresh dashboard data</a></p></article>
+          <article class="setupCard"><h3>3. Capture weekly sales</h3><p>Use the platform capture buttons after your scrapes are current to save weekly sold count and revenue.</p><ol><li>ThreadUp writes <code>data/threadup.json</code></li><li>Depop writes <code>data/depop.json</code></li><li>Weekly snapshots write <code>data/weekly-sales.json</code></li></ol><p><a href="#" class="inlineLink" onclick="loadData(); return false;">Refresh dashboard data</a></p></article>
         </div>
       </div>
     </details>
@@ -49,36 +50,44 @@
     </section>
 
     <details class="platform collapsible" open>
-      <summary class="platformSummary collapsibleSummary">
-        <div class="platformHead" style="width:100%;align-items:flex-start;">
+      <summary class="collapsibleSummary">
+        <div class="platformHead">
           <div class="titleWrap">
-            <div><div class="eyebrow" style="margin-bottom:6px;">Platform</div><div class="platformTitle">ThreadUp</div></div>
-            <div class="meta"><span class="pill" id="threadup-count">0 items</span><span class="pill" id="threadup-updated">No sync yet</span></div><div class="statusBar"><span class="pill pillStrong" id="threadup-weekly-pill">Weekly sales: not captured</span><span class="pill" id="threadup-weekly-delta">No prior week</span></div>
+            <div class="eyebrow" style="margin-bottom:0;">Platform</div>
+            <div class="titleLine"><div class="platformTitle">ThreadUp</div><span class="pill pillStrong" id="threadup-week-label">Week not captured yet</span></div>
+            <div class="titleMeta"><span class="pill" id="threadup-count">All: 0 items</span><span class="pill" id="threadup-updated">No sync yet</span></div>
+            <div class="statusBar"><span class="pill pillStrong" id="threadup-weekly-pill">Weekly sales: not captured</span><span class="pill" id="threadup-weekly-delta">No prior week</span></div>
           </div>
-          <span class="chev">›</span>
+          <span class="chev">+</span>
         </div>
       </summary>
       <div class="platformBody">
-        <div class="weeklyBlock"><button class="captureBtn" data-platform="threadup">Capture ThreadUp Week</button><button class="captureBtn secondary" data-action="reset-token">Change Token</button><button class="captureBtn secondary" onclick="loadData()">Refresh</button><span class="pill" id="threadup-week-label">Week not captured yet</span></div>
-        <div class="filters" id="threadup-filters"><button class="filterBtn active" data-filter="all">All</button><button class="filterBtn" data-filter="sold">Sold</button><button class="filterBtn" data-filter="listed">Listed</button></div>
+        <div class="controlsRow">
+          <div class="filters" id="threadup-filters"><button class="filterBtn active" data-filter="all">All</button><button class="filterBtn" data-filter="sold">Sold</button><button class="filterBtn pillWide" data-filter="listed">Listed</button></div>
+          <div class="actions"><button class="btn primary" data-platform="threadup">Capture</button><button class="btn" data-action="reset-token">Change Token</button><button class="btn" data-action="refresh">Refresh</button></div>
+        </div>
         <div id="threadup-content" class="loading">Loading ThreadUp data...</div>
         <div class="history"><div class="historyTitle">Weekly snapshot history</div><div class="historyRow" id="threadup-history">No weekly snapshots yet.</div></div>
       </div>
     </details>
 
     <details class="platform collapsible">
-      <summary class="platformSummary collapsibleSummary">
-        <div class="platformHead" style="width:100%;align-items:flex-start;">
+      <summary class="collapsibleSummary">
+        <div class="platformHead">
           <div class="titleWrap">
-            <div><div class="eyebrow" style="margin-bottom:6px;">Platform</div><div class="platformTitle">Depop</div></div>
-            <div class="meta"><span class="pill" id="depop-count">0 items</span><span class="pill" id="depop-updated">No sync yet</span></div><div class="statusBar"><span class="pill pillStrong" id="depop-weekly-pill">Weekly sales: not captured</span><span class="pill" id="depop-weekly-delta">No prior week</span></div>
+            <div class="eyebrow" style="margin-bottom:0;">Platform</div>
+            <div class="titleLine"><div class="platformTitle">Depop</div><span class="pill pillStrong" id="depop-week-label">Week not captured yet</span></div>
+            <div class="titleMeta"><span class="pill" id="depop-count">All: 0 items</span><span class="pill" id="depop-updated">No sync yet</span></div>
+            <div class="statusBar"><span class="pill pillStrong" id="depop-weekly-pill">Weekly sales: not captured</span><span class="pill" id="depop-weekly-delta">No prior week</span></div>
           </div>
-          <span class="chev">›</span>
+          <span class="chev">+</span>
         </div>
       </summary>
       <div class="platformBody">
-        <div class="weeklyBlock"><button class="captureBtn" data-platform="depop">Capture Depop Week</button><button class="captureBtn secondary" data-action="reset-token">Change Token</button><button class="captureBtn secondary" onclick="loadData()">Refresh</button><span class="pill" id="depop-week-label">Week not captured yet</span></div>
-        <div class="filters" id="depop-filters"><button class="filterBtn active" data-filter="all">All</button><button class="filterBtn" data-filter="sold">Sold</button><button class="filterBtn" data-filter="listed">For sale</button></div>
+        <div class="controlsRow">
+          <div class="filters" id="depop-filters"><button class="filterBtn active" data-filter="all">All</button><button class="filterBtn" data-filter="sold">Sold</button><button class="filterBtn pillWide" data-filter="listed">For sale</button></div>
+          <div class="actions"><button class="btn primary" data-platform="depop">Capture</button><button class="btn" data-action="reset-token">Change Token</button><button class="btn" data-action="refresh">Refresh</button></div>
+        </div>
         <div id="depop-content" class="loading">Loading Depop data...</div>
         <div class="history"><div class="historyTitle">Weekly snapshot history</div><div class="historyRow" id="depop-history">No weekly snapshots yet.</div></div>
       </div>
@@ -89,7 +98,14 @@
 
   <script>
     const CONFIG = { owner: 'architeketh', repo: 'resale-dashboard', branch: 'main', tokenKey: 'resale_dashboard_github_token' };
-    const state = { threadup: [], depop: [], syncStatus: null, weeklySales: { threadup: [], depop: [] }, filters: { threadup: 'all', depop: 'all' } };
+    const state = {
+      threadup: [],
+      depop: [],
+      syncStatus: null,
+      weeklySales: { threadup: [], depop: [] },
+      filters: { threadup: 'all', depop: 'all' },
+      sorts: { threadup: { key: null, direction: 'asc' }, depop: { key: null, direction: 'asc' } }
+    };
     const DATA_FILES = { threadup: ['data/threadup.json', 'threadup.json'], depop: ['data/depop.json', 'depop.json'], syncStatus: ['data/sync-status.json'], weeklySales: ['data/weekly-sales.json'] };
     const BOOKMARKLETS = {
       threadup: "javascript:(function(){const s=document.createElement('script');s.src='https://architeketh.github.io/resale-dashboard/threadup_scraper_github.js?t='+Date.now();document.body.appendChild(s);})();",
@@ -123,6 +139,11 @@
       }));
     }
 
+    function normalizeWeeklySales(data) {
+      if (!data || typeof data !== 'object') return { threadup: [], depop: [] };
+      return { threadup: Array.isArray(data.threadup) ? data.threadup : [], depop: Array.isArray(data.depop) ? data.depop : [] };
+    }
+
     function getSummary(items) {
       const sold = items.filter((item) => item.status === 'Sold');
       const listed = items.filter((item) => item.status === 'For Sale');
@@ -142,22 +163,34 @@
       return { key, start: start.toISOString().slice(0,10), end: end.toISOString().slice(0,10), label: `${shortDate(start.toISOString().slice(0,10))} - ${shortDate(end.toISOString().slice(0,10))}` };
     }
 
-    function normalizeWeeklySales(data) {
-      if (!data || typeof data !== 'object') return { threadup: [], depop: [] };
-      return {
-        threadup: Array.isArray(data.threadup) ? data.threadup : [],
-        depop: Array.isArray(data.depop) ? data.depop : []
-      };
-    }
-
     function filterItems(items, filter) {
       if (filter === 'sold') return items.filter((item) => item.status === 'Sold');
       if (filter === 'listed') return items.filter((item) => item.status === 'For Sale');
       return items;
     }
 
+    function getPlatformCountLabel(platform, items) {
+      const labels = { all: 'All', sold: 'Sold', listed: platform === 'depop' ? 'For sale' : 'Listed' };
+      return `${labels[state.filters[platform]]}: ${items.length} items`;
+    }
+
+    function sortItems(items, platform) {
+      const sort = state.sorts[platform];
+      if (!sort.key) return [...items];
+      const factor = sort.direction === 'asc' ? 1 : -1;
+      return [...items].sort((a, b) => {
+        if (sort.key === 'price') return ((a.price || 0) - (b.price || 0)) * factor;
+        return String(a[sort.key] || '').toLowerCase().localeCompare(String(b[sort.key] || '').toLowerCase()) * factor;
+      });
+    }
+
+    function getSortLabel(platform, key, label) {
+      const sort = state.sorts[platform];
+      return sort.key === key ? `${label} ${sort.direction === 'asc' ? '↑' : '↓'}` : label;
+    }
+
     function renderTable(items, platform) {
-      const filtered = filterItems(items, state.filters[platform]);
+      const filtered = sortItems(filterItems(items, state.filters[platform]), platform);
       if (!items.length) return `<div class="empty">No ${platform} data found yet. Run the scraper and wait for GitHub Pages to refresh.</div>`;
       if (!filtered.length) return '<div class="empty">No items match the current filter.</div>';
       const rows = filtered.map((item) => {
@@ -165,45 +198,41 @@
         const link = item.url ? `<a class="inlineLink" href="${item.url}" target="_blank" rel="noreferrer">Open</a>` : '-';
         return `<tr><td><span class="badge ${badgeClass}">${item.status}</span></td><td>${escapeHtml(item.brand || '-')}</td><td>${escapeHtml(item.description || '-')}</td><td class="money">${currency(item.price)}</td><td>${link}</td></tr>`;
       }).join('');
-      return `<div class="tableWrap"><table><thead><tr><th>Status</th><th>Brand</th><th>Description</th><th>Price</th><th>Link</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+      return `<div class="tableWrap"><table><thead><tr><th>Status</th><th class="sortable" data-platform="${platform}" data-sort="brand">${getSortLabel(platform, 'brand', 'Brand')}</th><th>Description</th><th class="sortable" data-platform="${platform}" data-sort="price">${getSortLabel(platform, 'price', 'Price')}</th><th>Link</th></tr></thead><tbody>${rows}</tbody></table></div>`;
     }
 
-    function updateFilterButtons(containerId, activeFilter) {
-      document.querySelectorAll(`#${containerId} .filterBtn`).forEach((button) => button.classList.toggle('active', button.dataset.filter === activeFilter));
+    function updateFilterButtons(platform) {
+      document.querySelectorAll(`#${platform}-filters .filterBtn`).forEach((button) => button.classList.toggle('active', button.dataset.filter === state.filters[platform]));
     }
 
     function renderWeekly(platform) {
       const list = [...state.weeklySales[platform]].sort((a, b) => b.weekKey.localeCompare(a.weekKey));
       const currentWeek = getWeekRange();
       const current = list.find((entry) => entry.weekKey === currentWeek.key) || null;
-      const previous = current ? list.find((entry) => entry.weekKey < current.weekKey) : list[0] && list[0].weekKey < currentWeek.key ? list[0] : null;
-
+      const previous = current ? list.find((entry) => entry.weekKey < current.weekKey) : null;
       document.getElementById(`${platform}-week-label`).textContent = current ? `Week ${current.label}` : `Current week ${currentWeek.label}`;
       document.getElementById(`${platform}-weekly-pill`).textContent = current ? `Weekly sales: ${current.soldCount} sold / ${currency(current.revenue)}` : 'Weekly sales: not captured';
-
+      const deltaNode = document.getElementById(`${platform}-weekly-delta`);
+      deltaNode.className = 'pill';
       if (current && previous) {
         const diffCount = current.soldCount - previous.soldCount;
         const diffRevenue = current.revenue - previous.revenue;
-        const countText = `${diffCount >= 0 ? '+' : ''}${diffCount} sold`;
-        const revenueText = `${diffRevenue >= 0 ? '+' : '-'}${currency(Math.abs(diffRevenue))}`;
-        document.getElementById(`${platform}-weekly-delta`).textContent = `vs prior week: ${countText}, ${revenueText}`;
+        deltaNode.textContent = `vs prior week: ${diffCount >= 0 ? '+' : ''}${diffCount} sold, ${diffRevenue >= 0 ? '+' : '-'}${currency(Math.abs(diffRevenue))}`;
+        deltaNode.classList.add(diffCount > 0 || diffRevenue > 0 ? 'pillUp' : diffCount < 0 || diffRevenue < 0 ? 'pillDown' : 'pillFlat');
       } else {
-        document.getElementById(`${platform}-weekly-delta`).textContent = 'No prior week';
+        deltaNode.textContent = 'No prior week';
       }
-
-      document.getElementById(`${platform}-history`).innerHTML = list.length
-        ? list.slice(0, 4).map((entry) => `<span>${entry.label}: <strong>${entry.soldCount}</strong> sold, <strong>${currency(entry.revenue)}</strong></span>`).join('')
-        : 'No weekly snapshots yet.';
+      document.getElementById(`${platform}-history`).innerHTML = list.length ? list.slice(0, 4).map((entry) => `<span>${entry.label}: <strong>${entry.soldCount}</strong> sold, <strong>${currency(entry.revenue)}</strong></span>`).join('') : 'No weekly snapshots yet.';
     }
 
     function renderPlatform(platform) {
       const items = state[platform];
       document.getElementById(`${platform}-content`).innerHTML = renderTable(items, platform);
-      const summary = getSummary(items);
-      document.getElementById(`${platform}-count`).textContent = `${summary.count} items`;
+      document.getElementById(`${platform}-count`).textContent = getPlatformCountLabel(platform, filterItems(items, state.filters[platform]));
       const platformStatus = state.syncStatus && state.syncStatus.platforms ? state.syncStatus.platforms[platform] : null;
       document.getElementById(`${platform}-updated`).textContent = platformStatus && platformStatus.updatedAt ? `Updated ${formatDate(platformStatus.updatedAt)}` : 'No sync yet';
       renderWeekly(platform);
+      updateFilterButtons(platform);
     }
 
     function renderStats() {
@@ -221,14 +250,19 @@
       document.getElementById('last-updated').textContent = state.syncStatus && state.syncStatus.lastUpdated ? formatDate(state.syncStatus.lastUpdated) : 'No sync yet';
     }
 
-    async function getToken() {
-      let token = localStorage.getItem(CONFIG.tokenKey);
+    async function getToken(forcePrompt = false) {
+      let token = forcePrompt ? '' : localStorage.getItem(CONFIG.tokenKey);
       if (token) return token;
       token = window.prompt('Paste a GitHub personal access token with repo write access for architeketh/resale-dashboard:');
       if (!token) throw new Error('No token provided.');
       token = token.trim();
       localStorage.setItem(CONFIG.tokenKey, token);
       return token;
+    }
+
+    function resetToken() {
+      localStorage.removeItem(CONFIG.tokenKey);
+      getToken(true).catch(() => {});
     }
 
     async function getRepoFile(token, path) {
@@ -247,11 +281,17 @@
         headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       });
-      if (!response.ok) throw new Error(`GitHub write failed (${response.status})`);
+      if (!response.ok) {
+        if (response.status === 401 || response.status === 403) {
+          localStorage.removeItem(CONFIG.tokenKey);
+          throw new Error('GitHub rejected the saved token. Click Change Token and try again.');
+        }
+        throw new Error(`GitHub write failed (${response.status})`);
+      }
     }
 
     async function captureWeeklySnapshot(platform) {
-      const button = document.querySelector(`.captureBtn[data-platform="${platform}"]`);
+      const button = document.querySelector(`.btn.primary[data-platform="${platform}"]`);
       const original = button.textContent;
       button.textContent = 'Saving...';
       button.disabled = true;
@@ -266,12 +306,19 @@
         state.weeklySales = next;
         renderWeekly(platform);
         button.textContent = 'Saved';
-        setTimeout(() => { button.textContent = original; button.disabled = false; }, 1600);
+        setTimeout(() => { button.textContent = original; button.disabled = false; }, 1400);
       } catch (error) {
-        button.textContent = 'Retry capture';
+        button.textContent = original;
         button.disabled = false;
         alert(error.message);
       }
+    }
+
+    function toggleSort(platform, key) {
+      const sort = state.sorts[platform];
+      if (sort.key === key) sort.direction = sort.direction === 'asc' ? 'desc' : 'asc';
+      else { sort.key = key; sort.direction = 'asc'; }
+      renderPlatform(platform);
     }
 
     async function loadData() {
@@ -285,25 +332,40 @@
       renderPlatform('threadup');
       renderPlatform('depop');
       renderStats();
-      updateFilterButtons('threadup-filters', state.filters.threadup);
-      updateFilterButtons('depop-filters', state.filters.depop);
     }
 
     document.getElementById('threadup-filters').addEventListener('click', (event) => {
-      const button = event.target.closest('.filterBtn'); if (!button) return;
-      state.filters.threadup = button.dataset.filter; updateFilterButtons('threadup-filters', state.filters.threadup); renderPlatform('threadup');
+      const button = event.target.closest('.filterBtn');
+      if (!button) return;
+      state.filters.threadup = button.dataset.filter;
+      renderPlatform('threadup');
     });
     document.getElementById('depop-filters').addEventListener('click', (event) => {
-      const button = event.target.closest('.filterBtn'); if (!button) return;
-      state.filters.depop = button.dataset.filter; updateFilterButtons('depop-filters', state.filters.depop); renderPlatform('depop');
+      const button = event.target.closest('.filterBtn');
+      if (!button) return;
+      state.filters.depop = button.dataset.filter;
+      renderPlatform('depop');
     });
-    document.querySelectorAll('.captureBtn[data-platform]').forEach((button) => button.addEventListener('click', () => captureWeeklySnapshot(button.dataset.platform)));
+    document.addEventListener('click', (event) => {
+      const sortHeader = event.target.closest('[data-sort][data-platform]');
+      if (sortHeader) {
+        toggleSort(sortHeader.dataset.platform, sortHeader.dataset.sort);
+        return;
+      }
+      const captureButton = event.target.closest('.btn.primary[data-platform]');
+      if (captureButton) {
+        captureWeeklySnapshot(captureButton.dataset.platform);
+        return;
+      }
+      const action = event.target.closest('[data-action]');
+      if (!action) return;
+      if (action.dataset.action === 'reset-token') resetToken();
+      if (action.dataset.action === 'refresh') loadData();
+    });
+
     document.getElementById('threadup-bookmarklet').setAttribute('href', BOOKMARKLETS.threadup);
     document.getElementById('depop-bookmarklet').setAttribute('href', BOOKMARKLETS.depop);
     loadData();
   </script>
 </body>
 </html>
-
-
-
