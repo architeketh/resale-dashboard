@@ -10,5 +10,15 @@
       "capturedAt": "2026-04-04T17:24:13.530Z"
     }
   ],
-  "depop": []
+  "depop": [
+    {
+      "weekKey": "2026-03-29_2026-04-05",
+      "label": "Mar 29 - Apr 5",
+      "weekStart": "2026-03-29",
+      "weekEnd": "2026-04-05",
+      "soldCount": 32,
+      "revenue": 1637.2999999999997,
+      "capturedAt": "2026-04-04T17:24:34.594Z"
+    }
+  ]
 }
