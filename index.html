@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
@@ -43,7 +43,17 @@
             font-size: 16px;
         }
 
-        .scraper-section {
+        .last-updated {
+            background: #f0f0f0;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .setup-section {
             background: white;
             padding: 25px;
             border-radius: 12px;
@@ -51,7 +61,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        .scraper-section h2 {
+        .setup-section h2 {
             color: #333;
             font-size: 22px;
             margin-bottom: 15px;
@@ -108,6 +118,15 @@
             font-size: 14px;
         }
 
+        .instructions ol {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+
+        .instructions li {
+            margin: 8px 0;
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -120,11 +139,6 @@
             padding: 25px;
             border-radius: 12px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-            transition: transform 0.3s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
         }
 
         .stat-label {
@@ -204,6 +218,7 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -213,34 +228,11 @@
             cursor: pointer;
             font-size: 14px;
             font-weight: 600;
-            transition: all 0.3s;
         }
 
         .btn-primary {
             background: #667eea;
             color: white;
-        }
-
-        .btn-primary:hover {
-            background: #5568d3;
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #5a6268;
-        }
-
-        .btn-danger {
-            background: #dc3545;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #c82333;
         }
 
         table {
@@ -305,6 +297,13 @@
             margin-bottom: 20px;
         }
 
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+            font-size: 18px;
+        }
+
         @media (max-width: 768px) {
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -318,14 +317,6 @@
                 flex-direction: column;
                 gap: 15px;
             }
-
-            table {
-                font-size: 13px;
-            }
-
-            th, td {
-                padding: 10px;
-            }
         }
     </style>
 </head>
@@ -333,36 +324,37 @@
     <div class="container">
         <header>
             <h1>🛍️ Resale Inventory Dashboard</h1>
-            <p class="subtitle">One-click scraping with automatic data storage</p>
+            <p class="subtitle">Auto-synced from GitHub repository</p>
+            <div class="last-updated" id="last-updated">Loading...</div>
         </header>
 
-        <!-- Scraper Bookmarklets -->
-        <div class="scraper-section">
-            <h2>📲 Quick Start - Drag These to Your Bookmarks Bar</h2>
+        <!-- Setup Instructions -->
+        <div class="setup-section">
+            <h2>🚀 Quick Setup (One-Time)</h2>
             
             <div class="instructions">
-                <strong>🎯 How it works:</strong>
-                <ol style="margin: 10px 0; padding-left: 25px;">
-                    <li>Drag the buttons below to your browser's bookmarks bar</li>
-                    <li>Go to ThreadUp or Depop website</li>
-                    <li>Click the bookmarklet - data saves automatically!</li>
-                    <li>Return here - your dashboard updates instantly</li>
+                <strong>📋 How it works:</strong>
+                <ol>
+                    <li><strong>Drag bookmarklets</strong> to your bookmarks bar (below)</li>
+                    <li><strong>Click bookmarklet</strong> on ThreadUp/Depop → Downloads JSON file</li>
+                    <li><strong>Upload JSON files</strong> to your GitHub repo (same folder as index.html)</li>
+                    <li><strong>Dashboard auto-updates</strong> from the JSON files! 🎉</li>
                 </ol>
             </div>
 
             <div class="scraper-grid">
                 <div class="scraper-card">
                     <h3>🛒 ThreadUp Scraper</h3>
-                    <p>Scrape your ThreadUp inventory (sold & listed)</p>
-                    <a href="javascript:(function(){const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=function(){const items=[];const cards=document.querySelectorAll('[class*=&quot;item-card&quot;]');const containers=new Set();cards.forEach(card=>{let parent=card.parentElement;while(parent&&parent!==document.body){const hasImage=parent.querySelector('[class*=&quot;item-card-image&quot;]');const hasBody=parent.querySelector('[class*=&quot;item-card-body&quot;]');if(hasImage&&hasBody){containers.add(parent);break;}parent=parent.parentElement;}});Array.from(containers).forEach(container=>{const img=container.querySelector('img[alt]');let brand='',description='';if(img&&img.alt){const cleanAlt=img.alt.replace(/\(view \d+\)/,'').trim();const words=cleanAlt.split(' ');for(let i=1;i<words.length;i++){const potentialBrand=words.slice(0,i).join(' ');const restOfText=words.slice(i).join(' ');if(restOfText.startsWith(potentialBrand)){brand=potentialBrand;description=restOfText.substring(potentialBrand.length).trim();break;}}if(!brand){brand=words.slice(0,Math.min(3,words.length)).join(' ');description=words.slice(Math.min(3,words.length)).join(' ');}}const containerText=container.textContent;const priceMatch=containerText.match(/\$[\d,]+\.?\d*/);const price=priceMatch?parseFloat(priceMatch[0].replace(/[$,]/g,'')):0;const status=containerText.toLowerCase().includes('sold')?'Sold':'For Sale';if(brand||description||price){items.push({Platform:'ThreadUp',Status:status,Brand:brand,Description:description,Price:price,'Date Sold':''});}});if(items.length>0){localStorage.setItem('threadup_data',JSON.stringify(items));const soldCount=items.filter(i=>i.Status==='Sold').length;const listedCount=items.filter(i=>i.Status==='For Sale').length;alert(`✅ Saved ${items.length} ThreadUp items!\n\n📊 Breakdown:\n- Sold: ${soldCount}\n- Listed: ${listedCount}\n\nReturn to dashboard to view!`);}else{alert('⚠️ No items found. Scroll to load items first!');}};document.head.appendChild(s);})();" class="bookmarklet">
+                    <p>Downloads threadup.json</p>
+                    <a href="javascript:(function(){const s=document.createElement('script');s.textContent=`(function(){const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=function(){const items=[];const cards=document.querySelectorAll('[class*=\"item-card\"]');const containers=new Set();cards.forEach(card=>{let parent=card.parentElement;while(parent&&parent!==document.body){const hasImage=parent.querySelector('[class*=\"item-card-image\"]');const hasBody=parent.querySelector('[class*=\"item-card-body\"]');if(hasImage&&hasBody){containers.add(parent);break;}parent=parent.parentElement;}});Array.from(containers).forEach(container=>{const img=container.querySelector('img[alt]');let brand='',description='';if(img&&img.alt){const cleanAlt=img.alt.replace(/\\(view \\d+\\)/,'').trim();const words=cleanAlt.split(' ');for(let i=1;i<words.length;i++){const potentialBrand=words.slice(0,i).join(' ');const restOfText=words.slice(i).join(' ');if(restOfText.startsWith(potentialBrand)){brand=potentialBrand;description=restOfText.substring(potentialBrand.length).trim();break;}}if(!brand){brand=words.slice(0,Math.min(3,words.length)).join(' ');description=words.slice(Math.min(3,words.length)).join(' ');}}const containerText=container.textContent;const priceMatch=containerText.match(/\\$[\\d,]+\\.?\\d*/);const price=priceMatch?parseFloat(priceMatch[0].replace(/[$,]/g,'')):0;const status=containerText.toLowerCase().includes('sold')?'Sold':'For Sale';if(brand||description||price){items.push({Platform:'ThreadUp',Status:status,Brand:brand,Description:description,Price:price});}});if(items.length>0){const dataStr=JSON.stringify(items,null,2);const dataBlob=new Blob([dataStr],{type:'application/json'});const url=URL.createObjectURL(dataBlob);const link=document.createElement('a');link.href=url;link.download='threadup.json';link.click();const soldCount=items.filter(i=>i.Status==='Sold').length;const listedCount=items.filter(i=>i.Status==='For Sale').length;alert('✅ Downloaded threadup.json!\\n\\n'+items.length+' items (Sold: '+soldCount+', Listed: '+listedCount+')\\n\\nUpload to GitHub repo!');}else{alert('⚠️ No items found!');}};document.head.appendChild(s);})();`;document.head.appendChild(s);})();" class="bookmarklet">
                         📦 Scrape ThreadUp
                     </a>
                 </div>
 
                 <div class="scraper-card">
                     <h3>🎨 Depop Scraper</h3>
-                    <p>Scrape your Depop profile (for sale & sold)</p>
-                    <a href="javascript:(function(){const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=function(){const items=[];const listItems=document.querySelectorAll('li');const productItems=Array.from(listItems).filter(li=>li.querySelector('a[href*=&quot;/products/&quot;]'));productItems.forEach(item=>{const link=item.querySelector('a[href*=&quot;/products/&quot;]');if(!link)return;const href=link.href;let description='';const urlParts=href.split('/products/')[1];if(urlParts){const slug=urlParts.split('/')[0];const parts=slug.split('-');if(parts.length>1){description=parts.slice(1,-1).join(' ');}}description=description.split(' ').map(word=>word.charAt(0).toUpperCase()+word.slice(1)).join(' ');let brand='';const commonBrands=['Lululemon','Nike','Adidas','Coach','Gucci','Louis','Vuitton','Prada','Jordan','Disney','Hello'];if(commonBrands.some(b=>description.includes(b))){brand=commonBrands.find(b=>description.includes(b))||'';}else{const firstWord=description.split(' ')[0];if(firstWord&&firstWord===firstWord.charAt(0).toUpperCase()+firstWord.slice(1).toLowerCase()){brand=firstWord;}}const itemText=item.textContent.trim();const priceMatch=itemText.match(/\$[\d,]+\.?\d*/);const price=priceMatch?parseFloat(priceMatch[0].replace(/[$,]/g,'')):0;const status=itemText.toLowerCase().includes('sold')?'Sold':'For Sale';if(description||price){items.push({Platform:'Depop',Status:status,Brand:brand,Description:description,Price:price,URL:href});}});if(items.length>0){localStorage.setItem('depop_data',JSON.stringify(items));const soldCount=items.filter(i=>i.Status==='Sold').length;const forSaleCount=items.filter(i=>i.Status==='For Sale').length;alert(`✅ Saved ${items.length} Depop items!\n\n📊 Breakdown:\n- For Sale: ${forSaleCount}\n- Sold: ${soldCount}\n\nReturn to dashboard to view!`);}else{alert('⚠️ No items found. Make sure you are on your Depop profile!');}};document.head.appendChild(s);})();" class="bookmarklet">
+                    <p>Downloads depop.json</p>
+                    <a href="javascript:(function(){const s=document.createElement('script');s.textContent=`(function(){const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=function(){const items=[];const listItems=document.querySelectorAll('li');const productItems=Array.from(listItems).filter(li=>li.querySelector('a[href*=\"/products/\"]'));productItems.forEach(item=>{const link=item.querySelector('a[href*=\"/products/\"]');if(!link)return;const href=link.href;let description='';const urlParts=href.split('/products/')[1];if(urlParts){const slug=urlParts.split('/')[0];const parts=slug.split('-');if(parts.length>1){description=parts.slice(1,-1).join(' ');}}description=description.split(' ').map(word=>word.charAt(0).toUpperCase()+word.slice(1)).join(' ');let brand='';const commonBrands=['Lululemon','Nike','Adidas','Coach','Gucci','Louis','Vuitton','Prada','Jordan','Disney','Hello'];if(commonBrands.some(b=>description.includes(b))){brand=commonBrands.find(b=>description.includes(b))||'';}else{const firstWord=description.split(' ')[0];if(firstWord){brand=firstWord;}}const itemText=item.textContent.trim();const priceMatch=itemText.match(/\\$[\\d,]+\\.?\\d*/);const price=priceMatch?parseFloat(priceMatch[0].replace(/[$,]/g,'')):0;const status=itemText.toLowerCase().includes('sold')?'Sold':'For Sale';if(description||price){items.push({Platform:'Depop',Status:status,Brand:brand,Description:description,Price:price,URL:href});}});if(items.length>0){const dataStr=JSON.stringify(items,null,2);const dataBlob=new Blob([dataStr],{type:'application/json'});const url=URL.createObjectURL(dataBlob);const link=document.createElement('a');link.href=url;link.download='depop.json';link.click();const soldCount=items.filter(i=>i.Status==='Sold').length;const forSaleCount=items.filter(i=>i.Status==='For Sale').length;alert('✅ Downloaded depop.json!\\n\\n'+items.length+' items (For Sale: '+forSaleCount+', Sold: '+soldCount+')\\n\\nUpload to GitHub repo!');}else{alert('⚠️ No items found!');}};document.head.appendChild(s);})();`;document.head.appendChild(s);})();" class="bookmarklet">
                         🎨 Scrape Depop
                     </a>
                 </div>
@@ -370,7 +362,7 @@
         </div>
 
         <!-- Stats Dashboard -->
-        <div class="stats-grid" id="stats-grid">
+        <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-label">Total Items</div>
                 <div class="stat-value" id="total-items">0</div>
@@ -393,11 +385,8 @@
             </div>
         </div>
 
-        <!-- Action Buttons -->
         <div class="action-buttons">
-            <button class="btn btn-primary" onclick="refreshData()">🔄 Refresh Data</button>
-            <button class="btn btn-secondary" onclick="exportData()">📥 Export JSON (for GitHub)</button>
-            <button class="btn btn-danger" onclick="clearData()">🗑️ Clear All Data</button>
+            <button class="btn btn-primary" onclick="loadData()">🔄 Refresh Data</button>
         </div>
 
         <!-- ThreadUp Section -->
@@ -411,11 +400,7 @@
                 </div>
             </div>
             <div id="threadup-content">
-                <div class="empty-state">
-                    <div class="empty-state-icon">📦</div>
-                    <p>No ThreadUp data yet</p>
-                    <p style="font-size: 14px; margin-top: 10px;">Use the bookmarklet above to scrape your ThreadUp inventory</p>
-                </div>
+                <div class="loading">Loading ThreadUp data...</div>
             </div>
         </div>
 
@@ -430,11 +415,7 @@
                 </div>
             </div>
             <div id="depop-content">
-                <div class="empty-state">
-                    <div class="empty-state-icon">🎨</div>
-                    <p>No Depop data yet</p>
-                    <p style="font-size: 14px; margin-top: 10px;">Use the bookmarklet above to scrape your Depop profile</p>
-                </div>
+                <div class="loading">Loading Depop data...</div>
             </div>
         </div>
     </div>
@@ -443,73 +424,52 @@
         let threadupData = [];
         let depopData = [];
 
-        // Load data on page load
-        window.addEventListener('load', function() {
-            loadData();
-        });
+        // Auto-load data on page load
+        window.addEventListener('load', loadData);
 
-        function loadData() {
-            // Load from localStorage
-            const threadupStored = localStorage.getItem('threadup_data');
-            const depopStored = localStorage.getItem('depop_data');
-            
-            if (threadupStored) {
-                threadupData = JSON.parse(threadupStored);
-                displayThreadUp('all');
+        async function loadData() {
+            try {
+                // Load ThreadUp data
+                const threadupResponse = await fetch('threadup.json');
+                if (threadupResponse.ok) {
+                    threadupData = await threadupResponse.json();
+                    displayThreadUp('all');
+                } else {
+                    document.getElementById('threadup-content').innerHTML = 
+                        '<div class="empty-state"><div class="empty-state-icon">📦</div><p>No threadup.json found</p><p style="font-size: 14px; margin-top: 10px;">Scrape ThreadUp and upload the JSON file to your repo</p></div>';
+                }
+            } catch(e) {
+                document.getElementById('threadup-content').innerHTML = 
+                    '<div class="empty-state"><div class="empty-state-icon">📦</div><p>No threadup.json found</p><p style="font-size: 14px; margin-top: 10px;">Scrape ThreadUp and upload the JSON file to your repo</p></div>';
             }
-            
-            if (depopStored) {
-                depopData = JSON.parse(depopStored);
-                displayDepop('all');
+
+            try {
+                // Load Depop data
+                const depopResponse = await fetch('depop.json');
+                if (depopResponse.ok) {
+                    depopData = await depopResponse.json();
+                    displayDepop('all');
+                } else {
+                    document.getElementById('depop-content').innerHTML = 
+                        '<div class="empty-state"><div class="empty-state-icon">🎨</div><p>No depop.json found</p><p style="font-size: 14px; margin-top: 10px;">Scrape Depop and upload the JSON file to your repo</p></div>';
+                }
+            } catch(e) {
+                document.getElementById('depop-content').innerHTML = 
+                    '<div class="empty-state"><div class="empty-state-icon">🎨</div><p>No depop.json found</p><p style="font-size: 14px; margin-top: 10px;">Scrape Depop and upload the JSON file to your repo</p></div>';
             }
-            
+
             updateStats();
-        }
-
-        function refreshData() {
-            loadData();
-            alert('✅ Data refreshed!');
-        }
-
-        function clearData() {
-            if (confirm('⚠️ Are you sure you want to delete all data? This cannot be undone!')) {
-                localStorage.removeItem('threadup_data');
-                localStorage.removeItem('depop_data');
-                threadupData = [];
-                depopData = [];
-                displayThreadUp('all');
-                displayDepop('all');
-                updateStats();
-                alert('✅ All data cleared!');
-            }
-        }
-
-        function exportData() {
-            const data = {
-                threadup: threadupData,
-                depop: depopData,
-                exported: new Date().toISOString()
-            };
-            
-            const dataStr = JSON.stringify(data, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'inventory_data.json';
-            link.click();
-            
-            alert('✅ JSON file downloaded!\n\nYou can commit this to your GitHub repo as a backup.');
+            document.getElementById('last-updated').textContent = 'Last updated: ' + new Date().toLocaleString();
         }
 
         function displayThreadUp(filter) {
             const container = document.getElementById('threadup-content');
-            
             let filtered = threadupData;
+            
             if (filter === 'sold') {
                 filtered = threadupData.filter(item => item.Status === 'Sold');
             } else if (filter === 'listed') {
-                filtered = threadupData.filter(item => item.Status === 'For Sale' || item.Status === 'Listed');
+                filtered = threadupData.filter(item => item.Status === 'For Sale');
             }
             
             if (filtered.length === 0) {
@@ -517,31 +477,17 @@
                 return;
             }
             
-            let html = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Status</th>
-                            <th>Brand</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
+            let html = '<table><thead><tr><th>Status</th><th>Brand</th><th>Description</th><th>Price</th></tr></thead><tbody>';
             
             filtered.forEach(item => {
                 const statusClass = item.Status === 'Sold' ? 'status-sold' : 'status-listed';
                 const statusText = item.Status === 'Sold' ? 'Sold' : 'Listed';
-                
-                html += `
-                    <tr>
-                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                        <td>${item.Brand || '-'}</td>
-                        <td>${item.Description || '-'}</td>
-                        <td class="price">$${(item.Price || 0).toFixed(2)}</td>
-                    </tr>
-                `;
+                html += `<tr>
+                    <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                    <td>${item.Brand || '-'}</td>
+                    <td>${item.Description || '-'}</td>
+                    <td class="price">$${(item.Price || 0).toFixed(2)}</td>
+                </tr>`;
             });
             
             html += '</tbody></table>';
@@ -550,8 +496,8 @@
 
         function displayDepop(filter) {
             const container = document.getElementById('depop-content');
-            
             let filtered = depopData;
+            
             if (filter === 'sold') {
                 filtered = depopData.filter(item => item.Status === 'Sold');
             } else if (filter === 'listed') {
@@ -563,32 +509,17 @@
                 return;
             }
             
-            let html = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Status</th>
-                            <th>Brand</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Link</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
+            let html = '<table><thead><tr><th>Status</th><th>Brand</th><th>Description</th><th>Price</th><th>Link</th></tr></thead><tbody>';
             
             filtered.forEach(item => {
                 const statusClass = item.Status === 'Sold' ? 'status-sold' : 'status-listed';
-                
-                html += `
-                    <tr>
-                        <td><span class="status-badge ${statusClass}">${item.Status}</span></td>
-                        <td>${item.Brand || '-'}</td>
-                        <td>${item.Description || '-'}</td>
-                        <td class="price">$${(item.Price || 0).toFixed(2)}</td>
-                        <td>${item.URL ? '<a href="' + item.URL + '" target="_blank">View</a>' : '-'}</td>
-                    </tr>
-                `;
+                html += `<tr>
+                    <td><span class="status-badge ${statusClass}">${item.Status}</span></td>
+                    <td>${item.Brand || '-'}</td>
+                    <td>${item.Description || '-'}</td>
+                    <td class="price">$${(item.Price || 0).toFixed(2)}</td>
+                    <td>${item.URL ? '<a href="' + item.URL + '" target="_blank">View</a>' : '-'}</td>
+                </tr>`;
             });
             
             html += '</tbody></table>';
@@ -596,7 +527,7 @@
         }
 
         function filterThreadUp(filter) {
-            const buttons = document.querySelectorAll('.platform-section:nth-of-type(3) .filter-btn');
+            const buttons = document.querySelectorAll('.platform-section:nth-of-type(4) .filter-btn');
             buttons.forEach(btn => {
                 btn.classList.remove('active');
                 if ((filter === 'all' && btn.textContent === 'All') ||
@@ -609,7 +540,7 @@
         }
 
         function filterDepop(filter) {
-            const buttons = document.querySelectorAll('.platform-section:nth-of-type(4) .filter-btn');
+            const buttons = document.querySelectorAll('.platform-section:nth-of-type(5) .filter-btn');
             buttons.forEach(btn => {
                 btn.classList.remove('active');
                 if ((filter === 'all' && btn.textContent === 'All') ||
@@ -623,28 +554,23 @@
 
         function updateStats() {
             const allData = [...threadupData, ...depopData];
-            
-            // Overall stats
             const soldItems = allData.filter(i => i.Status === 'Sold');
-            const listedItems = allData.filter(i => i.Status === 'For Sale' || i.Status === 'Listed');
+            const listedItems = allData.filter(i => i.Status === 'For Sale');
             const totalRevenue = soldItems.reduce((sum, item) => sum + (item.Price || 0), 0);
             
-            // Platform-specific stats
             const threadupSold = threadupData.filter(i => i.Status === 'Sold');
-            const threadupListed = threadupData.filter(i => i.Status === 'For Sale' || i.Status === 'Listed');
+            const threadupListed = threadupData.filter(i => i.Status === 'For Sale');
             const depopSold = depopData.filter(i => i.Status === 'Sold');
             const depopListed = depopData.filter(i => i.Status === 'For Sale');
             
             const threadupRevenue = threadupSold.reduce((sum, item) => sum + (item.Price || 0), 0);
             const depopRevenue = depopSold.reduce((sum, item) => sum + (item.Price || 0), 0);
             
-            // Update display
             document.getElementById('total-items').textContent = allData.length;
             document.getElementById('total-sold').textContent = soldItems.length;
             document.getElementById('total-listed').textContent = listedItems.length;
             document.getElementById('total-revenue').textContent = '$' + totalRevenue.toFixed(2);
             
-            // Breakdowns
             document.getElementById('platform-breakdown').textContent = 
                 `ThreadUp: ${threadupData.length} | Depop: ${depopData.length}`;
             document.getElementById('sold-breakdown').textContent = 
