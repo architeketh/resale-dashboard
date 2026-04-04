@@ -248,15 +248,21 @@
       const threadupSummary = getSummary(state.threadup);
       const depopSummary = getSummary(state.depop);
       const overall = getSummary(state.threadup.concat(state.depop));
+      const threadupListedValue = state.threadup
+        .filter((item) => item.status === 'For Sale')
+        .reduce((sum, item) => sum + (item.price || 0), 0);
+      const depopListedValue = state.depop
+        .filter((item) => item.status === 'For Sale')
+        .reduce((sum, item) => sum + (item.price || 0), 0);
       const lastUpdated = [state.threadup, state.depop].flat().reduce((max, item) => !max || (item.scrapedAt && item.scrapedAt > max) ? item.scrapedAt : max, '');
       document.getElementById('total-items').textContent = overall.count;
       document.getElementById('total-sold').textContent = overall.soldCount;
       document.getElementById('total-listed').textContent = overall.listedCount;
       document.getElementById('total-revenue').textContent = currency(overall.revenue);
-      document.getElementById('platform-breakdown').textContent = `ThreadUp ${threadupSummary.count} / Depop ${depopSummary.count}`;
-      document.getElementById('sold-breakdown').textContent = `ThreadUp ${threadupSummary.soldCount} / Depop ${depopSummary.soldCount}`;
-      document.getElementById('listed-breakdown').textContent = `ThreadUp ${threadupSummary.listedCount} / Depop ${depopSummary.listedCount}`;
-      document.getElementById('revenue-breakdown').textContent = `ThreadUp ${currency(threadupSummary.revenue)} / Depop ${currency(depopSummary.revenue)}`;
+      document.getElementById('platform-breakdown').textContent = `ThreadUp ${threadupSummary.count} / depop ${depopSummary.count}`;
+      document.getElementById('sold-breakdown').textContent = `ThreadUp ${threadupSummary.soldCount} (${currency(threadupSummary.revenue)}) / depop ${depopSummary.soldCount} (${currency(depopSummary.revenue)})`;
+      document.getElementById('listed-breakdown').textContent = `ThreadUp ${threadupSummary.listedCount} (${currency(threadupListedValue)}) / depop ${depopSummary.listedCount} (${currency(depopListedValue)})`;
+      document.getElementById('revenue-breakdown').textContent = `ThreadUp ${currency(threadupSummary.revenue)} / depop ${currency(depopSummary.revenue)}`;
       document.getElementById('last-updated').textContent = lastUpdated ? formatDate(lastUpdated) : 'No sync yet';
     }
 
@@ -356,6 +362,7 @@
   </script>
 </body>
 </html>
+
 
 
 
