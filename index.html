@@ -200,7 +200,7 @@
 
     function getSortLabel(platform, key, label) {
       const sort = state.sorts[platform];
-      return sort.key === key ? `${label} ${sort.direction === 'asc' ? 'ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“' : 'ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ'}` : label;
+      return sort.key === key ? `${label} ${sort.direction === 'asc' ? '(asc)' : '(desc)'}` : label;
     }
 
     function renderTable(items, platform) {
