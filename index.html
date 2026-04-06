@@ -64,7 +64,7 @@
       <div class="platformBody">
         <div class="controlsRow">
           <div class="filters" id="threadup-filters"><button class="filterBtn active" data-filter="all">All</button><button class="filterBtn" data-filter="sold">Sold</button><button class="filterBtn pillWide" data-filter="listed">For sale</button></div>
-          <div class="actions"><button class="btn primary" data-platform="threadup">Capture</button><button class="btn token" data-action="info-token">No Token Needed</button><button class="btn refresh" data-action="refresh">Refresh</button></div>
+          <div class="actions"><button class="btn primary" data-platform="threadup">Capture</button><button class="btn refresh" data-action="refresh">Refresh</button></div>
         </div>
         <div id="threadup-content" class="loading">Loading ThreadUp data...</div>
         <div class="history"><div class="historyTitle">Weekly snapshot history</div><div class="historyRow" id="threadup-history">No weekly snapshots yet.</div></div>
@@ -86,7 +86,7 @@
       <div class="platformBody">
         <div class="controlsRow">
           <div class="filters" id="depop-filters"><button class="filterBtn active" data-filter="all">All</button><button class="filterBtn" data-filter="sold">Sold</button><button class="filterBtn pillWide" data-filter="listed">For sale</button></div>
-          <div class="actions"><button class="btn primary" data-platform="depop">Capture</button><button class="btn token" data-action="info-token">No Token Needed</button><button class="btn refresh" data-action="refresh">Refresh</button></div>
+          <div class="actions"><button class="btn primary" data-platform="depop">Capture</button><button class="btn refresh" data-action="refresh">Refresh</button></div>
         </div>
         <div id="depop-content" class="loading">Loading Depop data...</div>
         <div class="history"><div class="historyTitle">Weekly snapshot history</div><div class="historyRow" id="depop-history">No weekly snapshots yet.</div></div>
@@ -374,7 +374,6 @@
       const action = event.target.closest('[data-action]');
       if (!action) return;
       if (action.dataset.action === 'refresh') loadData();
-      if (action.dataset.action === 'info-token') alert('This Supabase version no longer needs a GitHub token.');
     });
 
     document.getElementById('threadup-bookmarklet').setAttribute('href', BOOKMARKLETS.threadup);
