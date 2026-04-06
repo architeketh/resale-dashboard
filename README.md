@@ -1,117 +1,205 @@
-# Resale Inventory Dashboard
+# Resale Dashboard
 
-A beautiful web dashboard to track your ThreadUp and Depop inventory with automatic filtering and statistics.
+A static GitHub Pages dashboard for tracking ThreadUp and depop inventory with Supabase as the backend.
 
-## 🚀 Live Demo
+## What This App Does
 
-Upload your Excel files to see your inventory displayed with:
-- Total items, sold items, and active listings
-- Revenue tracking
-- Filter by platform (ThreadUp/Depop)
-- Filter by status (Sold/Listed)
-- Beautiful responsive design
+- Scrapes inventory from:
+  - ThreadUp
+  - depop
+- Syncs scraped items into Supabase through the `resale-sync` Edge Function
+- Displays live inventory in a GitHub Pages dashboard
+- Captures weekly sold snapshots
+- Tracks `first seen sold` dates for sold items
+- Exports the current filtered view to CSV or PDF
 
-## 📦 How to Deploy to GitHub Pages
+## Files In This Folder
 
-### Step 1: Create a GitHub Repository
+- `index.html`
+  - Main dashboard UI
+  - Reads inventory and weekly snapshots from Supabase
+  - Lets you refresh, capture weekly stats, and export current views
 
-1. Go to [GitHub](https://github.com) and create a new repository
-2. Name it something like `resale-dashboard` or `inventory-tracker`
-3. Make it **Public**
-4. Don't initialize with README (you'll upload files)
+- `threadup_scraper_github.js`
+  - Bookmarklet/browser scraper for ThreadUp
+  - Collects visible listings from the current page
+  - Sends them to the Supabase `resale-sync` Edge Function
 
-### Step 2: Upload Files
+- `depop_scraper_github.js`
+  - Bookmarklet/browser scraper for depop
+  - Collects visible listings from the profile grid
+  - Sends them to the Supabase `resale-sync` Edge Function
 
-1. Click **uploading an existing file**
-2. Drag and drop the `index.html` file
-3. Commit the file
+## Tools And Services Used
 
-### Step 3: Enable GitHub Pages
+- GitHub Pages
+  - Hosts the public dashboard
+  - Also hosts the scraper JS files used by bookmarklets
 
-1. Go to your repository **Settings**
-2. Click **Pages** in the left sidebar
-3. Under **Source**, select **main** branch
-4. Click **Save**
-5. Your site will be live at: `https://YOUR-USERNAME.github.io/REPO-NAME/`
+- Supabase
+  - Stores inventory data in `resale_inventory`
+  - Stores weekly snapshots in `resale_weekly_snapshots`
+  - Hosts the `resale-sync` Edge Function
 
-## 📊 How to Use
+- Supabase Edge Function: `resale-sync`
+  - Receives scraper payloads
+  - Syncs inventory rows
+  - Preserves `first_seen_sold_at`
+  - Saves weekly snapshot records
 
-### Step 1: Scrape Your Data
+- Browser bookmarklets
+  - Launch the scraper directly on ThreadUp or depop pages
+  - Avoid the need to paste code into DevTools
 
-Use the provided scrapers to get your inventory data:
+- Frontend stack
+  - Plain HTML
+  - Plain CSS
+  - Plain JavaScript
+  - No framework required
 
-**ThreadUp Scraper v3** (Updated - detects Sold vs Listed):
-```javascript
-// Copy threadup_scraper_v3.js and paste in console on ThreadUp page
-```
+## Current Data Flow
 
-**Depop Scraper**:
-```javascript
-// Copy depop_scraper.js and paste in console on Depop profile
-```
+1. Open the resale dashboard on GitHub Pages.
+2. Drag the scraper install links to the browser bookmarks bar.
+3. Visit the ThreadUp or depop page you want to scrape.
+4. Click the matching bookmarklet.
+5. The scraper gathers visible listing data from the page.
+6. The scraper sends the payload to:
+   - `https://fuhphebvnstgszapvitz.supabase.co/functions/v1/resale-sync`
+7. The Edge Function writes inventory into Supabase.
+8. The dashboard reads from Supabase and renders the updated inventory.
 
-### Step 2: Upload to Dashboard
+## Scraping Process
 
-1. Visit your GitHub Pages site
-2. Click "📁 Upload Excel Files"
-3. Select your scraped ThreadUp and/or Depop Excel files
-4. Dashboard will automatically update with your data!
+### ThreadUp
 
-## ✨ Features
+- The scraper searches the current page for item-card style containers
+- It reads:
+  - image alt text
+  - visible card text
+  - price
+  - product link
+- It infers:
+  - brand
+  - description
+  - status (`Sold` or `For Sale`)
 
-- **📊 Statistics Cards**: See total items, sold count, listings, and revenue at a glance
-- **🔍 Smart Filtering**: Filter by platform and status (All/Sold/Listed)
-- **💰 Revenue Tracking**: Automatic calculation of total sales
-- **📱 Responsive Design**: Works on desktop, tablet, and mobile
-- **🎨 Beautiful UI**: Modern gradient design with smooth animations
-- **⚡ Fast**: Client-side processing, no server needed
+### depop
 
-## 🛠️ Technical Details
+- The scraper reads profile-grid list items with product links
+- It parses:
+  - product URL slug
+  - visible text
+  - price
+- It infers:
+  - brand
+  - description
+  - status (`Sold` or `For Sale`)
 
-- Pure HTML/CSS/JavaScript
-- Uses SheetJS library for Excel file reading
-- No backend required - everything runs in the browser
-- No data is uploaded anywhere - all processing is local
+## First Seen Sold Logic
 
-## 📝 Data Format
+This app tracks `first_seen_sold_at`, not the exact marketplace sale timestamp.
 
-The dashboard expects Excel files with these columns:
+How it works:
 
-**ThreadUp**:
-- Platform
-- Status (Sold / For Sale)
-- Brand
-- Description
-- Price
+- When the scraper syncs inventory, the Edge Function compares incoming items to the existing platform inventory
+- If an item is now `Sold` and did not previously have `first_seen_sold_at`, the function stamps it
+- If the item was already sold earlier, the original sold stamp is preserved
 
-**Depop**:
-- Platform
-- Status (Sold / For Sale)
-- Brand
-- Description
-- Price
-- URL
+Important note:
 
-## 🔄 Updating Your Data
+- On the first rollout of this feature, items already marked sold will receive the date they were first observed by this tracking system
 
-1. Re-run the scrapers to get fresh data
-2. Upload new Excel files to the dashboard
-3. Stats and tables update automatically!
+## Weekly Capture
 
-## 💡 Tips
+The `Capture` button on the dashboard:
 
-- Upload both ThreadUp and Depop files for complete view
-- Use filters to see specific categories
-- Revenue only counts sold items
-- Prices are automatically formatted as currency
+- does not scrape
+- does not change inventory status
+- saves a weekly summary for the current platform
 
-## 🤝 Support
+It stores:
 
-If you have issues:
-1. Make sure Excel files are from the provided scrapers
-2. Check that files have the correct column headers
-3. Try refreshing the page and re-uploading
+- week key
+- week start
+- week end
+- sold count
+- revenue
+- capture timestamp
 
----
+This data is written to `resale_weekly_snapshots`.
 
-Made with ❤️ for resellers
+## Refresh
+
+The `Refresh` button:
+
+- reloads inventory from Supabase
+- reloads weekly snapshots from Supabase
+- redraws the dashboard
+
+It does not scrape or write data.
+
+## Export Tools
+
+Each platform section supports:
+
+- `Export CSV`
+  - downloads the current filtered/sorted platform view
+
+- `Export PDF`
+  - opens a print-friendly window so the browser can save the current filtered/sorted platform view as PDF
+
+## Supabase Tables
+
+### `resale_inventory`
+
+Expected key fields:
+
+- `platform`
+- `status`
+- `brand`
+- `description`
+- `price`
+- `url`
+- `scraped_at`
+- `source_key`
+- `first_seen_sold_at`
+
+### `resale_weekly_snapshots`
+
+Expected key fields:
+
+- `platform`
+- `week_key`
+- `week_start`
+- `week_end`
+- `label`
+- `sold_count`
+- `revenue`
+- `captured_at`
+
+## Deployment Notes
+
+To update the live dashboard:
+
+1. Upload these files to the `architeketh/resale-dashboard` repo:
+   - `index.html`
+   - `threadup_scraper_github.js`
+   - `depop_scraper_github.js`
+2. Wait for GitHub Pages to rebuild
+3. Refresh the live site
+
+## Operational Notes
+
+- The scrapers only capture items currently available in the loaded page view
+- If a site lazy-loads listings, scroll first before running the bookmarklet
+- The dashboard depends on Supabase being available and the `resale-sync` Edge Function being deployed
+- JWT verification for the Edge Function should remain off for this bookmarklet-based workflow unless custom auth is added later
+
+## Suggested Future Enhancements
+
+- Recently sold section
+- Sold-date-based weekly trend cards
+- Search by brand or description
+- Automatic detection of newly sold items by week
+- More resilient item identity matching across platform changes
