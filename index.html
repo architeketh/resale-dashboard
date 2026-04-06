@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -8,9 +8,9 @@
     :root{--paper:rgba(255,250,243,.92);--ink:#1f2933;--muted:#6b7280;--line:rgba(31,41,51,.1);--accent:#7c2d12;--accent-soft:#f59e0b;--teal:#0f766e;--rose:#9f1239;--shadow:0 24px 60px rgba(68,39,12,.12);--radius:24px;--mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;--sans:"Avenir Next","Segoe UI",Arial,sans-serif}
     *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:var(--sans);color:var(--ink);background:radial-gradient(circle at top left,rgba(245,158,11,.24),transparent 35%),radial-gradient(circle at bottom right,rgba(15,118,110,.18),transparent 32%),linear-gradient(180deg,#f7f2ea 0%,#efe6d8 100%)}
     .shell{width:min(1180px,calc(100% - 32px));margin:24px auto 48px}.hero,.panel,.platform{background:var(--paper);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.6);box-shadow:var(--shadow)}
-    .hero{padding:36px;border-radius:32px;display:grid;grid-template-columns:1.6fr 1fr;gap:24px}.eyebrow{font:600 12px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}h1{margin:0;font-size:clamp(34px,5vw,58px);line-height:.98;letter-spacing:-.04em;max-width:10ch}.hero p{margin:16px 0 0;max-width:58ch;color:var(--muted);font-size:16px;line-height:1.6}.statusStack{display:grid;gap:14px}.statusCard,.setupCard,.statCard{padding:22px;border-radius:20px;background:rgba(255,255,255,.64);border:1px solid var(--line)}.statusLinks{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.statusLink{display:inline-flex;align-items:center;justify-content:center;padding:11px 14px;border-radius:999px;font:600 13px/1 var(--mono);text-decoration:none}.statusLink-threadup{background:rgba(15,118,110,.12);border:1px solid rgba(15,118,110,.2);color:#0f766e}.statusLink-depop{background:rgba(159,18,57,.12);border:1px solid rgba(159,18,57,.2);color:#9f1239}.statusLabel,.statLabel{color:var(--muted);font:600 12px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}.statusValue{font-size:22px;font-weight:700}.panel,.platform{margin-top:22px;border-radius:var(--radius)}.panel{padding:28px}.statsGrid,.setupGrid{display:grid;gap:16px}.setupGrid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:18px}.setupCard h3,.platformTitle{margin:0 0 10px;font-size:20px}.setupCard p,.setupCard li,.muted{color:var(--muted);line-height:1.55}.setupCard ol{margin:14px 0 0;padding-left:18px}.inlineLink{color:var(--accent);text-decoration:none;font-weight:600}.statsGrid{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-top:16px}.statCard{position:relative;overflow:hidden}.statCard::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(180deg,var(--accent-soft),var(--accent))}.statValue{font-size:34px;font-weight:700;letter-spacing:-.04em}.statFoot{margin-top:10px;color:#4b5563;font-size:18px;font-weight:600;line-height:1.35}.collapsibleSummary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 28px}.collapsibleSummary::-webkit-details-marker{display:none}.chev{font:700 22px/1 Arial,sans-serif;color:var(--accent);transition:transform .2s ease;display:inline-block;min-width:18px;text-align:center}.collapsible[open] .chev{transform:rotate(45deg)}.workflowBody{padding:0 28px 28px}.platform{overflow:hidden}.platformBody{padding:0 28px 28px}.platformHead{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;width:100%}.titleWrap{display:flex;flex-direction:column;gap:10px;min-width:0}.titleLine,.titleMeta,.statusBar,.controlsRow,.filters,.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.titleLine{gap:10px}.controlsRow{justify-content:space-between;margin-top:8px;gap:14px}.actions{margin-left:auto;justify-content:flex-end}.pill{border-radius:999px;padding:8px 12px;background:rgba(255,255,255,.84);border:1px solid var(--line);font:600 12px/1 var(--mono);color:var(--muted);white-space:nowrap}.pillStrong{color:var(--accent)}.pillWide{width:104px;justify-content:center;text-align:center;display:inline-flex}.pillUp{background:rgba(15,118,110,.12);border-color:rgba(15,118,110,.18);color:var(--teal)}.pillDown{background:rgba(159,18,57,.12);border-color:rgba(159,18,57,.18);color:var(--rose)}.pillFlat{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.18);color:var(--accent)}.btn,.filterBtn{border:1px solid rgba(124,45,18,.18);background:rgba(255,255,255,.8);color:var(--accent);border-radius:999px;padding:10px 14px;cursor:pointer;font:600 13px/1 var(--mono)}.filters .filterBtn{width:104px;justify-content:center;text-align:center;display:inline-flex;white-space:nowrap}.btn.primary{background:#8f3e16;color:#fff;border-color:#8f3e16}.btn.token{background:#fff7ed;color:#9a3412;border-color:rgba(249,115,22,.28)}.btn.refresh{background:#f0fdfa;color:#115e59;border-color:rgba(20,184,166,.22)}.filterBtn.active{background:var(--accent);color:#fff;border-color:var(--accent)}.tableWrap{overflow-x:auto;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.78);margin-top:18px}table{width:100%;border-collapse:collapse}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid rgba(31,41,51,.08);vertical-align:top}th{font:600 12px/1.2 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);background:rgba(255,250,243,.92)}th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--accent)}tbody tr:hover{background:rgba(180,83,9,.04)}.badge{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:7px 11px;font:600 12px/1 var(--mono);white-space:nowrap;min-width:72px;text-align:center}.sold{background:rgba(159,18,57,.12);color:var(--rose)}.listed{background:rgba(15,118,110,.12);color:var(--teal)}.money{font-weight:700;color:var(--teal)}.empty,.loading{padding:38px 20px;text-align:center;color:var(--muted)}.history{margin-top:16px;padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.62);border:1px solid var(--line)}.historyTitle{font:600 12px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}.historyRow{display:flex;flex-wrap:wrap;gap:12px;color:#4b5563;font-size:15px}.mobileCards{display:none;margin-top:18px;gap:12px}.mobileCard{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.82);padding:10px 12px}.mobileRow{display:grid;grid-template-columns:84px 1fr;gap:8px;align-items:start;padding:3px 0}.mobileLabel{font:600 10px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left}.mobileValue{font-size:12px;line-height:1.25;color:var(--ink);text-align:left}.mobileValue .money{font-size:13px}.mobileValue .badge{justify-content:flex-start;min-width:0}.mobileValue--truncate{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.linkBar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px}.linkPill{display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:999px;border:1px solid rgba(124,45,18,.18);background:rgba(255,255,255,.84);color:var(--accent);font:600 13px/1 var(--mono);text-decoration:none}.footer{margin-top:20px;color:var(--muted);font-size:13px}
+    .hero{padding:36px;border-radius:32px;display:grid;grid-template-columns:1.6fr 1fr;gap:24px}.eyebrow{font:600 12px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}h1{margin:0;font-size:clamp(34px,5vw,58px);line-height:.98;letter-spacing:-.04em;max-width:10ch}.hero p{margin:16px 0 0;max-width:58ch;color:var(--muted);font-size:16px;line-height:1.6}.statusStack{display:grid;gap:14px}.statusCard,.setupCard,.statCard{padding:22px;border-radius:20px;background:rgba(255,255,255,.64);border:1px solid var(--line)}.statusLabel,.statLabel{color:var(--muted);font:600 12px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}.statusValue{font-size:22px;font-weight:700}.panel,.platform{margin-top:22px;border-radius:var(--radius)}.panel{padding:28px}.statsGrid,.setupGrid{display:grid;gap:16px}.setupGrid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:18px}.setupCard h3,.platformTitle{margin:0 0 10px;font-size:20px}.setupCard p,.setupCard li,.muted{color:var(--muted);line-height:1.55}.setupCard ol{margin:14px 0 0;padding-left:18px}.inlineLink{color:var(--accent);text-decoration:none;font-weight:600}.statsGrid{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-top:16px}.statCard{position:relative;overflow:hidden}.statCard::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(180deg,var(--accent-soft),var(--accent))}.statValue{font-size:34px;font-weight:700;letter-spacing:-.04em}.statFoot{margin-top:10px;color:#4b5563;font-size:18px;font-weight:600;line-height:1.35}.collapsibleSummary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 28px}.collapsibleSummary::-webkit-details-marker{display:none}.chev{font:700 22px/1 Arial,sans-serif;color:var(--accent);transition:transform .2s ease;display:inline-block;min-width:18px;text-align:center}.collapsible[open] .chev{transform:rotate(45deg)}.workflowBody{padding:0 28px 28px}.platform{overflow:hidden}.platformBody{padding:0 28px 28px}.platformHead{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;width:100%}.titleWrap{display:flex;flex-direction:column;gap:10px;min-width:0}.titleLine,.titleMeta,.statusBar,.controlsRow,.filters,.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.titleLine{gap:10px}.titleMeta{gap:8px}.statusBar{gap:8px}.controlsRow{justify-content:space-between;margin-top:8px;gap:14px}.actions{margin-left:auto;justify-content:flex-end}.pill{border-radius:999px;padding:8px 12px;background:rgba(255,255,255,.84);border:1px solid var(--line);font:600 12px/1 var(--mono);color:var(--muted);white-space:nowrap}.pillStrong{color:var(--accent)}.pillWide{min-width:94px;text-align:center}.pillUp{background:rgba(15,118,110,.12);border-color:rgba(15,118,110,.18);color:var(--teal)}.pillDown{background:rgba(159,18,57,.12);border-color:rgba(159,18,57,.18);color:var(--rose)}.pillFlat{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.18);color:var(--accent)}.btn,.filterBtn{border:1px solid rgba(124,45,18,.18);background:rgba(255,255,255,.8);color:var(--accent);border-radius:999px;padding:10px 14px;cursor:pointer;font:600 13px/1 var(--mono)}.btn.primary{background:#8f3e16;color:#fff;border-color:#8f3e16}.btn.token{background:#fff7ed;color:#9a3412;border-color:rgba(249,115,22,.28)}.btn.refresh{background:#f0fdfa;color:#115e59;border-color:rgba(20,184,166,.22)}.filterBtn.active{background:var(--accent);color:#fff;border-color:var(--accent)}.tableWrap{overflow-x:auto;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.78);margin-top:18px}table{width:100%;border-collapse:collapse}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid rgba(31,41,51,.08);vertical-align:top}th{font:600 12px/1.2 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);background:rgba(255,250,243,.92)}th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--accent)}tbody tr{transition:background-color .18s ease}tbody tr:hover{background:rgba(180,83,9,.04)}tbody tr.item-men{background:rgba(169,219,255,.16)}tbody tr.item-men:hover{background:rgba(169,219,255,.24)}tbody tr.item-women{background:rgba(255,204,229,.16)}tbody tr.item-women:hover{background:rgba(255,204,229,.24)}.badge{display:inline-flex;align-items:center;border-radius:999px;padding:7px 11px;font:600 12px/1 var(--mono)}.sold{background:rgba(159,18,57,.12);color:var(--rose)}.listed{background:rgba(15,118,110,.12);color:var(--teal)}.money{font-weight:700;color:var(--teal)}.mobileCard.item-men{background:rgba(169,219,255,.16)}.mobileCard.item-women{background:rgba(255,204,229,.16)}.empty,.loading{padding:38px 20px;text-align:center;color:var(--muted)}.history{margin-top:16px;padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.62);border:1px solid var(--line)}.historyTitle{font:600 12px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}.historyRow{display:flex;flex-wrap:wrap;gap:12px;color:#4b5563;font-size:15px}.footer{margin-top:20px;color:var(--muted);font-size:13px}
     @media (max-width:900px){.hero{grid-template-columns:1fr}}
-    @media (max-width:760px){.shell{width:min(100% - 18px,1180px)}.hero,.panel{padding:20px}.collapsibleSummary,.workflowBody,.platformBody{padding-left:20px;padding-right:20px}.platformHead,.controlsRow{flex-direction:column;align-items:flex-start}.actions{margin-left:0;justify-content:flex-start}.titleLine,.titleMeta,.statusBar,.filters,.actions{width:100%}.btn,.filterBtn{padding:11px 14px}.tableWrap{display:none}.mobileCards{display:grid}.historyRow span{display:block}.linkBar{justify-content:flex-start}}
+    @media (max-width:760px){.shell{width:min(100% - 18px,1180px)}.hero,.panel{padding:20px}.collapsibleSummary,.workflowBody,.platformBody{padding-left:20px;padding-right:20px}.platformHead,.controlsRow{flex-direction:column;align-items:flex-start}.actions{margin-left:0;justify-content:flex-start}.titleLine,.titleMeta,.statusBar,.filters,.actions{width:100%}.btn,.filterBtn{padding:11px 14px}.tableWrap{margin-top:14px}.historyRow span{display:block}}
   </style>
 </head>
 <body>
@@ -19,17 +19,11 @@
       <div>
         <div class="eyebrow">Resale command center</div>
         <h1>ThreadUp and Depop inventory in one place.</h1>
+        <p>This dashboard reads from Supabase, and the scrapers sync through your <code>resale-sync</code> Edge Function. Weekly capture saves Sunday through Saturday snapshots for each platform.</p>
       </div>
       <div class="statusStack">
         <div class="statusCard"><div class="statusLabel">Supabase project</div><div class="statusValue">resale-dashboard-db</div></div>
         <div class="statusCard"><div class="statusLabel">Last sync</div><div class="statusValue" id="last-updated">Checking...</div></div>
-        <div class="statusCard">
-          <div class="statusLabel">Links</div>
-          <div class="statusLinks">
-            <a class="statusLink statusLink-threadup" href="https://www.thredup.com/uc/iwBL6/01KBNJFM4W57ATYZNP0K43W5VX?filter=all" target="_blank" rel="noreferrer">ThreadUp</a>
-            <a class="statusLink statusLink-depop" href="https://www.depop.com/abc_isfor_xyz/" target="_blank" rel="noreferrer">depop</a>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -37,9 +31,9 @@
       <summary class="collapsibleSummary"><div><div class="eyebrow" style="margin-bottom:6px;">Workflow</div><div style="font-size:28px;font-weight:700;letter-spacing:-.04em;">How it works now</div></div><span class="chev">+</span></summary>
       <div class="workflowBody">
         <div class="setupGrid">
-          <article class="setupCard"><h3>1. Install the scraper buttons</h3><p>Drag these links to your bookmarks bar once, then click the matching bookmark while you are on ThreadUp or Depop.</p><p><a id="threadup-bookmarklet" class="inlineLink" href="#">Install ThreadUp Scraper</a></p><p><a id="depop-bookmarklet" class="inlineLink" href="#">Install Depop Scraper</a></p></article>
-          <article class="setupCard"><h3>2. Sync inventory</h3><p>The scraper sends inventory to your Supabase Edge Function, which updates the `resale_inventory` table for that platform.</p></article>
-          <article class="setupCard"><h3>3. Capture weekly sales</h3><p>Use the platform capture button after your scrapes are current to save a Sunday through Saturday snapshot in `resale_weekly_snapshots`.</p><p><a href="#" class="inlineLink" onclick="loadData(); return false;">Refresh dashboard data</a></p></article>
+          <article class="setupCard"><h3>1. Install the scraper buttons</h3><p>Drag these links to your bookmarks bar once, then click the matching bookmark while you are on ThreadUp or depop.</p><p><a id="threadup-bookmarklet" class="inlineLink" href="#">Install ThreadUp Scraper</a></p><p><a id="depop-bookmarklet" class="inlineLink" href="#">Install depop Scraper</a></p></article>
+          <article class="setupCard"><h3>2. Sync inventory</h3><p>Each scraper sends inventory to your Supabase <code>resale-sync</code> Edge Function, which updates the <code>resale_inventory</code> table.</p></article>
+          <article class="setupCard"><h3>3. Capture weekly sales</h3><p>Use the platform capture buttons after your scrapes are current to save weekly sold count and revenue in <code>resale_weekly_snapshots</code>.</p><p><a href="#" class="inlineLink" onclick="loadData(); return false;">Refresh dashboard data</a></p></article>
         </div>
       </div>
     </details>
@@ -69,7 +63,7 @@
       </summary>
       <div class="platformBody">
         <div class="controlsRow">
-          <div class="filters" id="threadup-filters"><button class="filterBtn pillWide active" data-filter="all">All</button><button class="filterBtn pillWide" data-filter="sold">Sold</button><button class="filterBtn pillWide" data-filter="listed">For sale</button></div>
+          <div class="filters" id="threadup-filters"><button class="filterBtn active" data-filter="all">All</button><button class="filterBtn" data-filter="sold">Sold</button><button class="filterBtn pillWide" data-filter="listed">For sale</button></div>
           <div class="actions"><button class="btn primary" data-platform="threadup">Capture</button><button class="btn token" data-action="info-token">No Token Needed</button><button class="btn refresh" data-action="refresh">Refresh</button></div>
         </div>
         <div id="threadup-content" class="loading">Loading ThreadUp data...</div>
@@ -91,14 +85,15 @@
       </summary>
       <div class="platformBody">
         <div class="controlsRow">
-          <div class="filters" id="depop-filters"><button class="filterBtn pillWide active" data-filter="all">All</button><button class="filterBtn pillWide" data-filter="sold">Sold</button><button class="filterBtn pillWide" data-filter="listed">For sale</button></div>
+          <div class="filters" id="depop-filters"><button class="filterBtn active" data-filter="all">All</button><button class="filterBtn" data-filter="sold">Sold</button><button class="filterBtn pillWide" data-filter="listed">For sale</button></div>
           <div class="actions"><button class="btn primary" data-platform="depop">Capture</button><button class="btn token" data-action="info-token">No Token Needed</button><button class="btn refresh" data-action="refresh">Refresh</button></div>
         </div>
         <div id="depop-content" class="loading">Loading Depop data...</div>
         <div class="history"><div class="historyTitle">Weekly snapshot history</div><div class="historyRow" id="depop-history">No weekly snapshots yet.</div></div>
       </div>
-</details>
+    </details>
 
+    <div class="footer">Supabase-backed resale dashboard</div>
   </div>
 
   <script>
@@ -110,8 +105,7 @@
       depop: [],
       weeklySales: { threadup: [], depop: [] },
       filters: { threadup: 'all', depop: 'all' },
-      sorts: { threadup: { key: null, direction: 'asc' }, depop: { key: null, direction: 'asc' } },
-      lastUpdated: null
+      sorts: { threadup: { key: null, direction: 'asc' }, depop: { key: null, direction: 'asc' } }
     };
     const BOOKMARKLETS = {
       threadup: "javascript:(function(){const s=document.createElement('script');s.src='https://architeketh.github.io/resale-dashboard/threadup_scraper_github.js?t='+Date.now();document.body.appendChild(s);})();",
@@ -122,38 +116,48 @@
     function formatDate(value) { if (!value) return 'No sync yet'; const date = new Date(value); return Number.isNaN(date.getTime()) ? value : date.toLocaleString(); }
     function shortDate(value) { return new Date(value + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }); }
     function escapeHtml(value) { return String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
-    function authHeaders() { return { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }; }
+
+    function authHeaders() {
+      return {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+      };
+    }
 
     async function supabaseFetch(path) {
-      const response = await fetch(`${SUPABASE_URL}${path}`, { headers: { ...authHeaders() } });
+      const response = await fetch(`${SUPABASE_URL}${path}`, { headers: authHeaders() });
       if (!response.ok) throw new Error(`Supabase read failed (${response.status})`);
       return response.json();
     }
 
     function normalizeItems(items, platform) {
       return (Array.isArray(items) ? items : []).map((item) => ({
-        platform: item.platform || platform,
-        status: item.status || 'For Sale',
-        brand: item.brand || '',
-        description: item.description || '',
-        price: Number(item.price || 0),
-        url: item.url || '',
-        scrapedAt: item.scraped_at || item.scrapedAt || ''
+        platform: item.platform || item.Platform || platform,
+        status: item.status || item.Status || 'For Sale',
+        brand: item.brand || item.Brand || '',
+        category: item.category || item.Category || item.department || item.Department || '',
+        description: item.description || item.Description || '',
+        price: Number(item.price ?? item.Price ?? item['Sold Price'] ?? 0),
+        url: item.url || item.URL || '',
+        scrapedAt: item.scraped_at || item.scrapedAt || item['Date Sold'] || '',
+        firstSeenSoldAt: item.firstSeenSoldAt || item.first_seen_sold_at || item['First Seen Sold At'] || ''
       }));
     }
 
-    function normalizeWeeklySales(rows) {
+    function normalizeWeeklySales(data) {
       const grouped = { threadup: [], depop: [] };
-      (Array.isArray(rows) ? rows : []).forEach((row) => {
-        if (row.platform === 'threadup' || row.platform === 'depop') grouped[row.platform].push({
-          weekKey: row.week_key,
-          label: row.label,
-          weekStart: row.week_start,
-          weekEnd: row.week_end,
-          soldCount: Number(row.sold_count || 0),
-          revenue: Number(row.revenue || 0),
-          capturedAt: row.captured_at
-        });
+      (Array.isArray(data) ? data : []).forEach((row) => {
+        if (row.platform === 'threadup' || row.platform === 'depop') {
+          grouped[row.platform].push({
+            weekKey: row.week_key,
+            label: row.label,
+            weekStart: row.week_start,
+            weekEnd: row.week_end,
+            soldCount: Number(row.sold_count || 0),
+            revenue: Number(row.revenue || 0),
+            capturedAt: row.captured_at
+          });
+        }
       });
       return grouped;
     }
@@ -200,7 +204,21 @@
 
     function getSortLabel(platform, key, label) {
       const sort = state.sorts[platform];
-      return sort.key === key ? `${label} ${sort.direction === 'asc' ? '(asc)' : '(desc)'}` : label;
+      return sort.key === key ? `${label} ${sort.direction === 'asc' ? '↑' : '↓'}` : label;
+    }
+
+    function formatSoldDate(value) {
+      if (!value) return '—';
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return value;
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function getItemToneClass(item) {
+      const text = `${item.category || ''} ${item.brand || ''} ${item.description || ''}`.toLowerCase();
+      if (/\b(women|women's|womens|woman|ladies|lady|girls|girl)\b/.test(text)) return 'item-women';
+      if (/\b(men|men's|mens|man|guys|guy|boys|boy)\b/.test(text)) return 'item-men';
+      return '';
     }
 
     function renderTable(items, platform) {
@@ -209,15 +227,11 @@
       if (!filtered.length) return '<div class="empty">No items match the current filter.</div>';
       const rows = filtered.map((item) => {
         const badgeClass = item.status === 'Sold' ? 'sold' : 'listed';
+        const toneClass = getItemToneClass(item);
         const link = item.url ? `<a class="inlineLink" href="${item.url}" target="_blank" rel="noreferrer">Open</a>` : '-';
-        return `<tr><td><span class="badge ${badgeClass}">${item.status}</span></td><td>${escapeHtml(item.brand || '-')}</td><td>${escapeHtml(item.description || '-')}</td><td class="money">${currency(item.price)}</td><td>${link}</td></tr>`;
+        return `<tr class="${toneClass}"><td><span class="badge ${badgeClass}">${item.status}</span></td><td>${escapeHtml(item.brand || '-')}</td><td>${escapeHtml(item.description || '-')}</td><td class="money">${currency(item.price)}</td><td>${item.status === 'Sold' ? escapeHtml(formatSoldDate(item.firstSeenSoldAt)) : '—'}</td><td>${link}</td></tr>`;
       }).join('');
-      const mobileRows = filtered.map((item) => {
-        const badgeClass = item.status === 'Sold' ? 'sold' : 'listed';
-        const link = item.url ? `<a class="inlineLink" href="${item.url}" target="_blank" rel="noreferrer">Open</a>` : '-';
-        return `<article class="mobileCard"><div class="mobileRow"><div class="mobileLabel">Status</div><div class="mobileValue"><span class="badge ${badgeClass}">${item.status}</span></div></div><div class="mobileRow"><div class="mobileLabel">Brand</div><div class="mobileValue">${escapeHtml(item.brand || '-')}</div></div><div class="mobileRow"><div class="mobileLabel">Description</div><div class="mobileValue mobileValue--truncate">${escapeHtml(item.description || '-')}</div></div><div class="mobileRow"><div class="mobileLabel">Price</div><div class="mobileValue"><span class="money">${currency(item.price)}</span></div></div><div class="mobileRow"><div class="mobileLabel">Link</div><div class="mobileValue">${link}</div></div></article>`;
-      }).join('');
-      return `<div class="tableWrap"><table><thead><tr><th>Status</th><th class="sortable" data-platform="${platform}" data-sort="brand">${getSortLabel(platform, 'brand', 'Brand')}</th><th>Description</th><th class="sortable" data-platform="${platform}" data-sort="price">${getSortLabel(platform, 'price', 'Price')}</th><th>Link</th></tr></thead><tbody>${rows}</tbody></table></div><div class="mobileCards">${mobileRows}</div>`;
+      return `<div class="tableWrap"><table><thead><tr><th>Status</th><th class="sortable" data-platform="${platform}" data-sort="brand">${getSortLabel(platform, 'brand', 'Brand')}</th><th>Description</th><th class="sortable" data-platform="${platform}" data-sort="price">${getSortLabel(platform, 'price', 'Price')}</th><th>Sold date</th><th>Link</th></tr></thead><tbody>${rows}</tbody></table></div>`;
     }
 
     function updateFilterButtons(platform) {
@@ -258,21 +272,15 @@
       const threadupSummary = getSummary(state.threadup);
       const depopSummary = getSummary(state.depop);
       const overall = getSummary(state.threadup.concat(state.depop));
-      const threadupListedValue = state.threadup
-        .filter((item) => item.status === 'For Sale')
-        .reduce((sum, item) => sum + (item.price || 0), 0);
-      const depopListedValue = state.depop
-        .filter((item) => item.status === 'For Sale')
-        .reduce((sum, item) => sum + (item.price || 0), 0);
-      const lastUpdated = [state.threadup, state.depop].flat().reduce((max, item) => !max || (item.scrapedAt && item.scrapedAt > max) ? item.scrapedAt : max, '');
       document.getElementById('total-items').textContent = overall.count;
       document.getElementById('total-sold').textContent = overall.soldCount;
       document.getElementById('total-listed').textContent = overall.listedCount;
       document.getElementById('total-revenue').textContent = currency(overall.revenue);
-      document.getElementById('platform-breakdown').textContent = `ThreadUp ${threadupSummary.count} / depop ${depopSummary.count}`;
-      document.getElementById('sold-breakdown').textContent = `ThreadUp ${threadupSummary.soldCount} (${currency(threadupSummary.revenue)}) / depop ${depopSummary.soldCount} (${currency(depopSummary.revenue)})`;
-      document.getElementById('listed-breakdown').textContent = `ThreadUp ${threadupSummary.listedCount} (${currency(threadupListedValue)}) / depop ${depopSummary.listedCount} (${currency(depopListedValue)})`;
-      document.getElementById('revenue-breakdown').textContent = `ThreadUp ${currency(threadupSummary.revenue)} / depop ${currency(depopSummary.revenue)}`;
+      document.getElementById('platform-breakdown').textContent = `ThreadUp ${threadupSummary.count} / Depop ${depopSummary.count}`;
+      document.getElementById('sold-breakdown').textContent = `ThreadUp ${threadupSummary.soldCount} / Depop ${depopSummary.soldCount}`;
+      document.getElementById('listed-breakdown').textContent = `ThreadUp ${threadupSummary.listedCount} / Depop ${depopSummary.listedCount}`;
+      document.getElementById('revenue-breakdown').textContent = `ThreadUp ${currency(threadupSummary.revenue)} / Depop ${currency(depopSummary.revenue)}`;
+      const lastUpdated = [state.threadup, state.depop].flat().reduce((max, item) => !max || (item.scrapedAt && item.scrapedAt > max) ? item.scrapedAt : max, '');
       document.getElementById('last-updated').textContent = lastUpdated ? formatDate(lastUpdated) : 'No sync yet';
     }
 
@@ -284,20 +292,23 @@
       try {
         const summary = getSummary(state[platform]);
         const week = getWeekRange();
-        const payload = {
-          action: 'capture_weekly_snapshot',
-          platform,
-          snapshot: {
-            weekKey: week.key,
-            weekStart: week.start,
-            weekEnd: week.end,
-            label: week.label,
-            soldCount: summary.soldCount,
-            revenue: summary.revenue,
-            capturedAt: new Date().toISOString()
-          }
-        };
-        const response = await fetch(FUNCTION_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        const response = await fetch(FUNCTION_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'capture_weekly_snapshot',
+            platform,
+            snapshot: {
+              weekKey: week.key,
+              weekStart: week.start,
+              weekEnd: week.end,
+              label: week.label,
+              soldCount: summary.soldCount,
+              revenue: summary.revenue,
+              capturedAt: new Date().toISOString()
+            }
+          })
+        });
         const result = await response.json();
         if (!response.ok) throw new Error(result.error || 'Weekly capture failed');
         await loadData();
@@ -322,7 +333,7 @@
       document.getElementById('depop-content').innerHTML = '<div class="loading">Loading Depop data...</div>';
       try {
         const [inventoryRows, snapshotRows] = await Promise.all([
-          supabaseFetch('/rest/v1/resale_inventory?select=platform,status,brand,description,price,url,scraped_at&order=scraped_at.desc'),
+          supabaseFetch('/rest/v1/resale_inventory?select=platform,status,brand,description,price,url,scraped_at,first_seen_sold_at&order=scraped_at.desc'),
           supabaseFetch('/rest/v1/resale_weekly_snapshots?select=platform,week_key,week_start,week_end,label,sold_count,revenue,captured_at&order=week_start.desc')
         ]);
         state.threadup = normalizeItems(inventoryRows.filter((row) => row.platform === 'ThreadUp'), 'ThreadUp');
@@ -333,7 +344,7 @@
         renderStats();
       } catch (error) {
         document.getElementById('threadup-content').innerHTML = `<div class="empty">Could not load ThreadUp data. ${escapeHtml(error.message)}</div>`;
-        document.getElementById('depop-content').innerHTML = `<div class="empty">Could not load Depop data. ${escapeHtml(error.message)}</div>`;
+        document.getElementById('depop-content').innerHTML = `<div class="empty">Could not load depop data. ${escapeHtml(error.message)}</div>`;
       }
     }
 
@@ -372,10 +383,4 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
 
