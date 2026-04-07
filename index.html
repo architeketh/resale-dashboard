@@ -273,14 +273,12 @@
       document.getElementById(`${platform}-weekly-pill`).textContent = `Current sales this week: ${currentSales.soldCount} sold / ${currency(currentSales.revenue)}`;
       const deltaNode = document.getElementById(`${platform}-weekly-delta`);
       deltaNode.className = 'pill';
-      if (current && previous) {
-        const diffCount = current.soldCount - previous.soldCount;
-        const diffRevenue = current.revenue - previous.revenue;
-        deltaNode.textContent = `vs prior week: ${diffCount >= 0 ? '+' : ''}${diffCount} sold, ${diffRevenue >= 0 ? '+' : '-'}${currency(Math.abs(diffRevenue))}`;
-        deltaNode.classList.add(diffCount > 0 || diffRevenue > 0 ? 'pillUp' : diffCount < 0 || diffRevenue < 0 ? 'pillDown' : 'pillFlat');
-      } else {
-        deltaNode.textContent = 'No prior week';
-      }
+      const baselineCount = previous ? previous.soldCount : 0;
+      const baselineRevenue = previous ? previous.revenue : 0;
+      const newCount = Math.max(0, currentSales.soldCount - baselineCount);
+      const newRevenue = Math.max(0, currentSales.revenue - baselineRevenue);
+      deltaNode.textContent = `New sales: ${newCount} sold / ${currency(newRevenue)}`;
+      deltaNode.classList.add(newCount > 0 || newRevenue > 0 ? 'pillUp' : 'pillFlat');
       document.getElementById(`${platform}-history`).innerHTML = list.length ? list.slice(0, 4).map((entry) => `<span>${entry.label}: <strong>${entry.soldCount}</strong> sold, <strong>${currency(entry.revenue)}</strong></span>`).join('') : 'No weekly snapshots yet.';
     }
 
@@ -301,13 +299,15 @@
       const threadupSummary = getSummary(state.threadup);
       const depopSummary = getSummary(state.depop);
       const overall = getSummary(state.threadup.concat(state.depop));
+      const threadupListedValue = state.threadup.filter((item) => item.status === 'For Sale').reduce((sum, item) => sum + (item.price || 0), 0);
+      const depopListedValue = state.depop.filter((item) => item.status === 'For Sale').reduce((sum, item) => sum + (item.price || 0), 0);
       document.getElementById('total-items').textContent = overall.count;
       document.getElementById('total-sold').textContent = overall.soldCount;
       document.getElementById('total-listed').textContent = overall.listedCount;
       document.getElementById('total-revenue').textContent = currency(overall.revenue);
       document.getElementById('platform-breakdown').textContent = `ThreadUp ${threadupSummary.count} / Depop ${depopSummary.count}`;
       document.getElementById('sold-breakdown').textContent = `ThreadUp ${threadupSummary.soldCount} / Depop ${depopSummary.soldCount}`;
-      document.getElementById('listed-breakdown').textContent = `ThreadUp ${threadupSummary.listedCount} / Depop ${depopSummary.listedCount}`;
+      document.getElementById('listed-breakdown').textContent = `ThreadUp ${threadupSummary.listedCount} (${currency(threadupListedValue)}) / Depop ${depopSummary.listedCount} (${currency(depopListedValue)})`;
       document.getElementById('revenue-breakdown').textContent = `ThreadUp ${currency(threadupSummary.revenue)} / Depop ${currency(depopSummary.revenue)}`;
       const lastUpdated = [state.threadup, state.depop].flat().reduce((max, item) => !max || (item.scrapedAt && item.scrapedAt > max) ? item.scrapedAt : max, '');
       document.getElementById('last-updated').textContent = lastUpdated ? formatDate(lastUpdated) : 'No sync yet';
