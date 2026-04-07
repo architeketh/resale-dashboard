@@ -216,6 +216,11 @@
       const factor = sort.direction === 'asc' ? 1 : -1;
       return [...items].sort((a, b) => {
         if (sort.key === 'price') return ((a.price || 0) - (b.price || 0)) * factor;
+        if (sort.key === 'soldDate') {
+          const aTime = a.firstSeenSoldAt ? new Date(a.firstSeenSoldAt).getTime() : -Infinity;
+          const bTime = b.firstSeenSoldAt ? new Date(b.firstSeenSoldAt).getTime() : -Infinity;
+          return (aTime - bTime) * factor;
+        }
         return String(a[sort.key] || '').toLowerCase().localeCompare(String(b[sort.key] || '').toLowerCase()) * factor;
       });
     }
@@ -256,7 +261,7 @@
         const link = item.url ? `<a class="inlineLink" href="${item.url}" target="_blank" rel="noreferrer">Open</a>` : '-';
         return `<tr class="${toneClass}"><td><span class="badge ${badgeClass}">${item.status}</span></td><td>${escapeHtml(item.brand || '-')}</td><td>${escapeHtml(item.description || '-')}</td><td class="money">${currency(item.price)}</td><td>${item.status === 'Sold' ? escapeHtml(formatSoldDate(item.firstSeenSoldAt)) : '—'}</td><td>${link}</td></tr>`;
       }).join('');
-      return `<div class="tableWrap"><table><thead><tr><th>Status</th><th class="sortable" data-platform="${platform}" data-sort="brand">${getSortLabel(platform, 'brand', 'Brand')}</th><th>Description</th><th class="sortable" data-platform="${platform}" data-sort="price">${getSortLabel(platform, 'price', 'Price')}</th><th>Sold date</th><th>Link</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+      return `<div class="tableWrap"><table><thead><tr><th>Status</th><th class="sortable" data-platform="${platform}" data-sort="brand">${getSortLabel(platform, 'brand', 'Brand')}</th><th>Description</th><th class="sortable" data-platform="${platform}" data-sort="price">${getSortLabel(platform, 'price', 'Price')}</th><th class="sortable" data-platform="${platform}" data-sort="soldDate">${getSortLabel(platform, 'soldDate', 'Sold date')}</th><th>Link</th></tr></thead><tbody>${rows}</tbody></table></div>`;
     }
 
     function updateFilterButtons(platform) {
