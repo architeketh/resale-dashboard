@@ -266,19 +266,15 @@
     function renderWeekly(platform) {
       const list = [...state.weeklySales[platform]].sort((a, b) => b.weekKey.localeCompare(a.weekKey));
       const currentWeek = getWeekRange();
+      const totalSales = getSummary(state[platform]);
       const currentSales = getCurrentWeekSales(state[platform]);
       const current = list.find((entry) => entry.weekKey === currentWeek.key) || null;
-      const previous = current ? list.find((entry) => entry.weekKey < current.weekKey) : null;
       document.getElementById(`${platform}-week-label`).textContent = current ? `Week ${current.label}` : `Current week ${currentWeek.label}`;
-      document.getElementById(`${platform}-weekly-pill`).textContent = `Current sales this week: ${currentSales.soldCount} sold / ${currency(currentSales.revenue)}`;
+      document.getElementById(`${platform}-weekly-pill`).textContent = `Current sales: ${totalSales.soldCount} sold / ${currency(totalSales.revenue)}`;
       const deltaNode = document.getElementById(`${platform}-weekly-delta`);
       deltaNode.className = 'pill';
-      const baselineCount = previous ? previous.soldCount : 0;
-      const baselineRevenue = previous ? previous.revenue : 0;
-      const newCount = Math.max(0, currentSales.soldCount - baselineCount);
-      const newRevenue = Math.max(0, currentSales.revenue - baselineRevenue);
-      deltaNode.textContent = `New sales: ${newCount} sold / ${currency(newRevenue)}`;
-      deltaNode.classList.add(newCount > 0 || newRevenue > 0 ? 'pillUp' : 'pillFlat');
+      deltaNode.textContent = `New sales this week: ${currentSales.soldCount} sold / ${currency(currentSales.revenue)}`;
+      deltaNode.classList.add(currentSales.soldCount > 0 || currentSales.revenue > 0 ? 'pillUp' : 'pillFlat');
       document.getElementById(`${platform}-history`).innerHTML = list.length ? list.slice(0, 4).map((entry) => `<span>${entry.label}: <strong>${entry.soldCount}</strong> sold, <strong>${currency(entry.revenue)}</strong></span>`).join('') : 'No weekly snapshots yet.';
     }
 
