@@ -60,14 +60,18 @@
 
   function getRecommendationMarker() {
     const markers = [
-      'Based on this collection',
-      'Based on this item',
-      'You may also like',
-      'More like this'
+      'based on this collection',
+      'based on this item',
+      'based on this',
+      'you may also like',
+      'more like this'
     ];
 
     return Array.from(document.querySelectorAll('h1, h2, h3, h4, p, span, div'))
-      .find((node) => markers.includes(cleanText(node.textContent)));
+      .find((node) => {
+        const text = cleanText(node.textContent).toLowerCase();
+        return markers.some((marker) => text.includes(marker));
+      });
   }
 
   function findContainers() {
@@ -95,7 +99,18 @@
       }
     });
 
-    return Array.from(containers);
+    const orderedContainers = Array.from(containers).sort((a, b) => {
+      if (a === b) return 0;
+      const relation = a.compareDocumentPosition(b);
+      return relation & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+    });
+
+    if (!recommendationMarker) return orderedContainers;
+
+    return orderedContainers.filter((container) => {
+      const relation = container.compareDocumentPosition(recommendationMarker);
+      return Boolean(relation & Node.DOCUMENT_POSITION_FOLLOWING);
+    });
   }
 
   function scrapeItems() {
