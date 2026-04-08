@@ -59,8 +59,8 @@
   }
 
   function findContainers() {
-    const cards = document.querySelectorAll('[class*="item-card"]');
-    const containers = new Set();
+    const cards = Array.from(document.querySelectorAll('[class*="item-card"]'));
+    const containers = [];
 
     cards.forEach((card) => {
       let parent = card.parentElement;
@@ -68,13 +68,27 @@
         const hasImage = parent.querySelector('[class*="item-card-image"]');
         const hasBody = parent.querySelector('[class*="item-card-body"]');
         if (hasImage && hasBody) {
-          containers.add(parent);
+          if (!containers.includes(parent)) containers.push(parent);
           break;
         }
         parent = parent.parentElement;
       }
     });
-    return Array.from(containers);
+
+    if (!containers.length) return [];
+
+    const firstContainer = containers[0];
+    let primaryGrid = firstContainer.parentElement;
+
+    while (primaryGrid && primaryGrid !== document.body) {
+      const siblingMatches = Array.from(primaryGrid.children).filter((child) => containers.includes(child));
+      if (siblingMatches.length >= 4) {
+        return siblingMatches;
+      }
+      primaryGrid = primaryGrid.parentElement;
+    }
+
+    return containers;
   }
 
   function dedupeItems(items) {
