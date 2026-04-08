@@ -1,7 +1,5 @@
 (function() {
   const FUNCTION_URL = 'https://fuhphebvnstgszapvitz.supabase.co/functions/v1/resale-sync';
-  const STAGE_KEY = 'threadup_filter_stage_v1';
-
   function cleanText(value) {
     return String(value || '')
       .replace(/\s+/g, ' ')
@@ -49,11 +47,24 @@
     if (target) target.innerHTML = message;
   }
 
-  function getCurrentFilter() {
-    const response = window.prompt('ThreadUp filter currently open? Type "sold" or "available".', 'available');
-    const normalized = cleanText(response).toLowerCase();
-    if (normalized === 'sold' || normalized === 'available') return normalized;
-    throw new Error('Please run the scraper from either the Sold or Available ThreadUp filter.');
+  function normalizeForMatch(value) {
+    return cleanText(value).toLowerCase();
+  }
+
+  function stripBrandFromText(brand, text) {
+    const cleanBrand = cleanText(brand);
+    const cleanValue = cleanText(text);
+    if (!cleanBrand || !cleanValue) return cleanValue;
+
+    const lowerBrand = cleanBrand.toLowerCase();
+    const lowerValue = cleanValue.toLowerCase();
+
+    if (lowerValue === lowerBrand) return '';
+    if (lowerValue.startsWith(lowerBrand + ' ')) return cleanText(cleanValue.slice(cleanBrand.length));
+    if (lowerValue.startsWith(lowerBrand + ' - ')) return cleanText(cleanValue.slice(cleanBrand.length + 3));
+    if (lowerValue.startsWith(lowerBrand + ': ')) return cleanText(cleanValue.slice(cleanBrand.length + 2));
+
+    return cleanValue;
   }
 
   function findContainers() {
@@ -120,28 +131,148 @@
     });
   }
 
-  function hasRequiredFields(item) {
-    return Boolean(cleanText(item.brand) && cleanText(item.description) && Number(item.price || 0) > 0 && cleanText(item.url));
+  function getContainerCandidates(container) {
+    const candidates = [];
+    const nodes = container.querySelectorAll(
+      '[class*="item-card-body"] *,' +
+      '[class*="item-card-title"],' +
+      '[class*="item-card-brand"],' +
+      '[class*="item-card-description"],' +
+      'h1,h2,h3,h4,p,span,div'
+    );
+
+    nodes.forEach((node) => {
+      const text = cleanText(node.textContent);
+      if (!text) return;
+      if (/^\$[\d,]+(?:\.\d+)?$/.test(text)) return;
+      if (/^(just listed|sold|like new|new with tags)$/i.test(text)) return;
+      if (/^\d+$/.test(text)) return;
+      if (text.length < 2 || text.length > 140) return;
+      if (!candidates.includes(text)) candidates.push(text);
+    });
+
+    return candidates;
   }
 
-  function readStage() {
+  function extractProductFromContainer(container) {
+    let fallback = { brand: '', description: '' };
+
+    const image = container.querySelector('img[alt]');
+    if (image?.alt) fallback = parseAltText(image.alt);
+
+    const candidates = getContainerCandidates(container);
+    if (!fallback.brand && candidates.length) fallback.brand = candidates[0];
+
+    if (!fallback.description) {
+      for (const candidate of candidates) {
+        if (normalizeForMatch(candidate) === normalizeForMatch(fallback.brand)) continue;
+        if (fallback.brand && normalizeForMatch(candidate).startsWith(normalizeForMatch(fallback.brand))) {
+          fallback.description = stripBrandFromText(fallback.brand, candidate);
+          if (fallback.description) break;
+        }
+      }
+    }
+
+    return {
+      brand: cleanText(fallback.brand),
+      description: cleanText(fallback.description)
+    };
+  }
+
+  function parseJson(text) {
     try {
-      const parsed = JSON.parse(localStorage.getItem(STAGE_KEY) || '{}');
-      return {
-        sold: Array.isArray(parsed.sold) ? parsed.sold : null,
-        available: Array.isArray(parsed.available) ? parsed.available : null
-      };
+      return JSON.parse(text);
     } catch (error) {
-      return { sold: null, available: null };
+      return null;
     }
   }
 
-  function writeStage(stage) {
-    localStorage.setItem(STAGE_KEY, JSON.stringify(stage));
+  function extractProductFromDocument(doc) {
+    const result = { brand: '', description: '' };
+    const scripts = doc.querySelectorAll('script[type="application/ld+json"]');
+
+    for (const script of scripts) {
+      const parsed = parseJson(script.textContent);
+      const entries = Array.isArray(parsed) ? parsed : [parsed];
+
+      for (const entry of entries) {
+        if (!entry || typeof entry !== 'object') continue;
+        const type = entry['@type'];
+        const isProduct = Array.isArray(type) ? type.includes('Product') : type === 'Product';
+        if (!isProduct) continue;
+
+        let brand = '';
+        if (typeof entry.brand === 'string') brand = entry.brand;
+        else if (entry.brand && typeof entry.brand === 'object') brand = entry.brand.name || '';
+
+        const name = cleanText(entry.name || '');
+        const description = cleanText(entry.description || '');
+
+        result.brand = cleanText(brand);
+        result.description = stripBrandFromText(result.brand, name) || stripBrandFromText(result.brand, description);
+        if (result.brand || result.description) return result;
+      }
+    }
+
+    const metaTitle = doc.querySelector('meta[property="og:title"], meta[name="twitter:title"]');
+    if (metaTitle?.content) {
+      const parsedTitle = parseAltText(metaTitle.content);
+      if (parsedTitle.brand || parsedTitle.description) return parsedTitle;
+    }
+
+    const heading = doc.querySelector('h1');
+    if (heading) {
+      const parsedHeading = parseAltText(heading.textContent);
+      if (parsedHeading.brand || parsedHeading.description) return parsedHeading;
+    }
+
+    const image = doc.querySelector('img[alt]');
+    if (image?.alt) {
+      const parsedImage = parseAltText(image.alt);
+      if (parsedImage.brand || parsedImage.description) return parsedImage;
+    }
+
+    return result;
   }
 
-  function clearStage() {
-    localStorage.removeItem(STAGE_KEY);
+  async function fetchProductPageDetails(url) {
+    try {
+      const response = await fetch(url, { credentials: 'include' });
+      if (!response.ok) return { brand: '', description: '' };
+
+      const html = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      return extractProductFromDocument(doc);
+    } catch (error) {
+      return { brand: '', description: '' };
+    }
+  }
+
+  function chooseBetterProductInfo(primary, secondary) {
+    let brand = cleanText(primary.brand || secondary.brand);
+    let description = cleanText(primary.description);
+
+    if (!description || (secondary.description && secondary.description.length > description.length)) {
+      description = cleanText(secondary.description);
+    }
+
+    if (!brand) brand = cleanText(secondary.brand);
+    return { brand, description };
+  }
+
+  function inferFilterName() {
+    const url = window.location.href.toLowerCase();
+    if (url.includes('filter=sold') || url.includes('/sold')) return 'sold';
+    if (url.includes('filter=available') || url.includes('filter=all') || url.includes('/available')) return 'available';
+
+    const text = cleanText(document.body.textContent).toLowerCase();
+    if (text.includes('sold') && !text.includes('available')) return 'sold';
+    return 'available';
+  }
+
+  function hasRequiredFields(item) {
+    return Boolean(cleanText(item.brand) && cleanText(item.description) && Number(item.price || 0) > 0 && cleanText(item.url));
   }
 
   async function autoScrollListings() {
@@ -168,31 +299,40 @@
     await new Promise((resolve) => setTimeout(resolve, 400));
   }
 
-  function scrapeItems(filterName) {
-    const rawItems = findContainers().map((container) => {
+  async function scrapeItems(filterName) {
+    const rawItems = [];
+    const containers = findContainers();
+
+    for (let index = 0; index < containers.length; index += 1) {
+      const container = containers[index];
       const productLink = container.querySelector('a[href*="/product/"], a[href*="/similar/"]');
       const href = productLink
         ? (productLink.href.startsWith('http') ? productLink.href : `https://www.thredup.com${productLink.getAttribute('href')}`)
         : '';
 
-      if (!href) return null;
+      if (!href) continue;
 
-      const image = container.querySelector('img[alt]');
-      const product = parseAltText(image ? image.alt : '');
+      const listingProduct = extractProductFromContainer(container);
+      const productPage = await fetchProductPageDetails(href);
+      const product = chooseBetterProductInfo(productPage, listingProduct);
       const text = cleanText(container.textContent);
       const price = parseMoney(text);
 
-      if (!product.brand && !product.description && !price && !href) return null;
+      if (!product.brand && !product.description && !price && !href) continue;
 
-      return {
+      rawItems.push({
         status: filterName === 'sold' ? 'Sold' : 'For Sale',
         brand: product.brand,
         description: product.description,
         price,
         url: href,
         scrapedAt: new Date().toISOString()
-      };
-    }).filter(Boolean);
+      });
+
+      if ((index + 1) % 5 === 0) {
+        setStatus(`Collecting ${filterName} items...<br>Processed ${index + 1}/${containers.length}`);
+      }
+    }
 
     const acceptedItems = dedupeItems(rawItems.filter(hasRequiredFields));
     return {
@@ -205,30 +345,16 @@
     const overlay = buildOverlay();
 
     try {
-      const filterName = getCurrentFilter();
+      const filterName = inferFilterName();
       setStatus(`Loading all ${filterName} items from the current page...`);
       await autoScrollListings();
       setStatus(`Collecting ${filterName} items from the current page...`);
-      const { items, skippedCount } = scrapeItems(filterName);
+      const { items, skippedCount } = await scrapeItems(filterName);
       if (!items.length) throw new Error('No ThreadUp items were found. Scroll the page to load listings, then run the scraper again.');
 
-      const stage = readStage();
-      stage[filterName] = items;
-      writeStage(stage);
+      const combinedItems = dedupeByUrl(items);
 
-      const soldItems = stage.sold;
-      const availableItems = stage.available;
-
-      if (!soldItems || !availableItems) {
-        const missing = !soldItems ? 'Sold' : 'Available';
-        setStatus(`Captured ${items.length} ${filterName} items.<br>Skipped ${skippedCount} missing required details.<br><br>${missing} filter still needed before sync.`);
-        setTimeout(() => overlay.remove(), 6000);
-        return;
-      }
-
-      const combinedItems = dedupeByUrl([].concat(soldItems, availableItems));
-
-      setStatus(`Captured both filters.<br><br>Sold: ${soldItems.length}<br>Available: ${availableItems.length}<br>Last run skipped: ${skippedCount}<br>Syncing ${combinedItems.length} combined items to Supabase...`);
+      setStatus(`Captured ${combinedItems.length} ${filterName} items.<br>Skipped ${skippedCount} missing required details.<br><br>Syncing to Supabase...`);
       const response = await fetch(FUNCTION_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -237,7 +363,6 @@
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Sync failed');
 
-      clearStage();
       setStatus(`Sync complete.<br><br>Items: ${combinedItems.length}<br>Newly stamped sold dates: ${result.newlyStampedSoldDates || 0}<br>Supabase inventory updated.`);
       setTimeout(() => overlay.remove(), 6000);
     } catch (error) {
