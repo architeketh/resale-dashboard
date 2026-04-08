@@ -261,11 +261,18 @@
     return { brand, description };
   }
 
-  function isSimilarRecommendation(container, href) {
+  function hasSoldSignal(container) {
     const text = cleanText(container.textContent).toLowerCase();
-    const url = cleanText(href).toLowerCase();
+    return Boolean(
+      container.querySelector('[data-testid="sold-overlay"]') ||
+      Array.from(container.querySelectorAll('p,span,div,a,h6')).some((node) => cleanText(node.textContent).toLowerCase() === 'sold') ||
+      text.includes('shop similar')
+    );
+  }
 
-    return text.includes('items similar to') || url.includes('/similar/');
+  function isAvailableRecommendation(container) {
+    const text = cleanText(container.textContent).toLowerCase();
+    return text.includes('add to cart');
   }
 
   function inferFilterName() {
@@ -318,7 +325,10 @@
         : '';
 
       if (!href) continue;
-      if (isSimilarRecommendation(container, href)) continue;
+      if (filterName === 'sold') {
+        if (!hasSoldSignal(container)) continue;
+        if (isAvailableRecommendation(container) && !hasSoldSignal(container)) continue;
+      }
 
       const listingProduct = extractProductFromContainer(container);
       const productPage = await fetchProductPageDetails(href);
