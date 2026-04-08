@@ -273,11 +273,30 @@
   function inferFilterName() {
     const url = window.location.href.toLowerCase();
     if (url.includes('filter=sold') || url.includes('/sold')) return 'sold';
-    if (url.includes('filter=available') || url.includes('filter=all') || url.includes('/available')) return 'available';
+    if (url.includes('filter=all')) return 'all';
+    if (url.includes('filter=available') || url.includes('/available')) return 'available';
 
     const text = cleanText(document.body.textContent).toLowerCase();
     if (text.includes('sold') && !text.includes('available')) return 'sold';
     return 'available';
+  }
+
+  function inferItemStatus(filterName, container) {
+    if (filterName === 'sold') return 'Sold';
+    if (filterName === 'available') return 'For Sale';
+    return hasSoldSignal(container) ? 'Sold' : 'For Sale';
+  }
+
+  function isExcludedAvailableItem(product, href) {
+    const url = cleanText(href).toLowerCase();
+    const brand = cleanText(product.brand).toLowerCase();
+
+    if (url.includes('/similar/')) return true;
+    if (brand === 'items similar to') return true;
+    if (brand === 'unbranded') return true;
+    if (brand === 'assorted brands') return true;
+
+    return false;
   }
 
   function hasRequiredFields(item) {
@@ -332,9 +351,10 @@
       const price = parseMoney(text);
 
       if (!product.brand && !product.description && !price && !href) continue;
+      if (filterName === 'available' && isExcludedAvailableItem(product, href)) continue;
 
       rawItems.push({
-        status: filterName === 'sold' ? 'Sold' : 'For Sale',
+        status: inferItemStatus(filterName, container),
         brand: product.brand,
         description: product.description,
         price,
