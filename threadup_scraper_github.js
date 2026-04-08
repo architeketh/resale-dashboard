@@ -306,7 +306,22 @@
       'https://www.thredup.com/product/women-adidas-green-sneakers/219918858',
       'https://www.thredup.com/product/women-suede-adidas-tan-sneakers/1501054789',
       'https://www.thredup.com/product/women-adidas-white-sneakers/1500829062',
-      'https://www.thredup.com/product/women-adidas-pink-sneakers/220173635'
+      'https://www.thredup.com/product/women-adidas-pink-sneakers/220173635',
+      'https://www.thredup.com/product/women-adidas-pink-sneakers/219997060',
+      'https://www.thredup.com/product/women-leather-adidas-black-sneakers/220615642',
+      'https://www.thredup.com/product/women-adidas-blue-sneakers/218115679',
+      'https://www.thredup.com/product/women-adidas-gold-sneakers/220454763',
+      'https://www.thredup.com/product/women-adidas-pink-sneakers/218119445',
+      'https://www.thredup.com/product/women-adidas-green-sneakers/219806880',
+      'https://www.thredup.com/product/women-adidas-gray-sneakers/1501067984',
+      'https://www.thredup.com/product/women-leather-adidas-white-sneakers/221251006',
+      'https://www.thredup.com/product/women-adidas-white-sneakers/221190017',
+      'https://www.thredup.com/product/women-adidas-purple-sneakers/219643064',
+      'https://www.thredup.com/product/women-adidas-white-sneakers/220366291',
+      'https://www.thredup.com/product/women-adidas-gray-sneakers/220158584',
+      'https://www.thredup.com/product/women-adidas-gray-sneakers/1501050560',
+      'https://www.thredup.com/product/women-adidas-tan-sneakers/220498840',
+      'https://www.thredup.com/product/women-leather-adidas-white-sneakers/1501069626'
     ]);
 
     if (excludedUrls.has(url)) return true;
