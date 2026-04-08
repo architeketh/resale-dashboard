@@ -51,6 +51,16 @@
     if (target) target.innerHTML = message;
   }
 
+  function isSoldItem(item) {
+    const exactSoldBadge = Array.from(item.querySelectorAll('span, div, p'))
+      .some((node) => cleanText(node.textContent).toLowerCase() === 'sold');
+
+    if (exactSoldBadge) return true;
+
+    const text = cleanText(item.textContent).toLowerCase();
+    return /\bsold\b/.test(text) && !/\bfor sale\b/.test(text);
+  }
+
   function scrapeItems() {
     return Array.from(document.querySelectorAll('li'))
       .filter((item) => item.querySelector('a[href*="/products/"]'))
@@ -65,7 +75,7 @@
 
         return {
           platform: 'Depop',
-          status: /sold/i.test(text) ? 'Sold' : 'For Sale',
+          status: isSoldItem(item) ? 'Sold' : 'For Sale',
           brand: getBrand(description),
           description,
           price,

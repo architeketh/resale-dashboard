@@ -48,6 +48,16 @@
     if (target) target.innerHTML = message;
   }
 
+  function isSoldItem(container) {
+    const exactSoldBadge = Array.from(container.querySelectorAll('span, div, p'))
+      .some((node) => cleanText(node.textContent).toLowerCase() === 'sold');
+
+    if (exactSoldBadge) return true;
+
+    const text = cleanText(container.textContent).toLowerCase();
+    return /\bsold\b/.test(text) && !/\bfor sale\b/.test(text);
+  }
+
   function findContainers() {
     const cards = document.querySelectorAll('[class*="item-card"]');
     const containers = new Set();
@@ -82,7 +92,7 @@
       if (!product.brand && !product.description && !price && !href) return null;
 
       return {
-        status: /sold/i.test(text) ? 'Sold' : 'For Sale',
+        status: isSoldItem(container) ? 'Sold' : 'For Sale',
         brand: product.brand,
         description: product.description,
         price,
