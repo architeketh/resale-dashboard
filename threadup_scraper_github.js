@@ -109,14 +109,17 @@
 
   function scrapeItems() {
     return dedupeItems(findContainers().map((container) => {
+      const link = container.querySelector('a[href*="/similar/"]');
+      const href = link
+        ? (link.href.startsWith('http') ? link.href : `https://www.thredup.com${link.getAttribute('href')}`)
+        : '';
+
+      if (!href) return null;
+
       const image = container.querySelector('img[alt]');
       const product = parseAltText(image ? image.alt : '');
       const text = cleanText(container.textContent);
       const price = parseMoney(text);
-      const link = container.querySelector('a[href*="/product/"]');
-      const href = link
-        ? (link.href.startsWith('http') ? link.href : `https://www.thredup.com${link.getAttribute('href')}`)
-        : '';
 
       if (!product.brand && !product.description && !price && !href) return null;
 
