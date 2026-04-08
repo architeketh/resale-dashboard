@@ -58,9 +58,22 @@
     return /\bsold\b/.test(text) && !/\bfor sale\b/.test(text);
   }
 
+  function getRecommendationMarker() {
+    const markers = [
+      'Based on this collection',
+      'Based on this item',
+      'You may also like',
+      'More like this'
+    ];
+
+    return Array.from(document.querySelectorAll('h1, h2, h3, h4, p, span, div'))
+      .find((node) => markers.includes(cleanText(node.textContent)));
+  }
+
   function findContainers() {
     const cards = document.querySelectorAll('[class*="item-card"]');
     const containers = new Set();
+    const recommendationMarker = getRecommendationMarker();
 
     cards.forEach((card) => {
       let parent = card.parentElement;
@@ -68,7 +81,14 @@
         const hasImage = parent.querySelector('[class*="item-card-image"]');
         const hasBody = parent.querySelector('[class*="item-card-body"]');
         if (hasImage && hasBody) {
-          containers.add(parent);
+          if (!recommendationMarker) {
+            containers.add(parent);
+          } else {
+            const relation = parent.compareDocumentPosition(recommendationMarker);
+            if (relation & Node.DOCUMENT_POSITION_FOLLOWING) {
+              containers.add(parent);
+            }
+          }
           break;
         }
         parent = parent.parentElement;
