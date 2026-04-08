@@ -58,26 +58,9 @@
     return /\bsold\b/.test(text) && !/\bfor sale\b/.test(text);
   }
 
-  function getRecommendationMarker() {
-    const markers = [
-      'based on this collection',
-      'based on this item',
-      'based on this',
-      'you may also like',
-      'more like this'
-    ];
-
-    return Array.from(document.querySelectorAll('h1, h2, h3, h4, p, span, div'))
-      .find((node) => {
-        const text = cleanText(node.textContent).toLowerCase();
-        return markers.some((marker) => text.includes(marker));
-      });
-  }
-
   function findContainers() {
     const cards = document.querySelectorAll('[class*="item-card"]');
     const containers = new Set();
-    const recommendationMarker = getRecommendationMarker();
 
     cards.forEach((card) => {
       let parent = card.parentElement;
@@ -85,34 +68,13 @@
         const hasImage = parent.querySelector('[class*="item-card-image"]');
         const hasBody = parent.querySelector('[class*="item-card-body"]');
         if (hasImage && hasBody) {
-          if (!recommendationMarker) {
-            containers.add(parent);
-          } else {
-            const relation = parent.compareDocumentPosition(recommendationMarker);
-            if (relation & Node.DOCUMENT_POSITION_FOLLOWING) {
-              containers.add(parent);
-            }
-          }
+          containers.add(parent);
           break;
         }
         parent = parent.parentElement;
       }
     });
-
-    const orderedContainers = Array.from(containers).sort((a, b) => {
-      if (a === b) return 0;
-      const relation = a.compareDocumentPosition(b);
-      return relation & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
-    });
-
-    if (!recommendationMarker) return orderedContainers;
-
-    const filteredContainers = orderedContainers.filter((container) => {
-      const relation = container.compareDocumentPosition(recommendationMarker);
-      return Boolean(relation & Node.DOCUMENT_POSITION_FOLLOWING);
-    });
-
-    return filteredContainers.length ? filteredContainers : orderedContainers;
+    return Array.from(containers);
   }
 
   function dedupeItems(items) {
