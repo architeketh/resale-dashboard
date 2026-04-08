@@ -107,14 +107,32 @@
 
     if (!recommendationMarker) return orderedContainers;
 
-    return orderedContainers.filter((container) => {
+    const filteredContainers = orderedContainers.filter((container) => {
       const relation = container.compareDocumentPosition(recommendationMarker);
       return Boolean(relation & Node.DOCUMENT_POSITION_FOLLOWING);
+    });
+
+    return filteredContainers.length ? filteredContainers : orderedContainers;
+  }
+
+  function dedupeItems(items) {
+    const seen = new Set();
+    return items.filter((item) => {
+      const key = [
+        cleanText(item.url).toLowerCase(),
+        cleanText(item.brand).toLowerCase(),
+        cleanText(item.description).toLowerCase(),
+        Number(item.price || 0),
+        item.status
+      ].join('||');
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
     });
   }
 
   function scrapeItems() {
-    return findContainers().map((container) => {
+    return dedupeItems(findContainers().map((container) => {
       const image = container.querySelector('img[alt]');
       const product = parseAltText(image ? image.alt : '');
       const text = cleanText(container.textContent);
@@ -134,7 +152,7 @@
         url: href,
         scrapedAt: new Date().toISOString()
       };
-    }).filter(Boolean);
+    }).filter(Boolean));
   }
 
   async function main() {
