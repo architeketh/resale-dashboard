@@ -145,7 +145,7 @@
       const text = cleanText(node.textContent);
       if (!text) return;
       if (/^\$[\d,]+(?:\.\d+)?$/.test(text)) return;
-      if (/^(just listed|sold|like new|new with tags)$/i.test(text)) return;
+      if (/^(just listed|sold|shop similar|items similar to|direct listing|like new|new with tags)$/i.test(text)) return;
       if (/^\d+$/.test(text)) return;
       if (text.length < 2 || text.length > 140) return;
       if (!candidates.includes(text)) candidates.push(text);
@@ -262,12 +262,7 @@
   }
 
   function hasSoldSignal(container) {
-    const text = cleanText(container.textContent).toLowerCase();
-    return Boolean(
-      container.querySelector('[data-testid="sold-overlay"]') ||
-      Array.from(container.querySelectorAll('p,span,div,a,h6')).some((node) => cleanText(node.textContent).toLowerCase() === 'sold') ||
-      text.includes('shop similar')
-    );
+    return Boolean(container.querySelector('[data-testid="sold-overlay"]'));
   }
 
   function isAvailableRecommendation(container) {
@@ -326,8 +321,8 @@
 
       if (!href) continue;
       if (filterName === 'sold') {
+        if (isAvailableRecommendation(container)) continue;
         if (!hasSoldSignal(container)) continue;
-        if (isAvailableRecommendation(container) && !hasSoldSignal(container)) continue;
       }
 
       const listingProduct = extractProductFromContainer(container);
