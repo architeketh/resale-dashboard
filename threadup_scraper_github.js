@@ -295,6 +295,10 @@
     if (brand === 'items similar to') return true;
     if (brand === 'unbranded') return true;
     if (brand === 'assorted brands') return true;
+    if (brand.includes('adidas originals')) return true;
+    if (brand.includes("levi")) return true;
+    if (brand.includes('alohas')) return true;
+    if (brand.includes('zara')) return true;
 
     return false;
   }
