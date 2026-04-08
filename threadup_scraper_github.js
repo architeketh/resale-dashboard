@@ -91,6 +91,11 @@
     return containers;
   }
 
+  function isDirectListing(container) {
+    return Array.from(container.querySelectorAll('h6, span, div, p'))
+      .some((node) => cleanText(node.textContent).toLowerCase() === 'direct listing');
+  }
+
   function dedupeItems(items) {
     const seen = new Set();
     return items.filter((item) => {
@@ -108,10 +113,11 @@
   }
 
   function scrapeItems() {
-    return dedupeItems(findContainers().map((container) => {
+    return dedupeItems(findContainers().filter(isDirectListing).map((container) => {
       const link = container.querySelector('a[href*="/similar/"]');
-      const href = link
-        ? (link.href.startsWith('http') ? link.href : `https://www.thredup.com${link.getAttribute('href')}`)
+      const productLink = container.querySelector('a[href*="/product/"], a[href*="/similar/"]');
+      const href = productLink
+        ? (productLink.href.startsWith('http') ? productLink.href : `https://www.thredup.com${productLink.getAttribute('href')}`)
         : '';
 
       if (!href) return null;
