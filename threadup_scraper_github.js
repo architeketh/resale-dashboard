@@ -290,6 +290,7 @@
   function isExcludedAvailableItem(product, href) {
     const url = cleanText(href).toLowerCase();
     const brand = cleanText(product.brand).toLowerCase();
+    const description = cleanText(product.description).toLowerCase();
 
     if (url.includes('/similar/')) return true;
     if (brand === 'items similar to') return true;
@@ -299,6 +300,12 @@
     if (brand.includes("levi")) return true;
     if (brand.includes('alohas')) return true;
     if (brand.includes('zara')) return true;
+    if (brand.includes('hello kitty')) return true;
+    if (url.includes('/girls-')) return true;
+    if (url.includes('/boys-')) return true;
+    if (description.includes('(baby)')) return true;
+    if (description.includes('(youth)')) return true;
+    if (description.includes('(kids)')) return true;
 
     return false;
   }
