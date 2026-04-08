@@ -291,7 +291,25 @@
     const url = cleanText(href).toLowerCase();
     const brand = cleanText(product.brand).toLowerCase();
     const description = cleanText(product.description).toLowerCase();
+    const excludedUrls = new Set([
+      'https://www.thredup.com/product/women-adidas-black-sneakers/220895299',
+      'https://www.thredup.com/product/women-adidas-gray-sneakers/219698953',
+      'https://www.thredup.com/product/women-adidas-pink-sneakers/221063814',
+      'https://www.thredup.com/product/women-adidas-black-sneakers/218819100',
+      'https://www.thredup.com/product/women-adidas-gray-sneakers/220056637',
+      'https://www.thredup.com/product/women-adidas-white-sneakers/1500849938',
+      'https://www.thredup.com/product/women-adidas-gray-sneakers/220632544',
+      'https://www.thredup.com/product/women-adidas-red-sneakers/220057407',
+      'https://www.thredup.com/product/women-adidas-orange-sneakers/217258500',
+      'https://www.thredup.com/product/women-adidas-multi-color-sneakers/1501015975',
+      'https://www.thredup.com/product/women-adidas-silver-sneakers/1500750348',
+      'https://www.thredup.com/product/women-adidas-green-sneakers/219918858',
+      'https://www.thredup.com/product/women-suede-adidas-tan-sneakers/1501054789',
+      'https://www.thredup.com/product/women-adidas-white-sneakers/1500829062',
+      'https://www.thredup.com/product/women-adidas-pink-sneakers/220173635'
+    ]);
 
+    if (excludedUrls.has(url)) return true;
     if (url.includes('/similar/')) return true;
     if (brand === 'items similar to') return true;
     if (brand === 'unbranded') return true;
