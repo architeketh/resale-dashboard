@@ -1,5 +1,6 @@
 (function() {
   const FUNCTION_URL = 'https://fuhphebvnstgszapvitz.supabase.co/functions/v1/resale-sync';
+  const STAGE_KEY = 'threadup_filter_stage_v1';
 
   function cleanText(value) {
     return String(value || '')
@@ -48,9 +49,16 @@
     if (target) target.innerHTML = message;
   }
 
+  function getCurrentFilter() {
+    const response = window.prompt('ThreadUp filter currently open? Type "sold" or "available".', 'available');
+    const normalized = cleanText(response).toLowerCase();
+    if (normalized === 'sold' || normalized === 'available') return normalized;
+    throw new Error('Please run the scraper from either the Sold or Available ThreadUp filter.');
+  }
+
   function findContainers() {
-    const cards = document.querySelectorAll('[class*="item-card"]');
-    const containers = new Set();
+    const cards = Array.from(document.querySelectorAll('[class*="item-card"]'));
+    const containers = [];
 
     cards.forEach((card) => {
       let parent = card.parentElement;
@@ -58,31 +66,102 @@
         const hasImage = parent.querySelector('[class*="item-card-image"]');
         const hasBody = parent.querySelector('[class*="item-card-body"]');
         if (hasImage && hasBody) {
-          containers.add(parent);
+          if (!containers.includes(parent)) containers.push(parent);
           break;
         }
         parent = parent.parentElement;
       }
     });
 
-    return Array.from(containers);
+    if (!containers.length) return [];
+
+    const firstContainer = containers[0];
+    let primaryGrid = firstContainer.parentElement;
+
+    while (primaryGrid && primaryGrid !== document.body) {
+      const siblingMatches = Array.from(primaryGrid.children).filter((child) => containers.includes(child));
+      if (siblingMatches.length >= 4) {
+        return siblingMatches;
+      }
+      primaryGrid = primaryGrid.parentElement;
+    }
+
+    return containers;
   }
 
-  function scrapeItems() {
-    return findContainers().map((container) => {
+  function dedupeItems(items) {
+    const seen = new Set();
+    return items.filter((item) => {
+      const key = [
+        cleanText(item.url).toLowerCase(),
+        cleanText(item.brand).toLowerCase(),
+        cleanText(item.description).toLowerCase(),
+        Number(item.price || 0),
+        item.status
+      ].join('||');
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }
+
+  function dedupeByUrl(items) {
+    const seen = new Set();
+    return items.filter((item) => {
+      const key = cleanText(item.url).toLowerCase() || [
+        cleanText(item.brand).toLowerCase(),
+        cleanText(item.description).toLowerCase(),
+        Number(item.price || 0),
+        item.status
+      ].join('||');
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }
+
+  function hasRequiredFields(item) {
+    return Boolean(cleanText(item.brand) && cleanText(item.description) && Number(item.price || 0) > 0 && cleanText(item.url));
+  }
+
+  function readStage() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(STAGE_KEY) || '{}');
+      return {
+        sold: Array.isArray(parsed.sold) ? parsed.sold : null,
+        available: Array.isArray(parsed.available) ? parsed.available : null
+      };
+    } catch (error) {
+      return { sold: null, available: null };
+    }
+  }
+
+  function writeStage(stage) {
+    localStorage.setItem(STAGE_KEY, JSON.stringify(stage));
+  }
+
+  function clearStage() {
+    localStorage.removeItem(STAGE_KEY);
+  }
+
+  function scrapeItems(filterName) {
+    const rawItems = findContainers().map((container) => {
+      const productLink = container.querySelector('a[href*="/product/"], a[href*="/similar/"]');
+      const href = productLink
+        ? (productLink.href.startsWith('http') ? productLink.href : `https://www.thredup.com${productLink.getAttribute('href')}`)
+        : '';
+
+      if (!href) return null;
+
       const image = container.querySelector('img[alt]');
       const product = parseAltText(image ? image.alt : '');
       const text = cleanText(container.textContent);
       const price = parseMoney(text);
-      const link = container.querySelector('a[href*="/product/"]');
-      const href = link
-        ? (link.href.startsWith('http') ? link.href : `https://www.thredup.com${link.getAttribute('href')}`)
-        : '';
 
       if (!product.brand && !product.description && !price && !href) return null;
 
       return {
-        status: /sold/i.test(text) ? 'Sold' : 'For Sale',
+        status: filterName === 'sold' ? 'Sold' : 'For Sale',
         brand: product.brand,
         description: product.description,
         price,
@@ -90,26 +169,50 @@
         scrapedAt: new Date().toISOString()
       };
     }).filter(Boolean);
+
+    const acceptedItems = dedupeItems(rawItems.filter(hasRequiredFields));
+    return {
+      items: acceptedItems,
+      skippedCount: rawItems.length - acceptedItems.length
+    };
   }
 
   async function main() {
     const overlay = buildOverlay();
 
     try {
-      setStatus('Collecting items from the current page...');
-      const items = scrapeItems();
+      const filterName = getCurrentFilter();
+      setStatus(`Collecting ${filterName} items from the current page...`);
+      const { items, skippedCount } = scrapeItems(filterName);
       if (!items.length) throw new Error('No ThreadUp items were found. Scroll the page to load listings, then run the scraper again.');
 
-      setStatus(`Found ${items.length} items. Syncing to Supabase...`);
+      const stage = readStage();
+      stage[filterName] = items;
+      writeStage(stage);
+
+      const soldItems = stage.sold;
+      const availableItems = stage.available;
+
+      if (!soldItems || !availableItems) {
+        const missing = !soldItems ? 'Sold' : 'Available';
+        setStatus(`Captured ${items.length} ${filterName} items.<br>Skipped ${skippedCount} missing required details.<br><br>${missing} filter still needed before sync.`);
+        setTimeout(() => overlay.remove(), 6000);
+        return;
+      }
+
+      const combinedItems = dedupeByUrl([].concat(soldItems, availableItems));
+
+      setStatus(`Captured both filters.<br><br>Sold: ${soldItems.length}<br>Available: ${availableItems.length}<br>Last run skipped: ${skippedCount}<br>Syncing ${combinedItems.length} combined items to Supabase...`);
       const response = await fetch(FUNCTION_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'sync_inventory', platform: 'threadup', items })
+        body: JSON.stringify({ action: 'sync_inventory', platform: 'threadup', items: combinedItems })
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Sync failed');
 
-      setStatus(`Sync complete.<br><br>Items: ${items.length}<br>Newly stamped sold dates: ${result.newlyStampedSoldDates || 0}<br>Supabase inventory updated.`);
+      clearStage();
+      setStatus(`Sync complete.<br><br>Items: ${combinedItems.length}<br>Newly stamped sold dates: ${result.newlyStampedSoldDates || 0}<br>Supabase inventory updated.`);
       setTimeout(() => overlay.remove(), 6000);
     } catch (error) {
       setStatus(`Error: ${error.message}`);
