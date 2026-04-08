@@ -144,6 +144,30 @@
     localStorage.removeItem(STAGE_KEY);
   }
 
+  async function autoScrollListings() {
+    let previousHeight = 0;
+    let stableRounds = 0;
+    const maxRounds = 30;
+
+    for (let round = 0; round < maxRounds; round += 1) {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
+      await new Promise((resolve) => setTimeout(resolve, 1400));
+
+      const currentHeight = document.body.scrollHeight;
+      if (currentHeight === previousHeight) {
+        stableRounds += 1;
+      } else {
+        stableRounds = 0;
+      }
+
+      previousHeight = currentHeight;
+      if (stableRounds >= 2) break;
+    }
+
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    await new Promise((resolve) => setTimeout(resolve, 400));
+  }
+
   function scrapeItems(filterName) {
     const rawItems = findContainers().map((container) => {
       const productLink = container.querySelector('a[href*="/product/"], a[href*="/similar/"]');
@@ -182,6 +206,8 @@
 
     try {
       const filterName = getCurrentFilter();
+      setStatus(`Loading all ${filterName} items from the current page...`);
+      await autoScrollListings();
       setStatus(`Collecting ${filterName} items from the current page...`);
       const { items, skippedCount } = scrapeItems(filterName);
       if (!items.length) throw new Error('No ThreadUp items were found. Scroll the page to load listings, then run the scraper again.');
