@@ -261,6 +261,13 @@
     return { brand, description };
   }
 
+  function isSimilarRecommendation(container, href) {
+    const text = cleanText(container.textContent).toLowerCase();
+    const url = cleanText(href).toLowerCase();
+
+    return text.includes('items similar to') || url.includes('/similar/');
+  }
+
   function inferFilterName() {
     const url = window.location.href.toLowerCase();
     if (url.includes('filter=sold') || url.includes('/sold')) return 'sold';
@@ -311,6 +318,7 @@
         : '';
 
       if (!href) continue;
+      if (isSimilarRecommendation(container, href)) continue;
 
       const listingProduct = extractProductFromContainer(container);
       const productPage = await fetchProductPageDetails(href);
