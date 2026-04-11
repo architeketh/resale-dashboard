@@ -8,6 +8,12 @@
       .trim();
   }
 
+  function isInvalidBrand(value) {
+    const normalized = cleanText(value).toLowerCase();
+    if (!normalized) return true;
+    return /^(items similar to|shop similar|direct listing|unbranded|assorted brands)$/.test(normalized);
+  }
+
   function parseMoney(value) {
     const match = cleanText(value).match(/\$[\d,]+(?:\.\d+)?/);
     return match ? Number(match[0].replace(/[$,]/g, '')) : 0;
@@ -23,14 +29,14 @@
       const remaining = words.slice(i).join(' ');
       if (remaining.toLowerCase().startsWith(candidateBrand.toLowerCase() + ' ')) {
         return {
-          brand: candidateBrand,
+          brand: isInvalidBrand(candidateBrand) ? '' : candidateBrand,
           description: cleanText(remaining.slice(candidateBrand.length))
         };
       }
     }
 
     return {
-      brand: words.slice(0, Math.min(3, words.length)).join(' '),
+      brand: isInvalidBrand(words.slice(0, Math.min(3, words.length)).join(' ')) ? '' : words.slice(0, Math.min(3, words.length)).join(' '),
       description: words.slice(Math.min(3, words.length)).join(' ')
     };
   }
@@ -169,7 +175,7 @@
     if (image?.alt) fallback = parseAltText(image.alt);
 
     const candidates = getContainerCandidates(container);
-    if (!fallback.brand && candidates.length) fallback.brand = candidates[0];
+    if (!fallback.brand && candidates.length && !isInvalidBrand(candidates[0])) fallback.brand = candidates[0];
 
     if (!fallback.description) {
       for (const candidate of candidates) {
@@ -258,18 +264,19 @@
   }
 
   function shouldFetchProductPage(product) {
-    return !(cleanText(product.brand) && cleanText(product.description));
+    return isInvalidBrand(product.brand) || !(cleanText(product.brand) && cleanText(product.description));
   }
 
   function chooseBetterProductInfo(primary, secondary) {
-    let brand = cleanText(primary.brand || secondary.brand);
+    let brand = cleanText(isInvalidBrand(primary.brand) ? secondary.brand : (primary.brand || secondary.brand));
     let description = cleanText(primary.description);
 
     if (!description || (secondary.description && secondary.description.length > description.length)) {
       description = cleanText(secondary.description);
     }
 
-    if (!brand) brand = cleanText(secondary.brand);
+    if (!brand || isInvalidBrand(brand)) brand = cleanText(secondary.brand);
+    if (isInvalidBrand(brand)) brand = '';
     return { brand, description };
   }
 
