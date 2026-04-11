@@ -257,6 +257,10 @@
     }
   }
 
+  function shouldFetchProductPage(product) {
+    return !(cleanText(product.brand) && cleanText(product.description));
+  }
+
   function chooseBetterProductInfo(primary, secondary) {
     let brand = cleanText(primary.brand || secondary.brand);
     let description = cleanText(primary.description);
@@ -406,8 +410,11 @@
       }
 
       const listingProduct = extractProductFromContainer(container);
-      const productPage = await fetchProductPageDetails(href);
-      const product = chooseBetterProductInfo(productPage, listingProduct);
+      let product = listingProduct;
+      if (shouldFetchProductPage(listingProduct)) {
+        const productPage = await fetchProductPageDetails(href);
+        product = chooseBetterProductInfo(productPage, listingProduct);
+      }
       const text = cleanText(container.textContent);
       const price = parseMoney(text);
 
