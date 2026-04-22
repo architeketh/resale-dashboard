@@ -387,15 +387,13 @@
       }
 
       try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/resale_inventory?id=eq.${encodeURIComponent(itemId)}`, {
-          method: 'PATCH',
-          headers: {
-            ...authHeaders(),
-            'Content-Type': 'application/json',
-            Prefer: 'return=representation'
-          },
+        const response = await fetch(FUNCTION_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            first_seen_sold_at: `${trimmed}T12:00:00.000Z`
+            action: 'update_sold_date',
+            id: itemId,
+            soldAt: `${trimmed}T12:00:00.000Z`
           })
         });
         const result = await response.json().catch(() => ({}));
