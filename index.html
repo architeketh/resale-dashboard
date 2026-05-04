@@ -50,22 +50,27 @@
       </div>
     </section>
 
-    <section class="panel chartPanel">
-      <div class="chartHeader">
-        <div>
-          <div class="eyebrow">Weekly Sales</div>
-          <div class="chartTitle">Depop vs ThreadUp by week</div>
+    <details class="panel chartPanel collapsible" open>
+      <summary class="collapsibleSummary">
+        <div class="chartHeader">
+          <div>
+            <div class="eyebrow">Weekly Sales</div>
+            <div class="chartTitle">Depop vs ThreadUp by week</div>
+          </div>
+          <div class="chartLegend">
+            <span class="legendItem"><span class="legendSwatch legendSwatch-threadup"></span>ThreadUp</span>
+            <span class="legendItem"><span class="legendSwatch legendSwatch-depop"></span>Depop</span>
+          </div>
         </div>
-        <div class="chartLegend">
-          <span class="legendItem"><span class="legendSwatch legendSwatch-threadup"></span>ThreadUp</span>
-          <span class="legendItem"><span class="legendSwatch legendSwatch-depop"></span>Depop</span>
+        <span class="chev">+</span>
+      </summary>
+      <div class="workflowBody">
+        <div class="chartFrame">
+          <div id="weekly-sales-chart" class="chartEmpty">Weekly sales chart will appear after captures are available.</div>
         </div>
+        <div class="chartFoot">Bars show weekly revenue from each saved snapshot.</div>
       </div>
-      <div class="chartFrame">
-        <div id="weekly-sales-chart" class="chartEmpty">Weekly sales chart will appear after captures are available.</div>
-      </div>
-      <div class="chartFoot">Bars show sold item count from each saved weekly snapshot.</div>
-    </section>
+    </details>
 
     <details class="platform collapsible" open>
       <summary class="collapsibleSummary">
@@ -309,11 +314,11 @@
       const byWeek = new Map();
       for (const entry of state.weeklySales.threadup) {
         if (!byWeek.has(entry.weekKey)) byWeek.set(entry.weekKey, { weekKey: entry.weekKey, label: entry.label, threadup: 0, depop: 0 });
-        byWeek.get(entry.weekKey).threadup = Number(entry.soldCount || 0);
+        byWeek.get(entry.weekKey).threadup = Number(entry.revenue || 0);
       }
       for (const entry of state.weeklySales.depop) {
         if (!byWeek.has(entry.weekKey)) byWeek.set(entry.weekKey, { weekKey: entry.weekKey, label: entry.label, threadup: 0, depop: 0 });
-        byWeek.get(entry.weekKey).depop = Number(entry.soldCount || 0);
+        byWeek.get(entry.weekKey).depop = Number(entry.revenue || 0);
       }
       return [...byWeek.values()].sort((a, b) => a.weekKey.localeCompare(b.weekKey)).slice(-8);
     }
@@ -340,7 +345,7 @@
 
       const grid = axisTicks.map((tick) => {
         const y = scaleY(tick);
-        return `<g><line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="rgba(31,41,51,0.12)" stroke-dasharray="4 6" /><text x="${margin.left - 12}" y="${y + 4}" text-anchor="end" font-size="12" fill="#6b7280">${tick}</text></g>`;
+        return `<g><line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="rgba(31,41,51,0.12)" stroke-dasharray="4 6" /><text x="${margin.left - 12}" y="${y + 4}" text-anchor="end" font-size="12" fill="#6b7280">${escapeHtml(currency(tick))}</text></g>`;
       }).join('');
 
       const bars = rows.map((row, index) => {
@@ -353,10 +358,10 @@
         return `
           <g>
             <rect x="${groupX - barWidth - 4}" y="${threadupY}" width="${barWidth}" height="${threadupHeight}" rx="8" fill="#0f766e">
-              <title>ThreadUp ${row.label}: ${row.threadup} sold</title>
+              <title>ThreadUp ${row.label}: ${currency(row.threadup)}</title>
             </rect>
             <rect x="${groupX + 4}" y="${depopY}" width="${barWidth}" height="${depopHeight}" rx="8" fill="#9f1239">
-              <title>Depop ${row.label}: ${row.depop} sold</title>
+              <title>Depop ${row.label}: ${currency(row.depop)}</title>
             </rect>
             <text x="${groupX}" y="${labelY}" text-anchor="middle" font-size="11" fill="#6b7280">${escapeHtml(row.label)}</text>
           </g>
