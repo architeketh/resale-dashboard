@@ -358,7 +358,27 @@
       applyPlatformDeltas('threadup', 'threadup');
       applyPlatformDeltas('depop', 'depop');
 
-      return [...byWeek.values()].sort((a, b) => a.weekKey.localeCompare(b.weekKey)).slice(-8);
+      const rows = [...byWeek.values()].sort((a, b) => a.weekKey.localeCompare(b.weekKey));
+      const currentWeek = getWeekRange();
+      const lastSaved = rows.length ? rows[rows.length - 1] : null;
+      const threadupCurrent = getCurrentWeekSales(state.threadup);
+      const depopCurrent = getCurrentWeekSales(state.depop);
+      const liveCurrent = {
+        weekKey: currentWeek.key,
+        label: currentWeek.label,
+        threadup: threadupCurrent.revenue,
+        depop: depopCurrent.revenue
+      };
+
+      if (!lastSaved || lastSaved.weekKey !== currentWeek.key) {
+        rows.push(liveCurrent);
+      } else {
+        lastSaved.threadup = threadupCurrent.revenue;
+        lastSaved.depop = depopCurrent.revenue;
+        lastSaved.label = currentWeek.label;
+      }
+
+      return rows.slice(-8);
     }
 
     function renderWeeklySalesChart() {
