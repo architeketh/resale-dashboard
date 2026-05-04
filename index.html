@@ -8,7 +8,7 @@
     :root{--paper:rgba(255,250,243,.92);--ink:#1f2933;--muted:#6b7280;--line:rgba(31,41,51,.1);--accent:#7c2d12;--accent-soft:#f59e0b;--teal:#0f766e;--rose:#9f1239;--shadow:0 24px 60px rgba(68,39,12,.12);--radius:24px;--mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;--sans:"Avenir Next","Segoe UI",Arial,sans-serif}
     *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:var(--sans);color:var(--ink);background:radial-gradient(circle at top left,rgba(245,158,11,.24),transparent 35%),radial-gradient(circle at bottom right,rgba(15,118,110,.18),transparent 32%),linear-gradient(180deg,#f7f2ea 0%,#efe6d8 100%)}
     .shell{width:min(1180px,calc(100% - 32px));margin:24px auto 48px}.hero,.panel,.platform{background:var(--paper);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.6);box-shadow:var(--shadow)}
-    .hero{padding:36px;border-radius:32px;display:grid;grid-template-columns:1.6fr 1fr;gap:24px}.eyebrow{font:600 12px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}h1{margin:0;font-size:clamp(34px,5vw,58px);line-height:.98;letter-spacing:-.04em;max-width:10ch}.hero p{margin:16px 0 0;max-width:58ch;color:var(--muted);font-size:16px;line-height:1.6}.statusStack{display:grid;gap:14px}.statusCard,.setupCard,.statCard{padding:22px;border-radius:20px;background:rgba(255,255,255,.64);border:1px solid var(--line)}.statusLabel,.statLabel{color:var(--muted);font:600 12px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}.statusValue{font-size:22px;font-weight:700}.statusLinks{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.statusLink{display:inline-flex;align-items:center;justify-content:center;padding:11px 14px;border-radius:999px;font:600 13px/1 var(--mono);text-decoration:none}.statusLink-threadup{background:rgba(15,118,110,.12);border:1px solid rgba(15,118,110,.2);color:#0f766e}.statusLink-depop{background:rgba(159,18,57,.12);border:1px solid rgba(159,18,57,.2);color:#9f1239}.panel,.platform{margin-top:22px;border-radius:var(--radius)}.panel{padding:28px}.statsGrid,.setupGrid{display:grid;gap:16px}.setupGrid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:18px}.setupCard h3,.platformTitle{margin:0 0 10px;font-size:20px}.setupCard p,.setupCard li,.muted{color:var(--muted);line-height:1.55}.setupCard ol{margin:14px 0 0;padding-left:18px}.inlineLink{color:var(--accent);text-decoration:none;font-weight:600}.statsGrid{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-top:16px}.statCard{position:relative;overflow:hidden}.statCard::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(180deg,var(--accent-soft),var(--accent))}.statValue{font-size:34px;font-weight:700;letter-spacing:-.04em}.statFoot{margin-top:10px;color:#4b5563;font-size:18px;font-weight:600;line-height:1.35}.collapsibleSummary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 28px}.collapsibleSummary::-webkit-details-marker{display:none}.chev{font:700 22px/1 Arial,sans-serif;color:var(--accent);transition:transform .2s ease;display:inline-block;min-width:18px;text-align:center}.collapsible[open] .chev{transform:rotate(45deg)}.workflowBody{padding:0 28px 28px}.platform{overflow:hidden}.platformBody{padding:0 28px 28px}.platformHead{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;width:100%}.titleWrap{display:flex;flex-direction:column;gap:10px;min-width:0}.titleLine,.titleMeta,.statusBar,.controlsRow,.filters,.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.titleLine{gap:10px}.titleMeta{gap:8px}.statusBar{gap:8px}.controlsRow{justify-content:space-between;margin-top:8px;gap:14px}.actions{margin-left:auto;justify-content:flex-end}.pill{border-radius:999px;padding:8px 12px;background:rgba(255,255,255,.84);border:1px solid var(--line);font:600 12px/1 var(--mono);color:var(--muted);white-space:nowrap}.pillStrong{color:var(--accent)}.pillWide{min-width:94px;text-align:center}.pillUp{background:rgba(15,118,110,.12);border-color:rgba(15,118,110,.18);color:var(--teal)}.pillDown{background:rgba(159,18,57,.12);border-color:rgba(159,18,57,.18);color:var(--rose)}.pillFlat{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.18);color:var(--accent)}.btn,.filterBtn{border:1px solid rgba(124,45,18,.18);background:rgba(255,255,255,.8);color:var(--accent);border-radius:999px;padding:10px 14px;cursor:pointer;font:600 13px/1 var(--mono)}.btn.primary{background:#8f3e16;color:#fff;border-color:#8f3e16}.btn.token{background:#fff7ed;color:#9a3412;border-color:rgba(249,115,22,.28)}.btn.refresh{background:#f0fdfa;color:#115e59;border-color:rgba(20,184,166,.22)}.btn.export{background:#fffaf3;color:#7c2d12;border-color:rgba(124,45,18,.18)}.filterBtn.active{background:var(--accent);color:#fff;border-color:var(--accent)}.tableWrap{overflow-x:auto;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.78);margin-top:18px}table{width:100%;border-collapse:collapse}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid rgba(31,41,51,.08);vertical-align:top}th{font:600 12px/1.2 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);background:rgba(255,250,243,.92)}th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--accent)}tbody tr{transition:background-color .18s ease}tbody tr:hover{background:rgba(180,83,9,.04)}.badge{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:7px 11px;font:600 12px/1 var(--mono);white-space:nowrap;min-width:72px;text-align:center}.sold{background:rgba(159,18,57,.12);color:var(--rose)}.listed{background:rgba(15,118,110,.12);color:var(--teal)}.money{font-weight:700;color:var(--teal)}.dateCell{display:flex;flex-direction:column;align-items:flex-start;gap:8px}.dateEdit{border:0;background:none;color:var(--accent);cursor:pointer;padding:0;font:600 12px/1.2 var(--mono);text-decoration:underline}.dateEdit:hover{color:#9a3412}.empty,.loading{padding:38px 20px;text-align:center;color:var(--muted)}.history{margin-top:16px;padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.62);border:1px solid var(--line)}.historyTitle{font:600 12px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}.historyRow{display:flex;flex-wrap:wrap;gap:12px;color:#4b5563;font-size:15px}.platformTotals{margin-top:14px;padding:14px 18px;border-radius:18px;background:rgba(255,255,255,.62);border:1px solid var(--line);font:600 14px/1.4 var(--mono);color:#4b5563}.footer{margin-top:20px;color:var(--muted);font-size:13px}
+    .hero{padding:36px;border-radius:32px;display:grid;grid-template-columns:1.6fr 1fr;gap:24px}.eyebrow{font:600 12px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}h1{margin:0;font-size:clamp(34px,5vw,58px);line-height:.98;letter-spacing:-.04em;max-width:10ch}.hero p{margin:16px 0 0;max-width:58ch;color:var(--muted);font-size:16px;line-height:1.6}.statusStack{display:grid;gap:14px}.statusCard,.setupCard,.statCard{padding:22px;border-radius:20px;background:rgba(255,255,255,.64);border:1px solid var(--line)}.statusLabel,.statLabel{color:var(--muted);font:600 12px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}.statusValue{font-size:22px;font-weight:700}.statusLinks{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.statusLink{display:inline-flex;align-items:center;justify-content:center;padding:11px 14px;border-radius:999px;font:600 13px/1 var(--mono);text-decoration:none}.statusLink-threadup{background:rgba(15,118,110,.12);border:1px solid rgba(15,118,110,.2);color:#0f766e}.statusLink-depop{background:rgba(159,18,57,.12);border:1px solid rgba(159,18,57,.2);color:#9f1239}.panel,.platform{margin-top:22px;border-radius:var(--radius)}.panel{padding:28px}.statsGrid,.setupGrid{display:grid;gap:16px}.setupGrid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:18px}.setupCard h3,.platformTitle{margin:0 0 10px;font-size:20px}.setupCard p,.setupCard li,.muted{color:var(--muted);line-height:1.55}.setupCard ol{margin:14px 0 0;padding-left:18px}.inlineLink{color:var(--accent);text-decoration:none;font-weight:600}.statsGrid{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-top:16px}.statCard{position:relative;overflow:hidden}.statCard::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(180deg,var(--accent-soft),var(--accent))}.statValue{font-size:34px;font-weight:700;letter-spacing:-.04em}.statFoot{margin-top:10px;color:#4b5563;font-size:18px;font-weight:600;line-height:1.35}.chartPanel{display:grid;gap:18px}.chartHeader{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}.chartTitle{font-size:28px;font-weight:700;letter-spacing:-.04em}.chartLegend{display:flex;flex-wrap:wrap;gap:10px}.legendItem{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.72);border:1px solid var(--line);font:600 12px/1 var(--mono);color:var(--muted)}.legendSwatch{width:12px;height:12px;border-radius:999px;display:inline-block}.legendSwatch-threadup{background:#0f766e}.legendSwatch-depop{background:#9f1239}.chartFrame{padding:18px;border-radius:22px;background:rgba(255,255,255,.68);border:1px solid var(--line)}.chartSvg{width:100%;height:auto;display:block}.chartEmpty{padding:48px 20px;text-align:center;color:var(--muted)}.chartFoot{font:600 12px/1.5 var(--mono);color:var(--muted)}.collapsibleSummary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 28px}.collapsibleSummary::-webkit-details-marker{display:none}.chev{font:700 22px/1 Arial,sans-serif;color:var(--accent);transition:transform .2s ease;display:inline-block;min-width:18px;text-align:center}.collapsible[open] .chev{transform:rotate(45deg)}.workflowBody{padding:0 28px 28px}.platform{overflow:hidden}.platformBody{padding:0 28px 28px}.platformHead{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;width:100%}.titleWrap{display:flex;flex-direction:column;gap:10px;min-width:0}.titleLine,.titleMeta,.statusBar,.controlsRow,.filters,.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.titleLine{gap:10px}.titleMeta{gap:8px}.statusBar{gap:8px}.controlsRow{justify-content:space-between;margin-top:8px;gap:14px}.actions{margin-left:auto;justify-content:flex-end}.pill{border-radius:999px;padding:8px 12px;background:rgba(255,255,255,.84);border:1px solid var(--line);font:600 12px/1 var(--mono);color:var(--muted);white-space:nowrap}.pillStrong{color:var(--accent)}.pillWide{min-width:94px;text-align:center}.pillUp{background:rgba(15,118,110,.12);border-color:rgba(15,118,110,.18);color:var(--teal)}.pillDown{background:rgba(159,18,57,.12);border-color:rgba(159,18,57,.18);color:var(--rose)}.pillFlat{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.18);color:var(--accent)}.btn,.filterBtn{border:1px solid rgba(124,45,18,.18);background:rgba(255,255,255,.8);color:var(--accent);border-radius:999px;padding:10px 14px;cursor:pointer;font:600 13px/1 var(--mono)}.btn.primary{background:#8f3e16;color:#fff;border-color:#8f3e16}.btn.token{background:#fff7ed;color:#9a3412;border-color:rgba(249,115,22,.28)}.btn.refresh{background:#f0fdfa;color:#115e59;border-color:rgba(20,184,166,.22)}.btn.export{background:#fffaf3;color:#7c2d12;border-color:rgba(124,45,18,.18)}.filterBtn.active{background:var(--accent);color:#fff;border-color:var(--accent)}.tableWrap{overflow-x:auto;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.78);margin-top:18px}table{width:100%;border-collapse:collapse}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid rgba(31,41,51,.08);vertical-align:top}th{font:600 12px/1.2 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);background:rgba(255,250,243,.92)}th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--accent)}tbody tr{transition:background-color .18s ease}tbody tr:hover{background:rgba(180,83,9,.04)}.badge{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:7px 11px;font:600 12px/1 var(--mono);white-space:nowrap;min-width:72px;text-align:center}.sold{background:rgba(159,18,57,.12);color:var(--rose)}.listed{background:rgba(15,118,110,.12);color:var(--teal)}.money{font-weight:700;color:var(--teal)}.dateCell{display:flex;flex-direction:column;align-items:flex-start;gap:8px}.dateEdit{border:0;background:none;color:var(--accent);cursor:pointer;padding:0;font:600 12px/1.2 var(--mono);text-decoration:underline}.dateEdit:hover{color:#9a3412}.empty,.loading{padding:38px 20px;text-align:center;color:var(--muted)}.history{margin-top:16px;padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.62);border:1px solid var(--line)}.historyTitle{font:600 12px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}.historyRow{display:flex;flex-wrap:wrap;gap:12px;color:#4b5563;font-size:15px}.platformTotals{margin-top:14px;padding:14px 18px;border-radius:18px;background:rgba(255,255,255,.62);border:1px solid var(--line);font:600 14px/1.4 var(--mono);color:#4b5563}.footer{margin-top:20px;color:var(--muted);font-size:13px}
     @media (max-width:900px){.hero{grid-template-columns:1fr}}
     @media (max-width:760px){.shell{width:min(100% - 18px,1180px)}.hero,.panel{padding:20px}.collapsibleSummary,.workflowBody,.platformBody{padding-left:20px;padding-right:20px}.platformHead,.controlsRow{flex-direction:column;align-items:flex-start}.actions{margin-left:0;justify-content:flex-start}.titleLine,.titleMeta,.statusBar,.filters,.actions{width:100%}.btn,.filterBtn{padding:11px 14px}.tableWrap{margin-top:14px}.historyRow span{display:block}}
   </style>
@@ -48,6 +48,23 @@
         <article class="statCard"><div class="statLabel">Active listings</div><div class="statValue" id="total-listed">0</div><div class="statFoot" id="listed-breakdown">Waiting for data</div></article>
         <article class="statCard"><div class="statLabel">Revenue</div><div class="statValue" id="total-revenue">$0.00</div><div class="statFoot" id="revenue-breakdown">Waiting for data</div></article>
       </div>
+    </section>
+
+    <section class="panel chartPanel">
+      <div class="chartHeader">
+        <div>
+          <div class="eyebrow">Weekly Sales</div>
+          <div class="chartTitle">Depop vs ThreadUp by week</div>
+        </div>
+        <div class="chartLegend">
+          <span class="legendItem"><span class="legendSwatch legendSwatch-threadup"></span>ThreadUp</span>
+          <span class="legendItem"><span class="legendSwatch legendSwatch-depop"></span>Depop</span>
+        </div>
+      </div>
+      <div class="chartFrame">
+        <div id="weekly-sales-chart" class="chartEmpty">Weekly sales chart will appear after captures are available.</div>
+      </div>
+      <div class="chartFoot">Bars show sold item count from each saved weekly snapshot.</div>
     </section>
 
     <details class="platform collapsible" open>
@@ -288,6 +305,74 @@
       document.getElementById(`${platform}-history`).innerHTML = list.length ? list.slice(0, 4).map((entry) => `<span>${entry.label}: <strong>${entry.soldCount}</strong> sold, <strong>${currency(entry.revenue)}</strong></span>`).join('') : 'No weekly snapshots yet.';
     }
 
+    function getWeeklyChartRows() {
+      const byWeek = new Map();
+      for (const entry of state.weeklySales.threadup) {
+        if (!byWeek.has(entry.weekKey)) byWeek.set(entry.weekKey, { weekKey: entry.weekKey, label: entry.label, threadup: 0, depop: 0 });
+        byWeek.get(entry.weekKey).threadup = Number(entry.soldCount || 0);
+      }
+      for (const entry of state.weeklySales.depop) {
+        if (!byWeek.has(entry.weekKey)) byWeek.set(entry.weekKey, { weekKey: entry.weekKey, label: entry.label, threadup: 0, depop: 0 });
+        byWeek.get(entry.weekKey).depop = Number(entry.soldCount || 0);
+      }
+      return [...byWeek.values()].sort((a, b) => a.weekKey.localeCompare(b.weekKey)).slice(-8);
+    }
+
+    function renderWeeklySalesChart() {
+      const mount = document.getElementById('weekly-sales-chart');
+      const rows = getWeeklyChartRows();
+      if (!rows.length) {
+        mount.className = 'chartEmpty';
+        mount.innerHTML = 'Weekly sales chart will appear after captures are available.';
+        return;
+      }
+
+      const width = 920;
+      const height = 360;
+      const margin = { top: 18, right: 18, bottom: 64, left: 56 };
+      const plotWidth = width - margin.left - margin.right;
+      const plotHeight = height - margin.top - margin.bottom;
+      const maxValue = Math.max(1, ...rows.flatMap((row) => [row.threadup, row.depop]));
+      const groupWidth = plotWidth / rows.length;
+      const barWidth = Math.min(24, Math.max(10, (groupWidth - 18) / 2));
+      const scaleY = (value) => margin.top + plotHeight - ((value / maxValue) * plotHeight);
+      const axisTicks = Array.from(new Set([0, Math.ceil(maxValue / 2), maxValue])).sort((a, b) => a - b);
+
+      const grid = axisTicks.map((tick) => {
+        const y = scaleY(tick);
+        return `<g><line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="rgba(31,41,51,0.12)" stroke-dasharray="4 6" /><text x="${margin.left - 12}" y="${y + 4}" text-anchor="end" font-size="12" fill="#6b7280">${tick}</text></g>`;
+      }).join('');
+
+      const bars = rows.map((row, index) => {
+        const groupX = margin.left + (index * groupWidth) + (groupWidth / 2);
+        const threadupHeight = ((row.threadup / maxValue) * plotHeight);
+        const depopHeight = ((row.depop / maxValue) * plotHeight);
+        const threadupY = scaleY(row.threadup);
+        const depopY = scaleY(row.depop);
+        const labelY = height - 26;
+        return `
+          <g>
+            <rect x="${groupX - barWidth - 4}" y="${threadupY}" width="${barWidth}" height="${threadupHeight}" rx="8" fill="#0f766e">
+              <title>ThreadUp ${row.label}: ${row.threadup} sold</title>
+            </rect>
+            <rect x="${groupX + 4}" y="${depopY}" width="${barWidth}" height="${depopHeight}" rx="8" fill="#9f1239">
+              <title>Depop ${row.label}: ${row.depop} sold</title>
+            </rect>
+            <text x="${groupX}" y="${labelY}" text-anchor="middle" font-size="11" fill="#6b7280">${escapeHtml(row.label)}</text>
+          </g>
+        `;
+      }).join('');
+
+      mount.className = '';
+      mount.innerHTML = `
+        <svg class="chartSvg" viewBox="0 0 ${width} ${height}" role="img" aria-label="Weekly sales by platform">
+          ${grid}
+          <line x1="${margin.left}" y1="${margin.top + plotHeight}" x2="${width - margin.right}" y2="${margin.top + plotHeight}" stroke="rgba(31,41,51,0.16)" />
+          ${bars}
+        </svg>
+      `;
+    }
+
     function renderPlatform(platform) {
       const items = state[platform];
       document.getElementById(`${platform}-content`).innerHTML = renderTable(items, platform);
@@ -317,6 +402,7 @@
       document.getElementById('revenue-breakdown').textContent = `ThreadUp ${currency(threadupSummary.revenue)} / Depop ${currency(depopSummary.revenue)}`;
       const lastUpdated = [state.threadup, state.depop].flat().reduce((max, item) => !max || (item.scrapedAt && item.scrapedAt > max) ? item.scrapedAt : max, '');
       document.getElementById('last-updated').textContent = lastUpdated ? formatDate(lastUpdated) : 'No sync yet';
+      renderWeeklySalesChart();
     }
 
     async function captureWeeklySnapshot(platform) {
