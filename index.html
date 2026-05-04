@@ -55,7 +55,7 @@
         <div class="chartHeader">
           <div>
             <div class="eyebrow">Weekly Sales</div>
-            <div class="chartTitle">Depop vs ThreadUp by week</div>
+            <div class="chartTitle">Revenue change by week</div>
           </div>
           <div class="chartLegend">
             <span class="legendItem"><span class="legendSwatch legendSwatch-threadup"></span>ThreadUp</span>
@@ -66,9 +66,9 @@
       </summary>
       <div class="workflowBody">
         <div class="chartFrame">
-          <div id="weekly-sales-chart" class="chartEmpty">Weekly sales chart will appear after captures are available.</div>
+          <div id="weekly-sales-chart" class="chartEmpty">Weekly revenue change chart will appear after captures are available.</div>
         </div>
-        <div class="chartFoot">Bars show weekly revenue from each saved snapshot.</div>
+        <div class="chartFoot">Bars show the revenue increase or decrease versus the prior captured week.</div>
       </div>
     </details>
 
@@ -310,25 +310,35 @@
       document.getElementById(`${platform}-history`).innerHTML = list.length ? list.slice(0, 4).map((entry) => `<span>${entry.label}: <strong>${entry.soldCount}</strong> sold, <strong>${currency(entry.revenue)}</strong></span>`).join('') : 'No weekly snapshots yet.';
     }
 
-    function getWeeklyChartRows() {
+    function getWeeklyRevenueDeltaRows() {
       const byWeek = new Map();
-      for (const entry of state.weeklySales.threadup) {
-        if (!byWeek.has(entry.weekKey)) byWeek.set(entry.weekKey, { weekKey: entry.weekKey, label: entry.label, threadup: 0, depop: 0 });
-        byWeek.get(entry.weekKey).threadup = Number(entry.revenue || 0);
+
+      function applyPlatformDeltas(platformKey, targetKey) {
+        const entries = [...state.weeklySales[platformKey]].sort((a, b) => a.weekKey.localeCompare(b.weekKey));
+        let previousRevenue = null;
+        for (const entry of entries) {
+          if (!byWeek.has(entry.weekKey)) {
+            byWeek.set(entry.weekKey, { weekKey: entry.weekKey, label: entry.label, threadup: 0, depop: 0 });
+          }
+          const revenue = Number(entry.revenue || 0);
+          const delta = previousRevenue === null ? revenue : revenue - previousRevenue;
+          byWeek.get(entry.weekKey)[targetKey] = delta;
+          previousRevenue = revenue;
+        }
       }
-      for (const entry of state.weeklySales.depop) {
-        if (!byWeek.has(entry.weekKey)) byWeek.set(entry.weekKey, { weekKey: entry.weekKey, label: entry.label, threadup: 0, depop: 0 });
-        byWeek.get(entry.weekKey).depop = Number(entry.revenue || 0);
-      }
+
+      applyPlatformDeltas('threadup', 'threadup');
+      applyPlatformDeltas('depop', 'depop');
+
       return [...byWeek.values()].sort((a, b) => a.weekKey.localeCompare(b.weekKey)).slice(-8);
     }
 
     function renderWeeklySalesChart() {
       const mount = document.getElementById('weekly-sales-chart');
-      const rows = getWeeklyChartRows();
+      const rows = getWeeklyRevenueDeltaRows();
       if (!rows.length) {
         mount.className = 'chartEmpty';
-        mount.innerHTML = 'Weekly sales chart will appear after captures are available.';
+        mount.innerHTML = 'Weekly revenue change chart will appear after captures are available.';
         return;
       }
 
@@ -337,11 +347,13 @@
       const margin = { top: 18, right: 18, bottom: 64, left: 56 };
       const plotWidth = width - margin.left - margin.right;
       const plotHeight = height - margin.top - margin.bottom;
+      const minValue = Math.min(0, ...rows.flatMap((row) => [row.threadup, row.depop]));
       const maxValue = Math.max(1, ...rows.flatMap((row) => [row.threadup, row.depop]));
       const groupWidth = plotWidth / rows.length;
       const barWidth = Math.min(24, Math.max(10, (groupWidth - 18) / 2));
-      const scaleY = (value) => margin.top + plotHeight - ((value / maxValue) * plotHeight);
-      const axisTicks = Array.from(new Set([0, Math.ceil(maxValue / 2), maxValue])).sort((a, b) => a - b);
+      const valueRange = Math.max(1, maxValue - minValue);
+      const scaleY = (value) => margin.top + ((maxValue - value) / valueRange) * plotHeight;
+      const axisTicks = Array.from(new Set([minValue, 0, Math.round((minValue + maxValue) / 2), maxValue])).sort((a, b) => a - b);
 
       const grid = axisTicks.map((tick) => {
         const y = scaleY(tick);
@@ -350,18 +362,21 @@
 
       const bars = rows.map((row, index) => {
         const groupX = margin.left + (index * groupWidth) + (groupWidth / 2);
-        const threadupHeight = ((row.threadup / maxValue) * plotHeight);
-        const depopHeight = ((row.depop / maxValue) * plotHeight);
-        const threadupY = scaleY(row.threadup);
-        const depopY = scaleY(row.depop);
+        const zeroY = scaleY(0);
+        const threadupY = scaleY(Math.max(row.threadup, 0));
+        const depopY = scaleY(Math.max(row.depop, 0));
+        const threadupNegativeY = scaleY(Math.min(row.threadup, 0));
+        const depopNegativeY = scaleY(Math.min(row.depop, 0));
+        const threadupHeight = Math.abs(scaleY(row.threadup) - zeroY);
+        const depopHeight = Math.abs(scaleY(row.depop) - zeroY);
         const labelY = height - 26;
         return `
           <g>
-            <rect x="${groupX - barWidth - 4}" y="${threadupY}" width="${barWidth}" height="${threadupHeight}" rx="8" fill="#0f766e">
-              <title>ThreadUp ${row.label}: ${currency(row.threadup)}</title>
+            <rect x="${groupX - barWidth - 4}" y="${row.threadup >= 0 ? threadupY : zeroY}" width="${barWidth}" height="${threadupHeight}" rx="8" fill="#0f766e">
+              <title>ThreadUp ${row.label}: ${currency(row.threadup)} vs prior week</title>
             </rect>
-            <rect x="${groupX + 4}" y="${depopY}" width="${barWidth}" height="${depopHeight}" rx="8" fill="#9f1239">
-              <title>Depop ${row.label}: ${currency(row.depop)}</title>
+            <rect x="${groupX + 4}" y="${row.depop >= 0 ? depopY : zeroY}" width="${barWidth}" height="${depopHeight}" rx="8" fill="#9f1239">
+              <title>Depop ${row.label}: ${currency(row.depop)} vs prior week</title>
             </rect>
             <text x="${groupX}" y="${labelY}" text-anchor="middle" font-size="11" fill="#6b7280">${escapeHtml(row.label)}</text>
           </g>
@@ -372,7 +387,7 @@
       mount.innerHTML = `
         <svg class="chartSvg" viewBox="0 0 ${width} ${height}" role="img" aria-label="Weekly sales by platform">
           ${grid}
-          <line x1="${margin.left}" y1="${margin.top + plotHeight}" x2="${width - margin.right}" y2="${margin.top + plotHeight}" stroke="rgba(31,41,51,0.16)" />
+          <line x1="${margin.left}" y1="${scaleY(0)}" x2="${width - margin.right}" y2="${scaleY(0)}" stroke="rgba(31,41,51,0.16)" />
           ${bars}
         </svg>
       `;
