@@ -14,6 +14,23 @@
     return match ? Number(match[0].replace(/[$,]/g, '')) : 0;
   }
 
+  function canonicalizeDepopUrl(href) {
+    try {
+      const url = new URL(href, window.location.origin);
+      const pathname = url.pathname.replace(/\/+$/, '');
+      return `${url.origin}${pathname}`;
+    } catch (error) {
+      return cleanText(href).replace(/[?#].*$/, '').replace(/\/+$/, '');
+    }
+  }
+
+  function getDepopProductToken(href) {
+    const slug = (canonicalizeDepopUrl(href).split('/products/')[1] || '').split('/')[0];
+    if (!slug) return '';
+    const parts = slug.split('-').filter(Boolean);
+    return parts.length ? parts[parts.length - 1].toLowerCase() : '';
+  }
+
   function getDescriptionFromUrl(href) {
     const slug = (href.split('/products/')[1] || '').split('/')[0];
     if (!slug) return '';
@@ -61,15 +78,35 @@
     return /\bsold\b/.test(text) && !/\bfor sale\b/.test(text);
   }
 
+  function getRecommendationMarker() {
+    const markers = [
+      'Based on this collection',
+      'Based on this item',
+      'You may also like',
+      'More like this'
+    ];
+
+    return Array.from(document.querySelectorAll('h1, h2, h3, h4, p, span, div'))
+      .find((node) => markers.includes(cleanText(node.textContent)));
+  }
+
   function scrapeItems() {
+    const recommendationMarker = getRecommendationMarker();
+
     return Array.from(document.querySelectorAll('li'))
       .filter((item) => item.querySelector('a[href*="/products/"]'))
+      .filter((item) => {
+        if (!recommendationMarker) return true;
+        const relation = item.compareDocumentPosition(recommendationMarker);
+        return Boolean(relation & Node.DOCUMENT_POSITION_FOLLOWING);
+      })
       .map((item) => {
         const link = item.querySelector('a[href*="/products/"]');
-        const href = link ? link.href : '';
+        const href = link ? canonicalizeDepopUrl(link.href) : '';
         const description = getDescriptionFromUrl(href);
         const text = cleanText(item.textContent);
         const price = parseMoney(text);
+        const productToken = getDepopProductToken(href);
 
         if (!description && !price && !href) return null;
 
@@ -80,6 +117,7 @@
           description,
           price,
           url: href,
+          sourceKey: productToken ? `depop::${productToken}` : '',
           scrapedAt: new Date().toISOString()
         };
       })
