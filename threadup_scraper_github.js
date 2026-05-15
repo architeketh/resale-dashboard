@@ -284,7 +284,7 @@
     return Boolean(container.querySelector('[data-testid="sold-overlay"]'));
   }
 
-  function getRecommendationMarker() {
+  function hasRecommendationLabel(container) {
     const markers = [
       'Based on this collection',
       'Based on this item',
@@ -294,14 +294,8 @@
       'Shop similar'
     ];
 
-    return Array.from(document.querySelectorAll('h1, h2, h3, h4, p, span, div'))
-      .find((node) => markers.includes(cleanText(node.textContent)));
-  }
-
-  function isAfterRecommendationMarker(container, marker) {
-    if (!marker) return false;
-    const relation = container.compareDocumentPosition(marker);
-    return Boolean(relation & Node.DOCUMENT_POSITION_PRECEDING);
+    return Array.from(container.querySelectorAll('h1, h2, h3, h4, p, span, div'))
+      .some((node) => markers.includes(cleanText(node.textContent)));
   }
 
   function isAvailableRecommendation(container) {
@@ -422,7 +416,6 @@
   async function scrapeItems(filterName) {
     const rawItems = [];
     const containers = findContainers();
-    const recommendationMarker = getRecommendationMarker();
 
     for (let index = 0; index < containers.length; index += 1) {
       const container = containers[index];
@@ -432,7 +425,7 @@
         : '';
 
       if (!href) continue;
-      if (isAfterRecommendationMarker(container, recommendationMarker)) continue;
+      if (hasRecommendationLabel(container)) continue;
       if (href.includes('/similar/')) continue;
       if (filterName === 'sold') {
         if (isAvailableRecommendation(container)) continue;
