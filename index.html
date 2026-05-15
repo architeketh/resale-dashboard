@@ -81,7 +81,7 @@
         <div class="platformHead">
           <div class="titleWrap">
             <div class="eyebrow" style="margin-bottom:0;">Platform</div>
-            <div class="titleLine"><div class="platformTitle">ThreadUp</div><span class="pill pillStrong" id="threadup-week-label">Week not captured yet</span></div>
+            <div class="titleLine"><div class="platformTitle">ThreadUp</div><span class="pill pillStrong" id="threadup-week-label">Week not captured yet</span><input class="weekPicker" type="date" data-view-week-picker="threadup" aria-label="ThreadUp viewing week"></div>
             <div class="titleMeta"><span class="pill" id="threadup-count">All: 0 items</span><span class="pill" id="threadup-updated">No sync yet</span></div>
             <div class="statusBar"><span class="pill pillStrong" id="threadup-weekly-pill">Sold to date: 0 sold / $0.00</span><span class="pill" id="threadup-weekly-delta">New sales this week: 0 sold / $0.00</span></div>
           </div>
@@ -90,7 +90,7 @@
       </summary>
       <div class="platformBody">
         <div class="controlsRow">
-          <div class="filters" id="threadup-filters"><button class="filterBtn active" data-filter="all">All</button><button class="filterBtn" data-filter="sold">Sold</button><button class="filterBtn pillWide" data-filter="listed">For sale</button><button class="btn export" data-export="csv" data-platform="threadup">Export CSV</button><button class="btn export" data-export="pdf" data-platform="threadup">Export PDF</button></div>
+          <div class="filters" id="threadup-filters"><button class="filterBtn active" data-filter="all">All</button><button class="filterBtn" data-filter="sold">Sold</button><button class="filterBtn" data-filter="weekSold">Selected week</button><button class="filterBtn pillWide" data-filter="listed">For sale</button><button class="btn export" data-export="csv" data-platform="threadup">Export CSV</button><button class="btn export" data-export="pdf" data-platform="threadup">Export PDF</button></div>
           <div class="actions"><div class="captureTools"><input class="weekPicker" type="date" data-week-picker="threadup" aria-label="ThreadUp capture week"><button class="btn primary" data-platform="threadup">Capture</button><button class="btn refresh" data-action="refresh">Refresh</button></div></div>
         </div>
         <div id="threadup-content" class="loading">Loading ThreadUp data...</div>
@@ -104,7 +104,7 @@
         <div class="platformHead">
           <div class="titleWrap">
             <div class="eyebrow" style="margin-bottom:0;">Platform</div>
-            <div class="titleLine"><div class="platformTitle">Depop</div><span class="pill pillStrong" id="depop-week-label">Week not captured yet</span></div>
+            <div class="titleLine"><div class="platformTitle">Depop</div><span class="pill pillStrong" id="depop-week-label">Week not captured yet</span><input class="weekPicker" type="date" data-view-week-picker="depop" aria-label="Depop viewing week"></div>
             <div class="titleMeta"><span class="pill" id="depop-count">All: 0 items</span><span class="pill" id="depop-updated">No sync yet</span></div>
             <div class="statusBar"><span class="pill pillStrong" id="depop-weekly-pill">Sold to date: 0 sold / $0.00</span><span class="pill" id="depop-weekly-delta">New sales this week: 0 sold / $0.00</span></div>
           </div>
@@ -113,7 +113,7 @@
       </summary>
       <div class="platformBody">
         <div class="controlsRow">
-          <div class="filters" id="depop-filters"><button class="filterBtn active" data-filter="all">All</button><button class="filterBtn" data-filter="sold">Sold</button><button class="filterBtn pillWide" data-filter="listed">For sale</button><button class="btn export" data-export="csv" data-platform="depop">Export CSV</button><button class="btn export" data-export="pdf" data-platform="depop">Export PDF</button></div>
+          <div class="filters" id="depop-filters"><button class="filterBtn active" data-filter="all">All</button><button class="filterBtn" data-filter="sold">Sold</button><button class="filterBtn" data-filter="weekSold">Selected week</button><button class="filterBtn pillWide" data-filter="listed">For sale</button><button class="btn export" data-export="csv" data-platform="depop">Export CSV</button><button class="btn export" data-export="pdf" data-platform="depop">Export PDF</button></div>
           <div class="actions"><div class="captureTools"><input class="weekPicker" type="date" data-week-picker="depop" aria-label="Depop capture week"><button class="btn primary" data-platform="depop">Capture</button><button class="btn refresh" data-action="refresh">Refresh</button></div></div>
         </div>
         <div id="depop-content" class="loading">Loading Depop data...</div>
@@ -134,7 +134,8 @@
       depop: [],
       weeklySales: { threadup: [], depop: [] },
       filters: { threadup: 'all', depop: 'all' },
-      sorts: { threadup: { key: null, direction: 'asc' }, depop: { key: null, direction: 'asc' } }
+      sorts: { threadup: { key: null, direction: 'asc' }, depop: { key: null, direction: 'asc' } },
+      viewingWeeks: { threadup: '', depop: '' }
     };
     const BOOKMARKLETS = {
       threadup: "javascript:(function(){const s=document.createElement('script');s.src='https://architeketh.github.io/resale-dashboard/threadup_scraper_github.js?t='+Date.now();document.body.appendChild(s);})();",
@@ -244,14 +245,24 @@
       };
     }
 
-    function filterItems(items, filter) {
+    function filterItems(items, filter, platform) {
       if (filter === 'sold') return items.filter((item) => item.status === 'Sold');
+      if (filter === 'weekSold') {
+        const week = getViewingWeek(platform);
+        const start = new Date(`${week.start}T00:00:00`);
+        const end = new Date(`${week.end}T23:59:59`);
+        return items.filter((item) => {
+          if (item.status !== 'Sold' || !item.firstSeenSoldAt) return false;
+          const soldAt = new Date(item.firstSeenSoldAt);
+          return !Number.isNaN(soldAt.getTime()) && soldAt >= start && soldAt <= end;
+        });
+      }
       if (filter === 'listed') return items.filter((item) => item.status === 'For Sale');
       return items;
     }
 
     function getPlatformCountLabel(platform, items) {
-      const labels = { all: 'All', sold: 'Sold', listed: 'For sale' };
+      const labels = { all: 'All', sold: 'Sold', weekSold: 'Selected week', listed: 'For sale' };
       return `${labels[state.filters[platform]]}: ${items.length} items`;
     }
 
@@ -301,10 +312,25 @@
       return Number.isNaN(picked.getTime()) ? new Date() : picked;
     }
 
+    function getViewingWeekDate(platform) {
+      const value = state.viewingWeeks[platform];
+      if (!value) return new Date();
+      const picked = new Date(`${value}T12:00:00`);
+      return Number.isNaN(picked.getTime()) ? new Date() : picked;
+    }
+
+    function getViewingWeek(platform) {
+      return getWeekRange(getViewingWeekDate(platform));
+    }
+
     function initializeWeekPickers() {
       const today = toDateInputValue(new Date().toISOString());
       document.querySelectorAll('[data-week-picker]').forEach((input) => {
         if (!input.value) input.value = today;
+      });
+      document.querySelectorAll('[data-view-week-picker]').forEach((input) => {
+        if (!input.value) input.value = today;
+        state.viewingWeeks[input.dataset.viewWeekPicker] = input.value;
       });
       const chartStartInput = document.getElementById('chart-start-week');
       if (chartStartInput && !chartStartInput.value) chartStartInput.value = '2026-04-12';
@@ -318,7 +344,7 @@
     }
 
     function getVisibleItems(platform) {
-      return sortItems(filterItems(state[platform], state.filters[platform]), platform);
+      return sortItems(filterItems(state[platform], state.filters[platform], platform), platform);
     }
 
     function renderTable(items, platform) {
@@ -343,15 +369,18 @@
     function renderWeekly(platform) {
       const list = [...state.weeklySales[platform]].sort((a, b) => b.weekKey.localeCompare(a.weekKey));
       const currentWeek = getWeekRange();
+      const viewingWeek = getViewingWeek(platform);
       const totalSales = getSummary(state[platform]);
-      const currentSales = getCurrentWeekSales(state[platform]);
-      const current = list.find((entry) => entry.weekKey === currentWeek.key) || null;
-      document.getElementById(`${platform}-week-label`).textContent = current ? `Week ${current.label}` : `Current week ${currentWeek.label}`;
+      const viewingSales = getWeekSalesForRange(state[platform], viewingWeek);
+      const current = list.find((entry) => entry.weekKey === viewingWeek.key) || null;
+      document.getElementById(`${platform}-week-label`).textContent = current ? `Week ${current.label}` : `Viewing ${viewingWeek.label}`;
       document.getElementById(`${platform}-weekly-pill`).textContent = `Sold to date: ${totalSales.soldCount} sold / ${currency(totalSales.revenue)}`;
       const deltaNode = document.getElementById(`${platform}-weekly-delta`);
       deltaNode.className = 'pill';
-      deltaNode.textContent = `New sales this week: ${currentSales.soldCount} sold / ${currency(currentSales.revenue)}`;
-      deltaNode.classList.add(currentSales.soldCount > 0 || currentSales.revenue > 0 ? 'pillUp' : 'pillFlat');
+      deltaNode.textContent = viewingWeek.key === currentWeek.key
+        ? `New sales this week: ${viewingSales.soldCount} sold / ${currency(viewingSales.revenue)}`
+        : `Sales for selected week: ${viewingSales.soldCount} sold / ${currency(viewingSales.revenue)}`;
+      deltaNode.classList.add(viewingSales.soldCount > 0 || viewingSales.revenue > 0 ? 'pillUp' : 'pillFlat');
       document.getElementById(`${platform}-history`).innerHTML = list.length ? list.slice(0, 4).map((entry) => `<span>${entry.label}: <strong>${entry.soldCount}</strong> sold, <strong>${currency(entry.revenue)}</strong></span>`).join('') : 'No weekly snapshots yet.';
     }
 
@@ -454,7 +483,7 @@
     function renderPlatform(platform) {
       const items = state[platform];
       document.getElementById(`${platform}-content`).innerHTML = renderTable(items, platform);
-      document.getElementById(`${platform}-count`).textContent = getPlatformCountLabel(platform, filterItems(items, state.filters[platform]));
+      document.getElementById(`${platform}-count`).textContent = getPlatformCountLabel(platform, filterItems(items, state.filters[platform], platform));
       const latest = items.reduce((max, item) => !max || (item.scrapedAt && item.scrapedAt > max) ? item.scrapedAt : max, '');
       const listedItems = items.filter((item) => item.status === 'For Sale');
       const listedValue = listedItems.reduce((sum, item) => sum + (item.price || 0), 0);
@@ -728,6 +757,12 @@
     });
     document.getElementById('chart-start-week').addEventListener('change', () => {
       renderStats();
+    });
+    document.querySelectorAll('[data-view-week-picker]').forEach((input) => {
+      input.addEventListener('change', () => {
+        state.viewingWeeks[input.dataset.viewWeekPicker] = input.value || toDateInputValue(new Date().toISOString());
+        renderPlatform(input.dataset.viewWeekPicker);
+      });
     });
     document.addEventListener('click', (event) => {
       const sortHeader = event.target.closest('[data-sort][data-platform]');
