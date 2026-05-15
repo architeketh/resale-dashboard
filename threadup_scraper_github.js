@@ -284,6 +284,16 @@
     return Boolean(container.querySelector('[data-testid="sold-overlay"]'));
   }
 
+  function hasSoldText(container) {
+    const exactSoldBadge = Array.from(container.querySelectorAll('span, div, p'))
+      .some((node) => cleanText(node.textContent).toLowerCase() === 'sold');
+
+    if (exactSoldBadge) return true;
+
+    const text = cleanText(container.textContent).toLowerCase();
+    return /\bsold\b/.test(text) && !/\bfor sale\b/.test(text);
+  }
+
   function hasRecommendationLabel(container) {
     const markers = [
       'Based on this collection',
@@ -295,7 +305,43 @@
     ];
 
     return Array.from(container.querySelectorAll('h1, h2, h3, h4, p, span, div'))
-      .some((node) => markers.includes(cleanText(node.textContent)));
+      .some((node) => {
+        const text = cleanText(node.textContent);
+        return markers.some((marker) => text.includes(marker));
+      });
+  }
+
+  function isRecommendationMarkerText(value) {
+    const text = cleanText(value).toLowerCase();
+    if (!text) return false;
+
+    return [
+      'based on this collection',
+      'based on this item',
+      'more like this',
+      'you may also like',
+      'items similar to',
+      'shop similar'
+    ].some((marker) => text.includes(marker));
+  }
+
+  function hasNearbyRecommendationMarker(container) {
+    let current = container;
+
+    for (let depth = 0; current && current !== document.body && depth < 5; depth += 1) {
+      let sibling = current.previousElementSibling;
+      let checkedSiblings = 0;
+
+      while (sibling && checkedSiblings < 4) {
+        if (isRecommendationMarkerText(sibling.textContent)) return true;
+        sibling = sibling.previousElementSibling;
+        checkedSiblings += 1;
+      }
+
+      current = current.parentElement;
+    }
+
+    return false;
   }
 
   function isAvailableRecommendation(container) {
@@ -303,10 +349,19 @@
     return text.includes('add to cart');
   }
 
+  function isRecommendationCard(container, href) {
+    const url = cleanText(href).toLowerCase();
+    if (!url) return true;
+    if (url.includes('/similar/')) return true;
+    if (hasRecommendationLabel(container)) return true;
+    if (hasNearbyRecommendationMarker(container)) return true;
+    return false;
+  }
+
   function inferItemStatus(filterName, container) {
     if (filterName === 'sold') return 'Sold';
     if (filterName === 'available') return 'For Sale';
-    return hasSoldSignal(container) ? 'Sold' : 'For Sale';
+    return (hasSoldSignal(container) || hasSoldText(container)) ? 'Sold' : 'For Sale';
   }
 
   function isExcludedAvailableItem(product, href) {
@@ -425,11 +480,9 @@
         : '';
 
       if (!href) continue;
-      if (hasRecommendationLabel(container)) continue;
-      if (href.includes('/similar/')) continue;
+      if (isRecommendationCard(container, href)) continue;
       if (filterName === 'sold') {
         if (isAvailableRecommendation(container)) continue;
-        if (!hasSoldSignal(container)) continue;
       }
 
       const listingProduct = extractProductFromContainer(container);
