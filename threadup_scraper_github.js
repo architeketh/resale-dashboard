@@ -100,18 +100,38 @@
 
     if (!containers.length) return [];
 
-    const firstContainer = containers[0];
-    let primaryGrid = firstContainer.parentElement;
+    const containerSet = new Set(containers);
+    const checkedAncestors = new Set();
+    let bestGroup = containers;
+    let bestScore = 0;
 
-    while (primaryGrid && primaryGrid !== document.body) {
-      const siblingMatches = Array.from(primaryGrid.children).filter((child) => containers.includes(child));
-      if (siblingMatches.length >= 4) {
-        return siblingMatches;
+    containers.forEach((container) => {
+      let ancestor = container.parentElement;
+
+      while (ancestor && ancestor !== document.body) {
+        if (!checkedAncestors.has(ancestor)) {
+          checkedAncestors.add(ancestor);
+          const siblingMatches = Array.from(ancestor.children).filter((child) => containerSet.has(child));
+
+          if (siblingMatches.length >= 4) {
+            const realProductCount = siblingMatches.filter((child) => {
+              const link = child.querySelector('a[href*="/product/"]');
+              return Boolean(link);
+            }).length;
+
+            const score = (realProductCount * 100) + siblingMatches.length;
+            if (score > bestScore) {
+              bestScore = score;
+              bestGroup = siblingMatches;
+            }
+          }
+        }
+
+        ancestor = ancestor.parentElement;
       }
-      primaryGrid = primaryGrid.parentElement;
-    }
+    });
 
-    return containers;
+    return bestGroup;
   }
 
   function dedupeItems(items) {
