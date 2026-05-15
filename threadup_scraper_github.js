@@ -284,9 +284,22 @@
     return Boolean(container.querySelector('[data-testid="sold-overlay"]'));
   }
 
+  function isRecommendationContainer(container) {
+    const text = cleanText(container.textContent).toLowerCase();
+    if (!text) return false;
+    return (
+      text.includes('based on this collection') ||
+      text.includes('based on this item') ||
+      text.includes('more like this') ||
+      text.includes('you may also like') ||
+      text.includes('items similar to') ||
+      text.includes('shop similar')
+    );
+  }
+
   function isAvailableRecommendation(container) {
     const text = cleanText(container.textContent).toLowerCase();
-    return text.includes('add to cart');
+    return text.includes('add to cart') || isRecommendationContainer(container);
   }
 
   function inferItemStatus(filterName, container) {
@@ -411,6 +424,7 @@
         : '';
 
       if (!href) continue;
+      if (isRecommendationContainer(container)) continue;
       if (filterName === 'sold') {
         if (isAvailableRecommendation(container)) continue;
         if (!hasSoldSignal(container)) continue;
