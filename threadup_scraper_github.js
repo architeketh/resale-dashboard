@@ -284,22 +284,29 @@
     return Boolean(container.querySelector('[data-testid="sold-overlay"]'));
   }
 
-  function isRecommendationContainer(container) {
-    const text = cleanText(container.textContent).toLowerCase();
-    if (!text) return false;
-    return (
-      text.includes('based on this collection') ||
-      text.includes('based on this item') ||
-      text.includes('more like this') ||
-      text.includes('you may also like') ||
-      text.includes('items similar to') ||
-      text.includes('shop similar')
-    );
+  function getRecommendationMarker() {
+    const markers = [
+      'Based on this collection',
+      'Based on this item',
+      'More like this',
+      'You may also like',
+      'Items similar to',
+      'Shop similar'
+    ];
+
+    return Array.from(document.querySelectorAll('h1, h2, h3, h4, p, span, div'))
+      .find((node) => markers.includes(cleanText(node.textContent)));
+  }
+
+  function isAfterRecommendationMarker(container, marker) {
+    if (!marker) return false;
+    const relation = container.compareDocumentPosition(marker);
+    return Boolean(relation & Node.DOCUMENT_POSITION_PRECEDING);
   }
 
   function isAvailableRecommendation(container) {
     const text = cleanText(container.textContent).toLowerCase();
-    return text.includes('add to cart') || isRecommendationContainer(container);
+    return text.includes('add to cart');
   }
 
   function inferItemStatus(filterName, container) {
@@ -415,6 +422,7 @@
   async function scrapeItems(filterName) {
     const rawItems = [];
     const containers = findContainers();
+    const recommendationMarker = getRecommendationMarker();
 
     for (let index = 0; index < containers.length; index += 1) {
       const container = containers[index];
@@ -424,7 +432,8 @@
         : '';
 
       if (!href) continue;
-      if (isRecommendationContainer(container)) continue;
+      if (isAfterRecommendationMarker(container, recommendationMarker)) continue;
+      if (href.includes('/similar/')) continue;
       if (filterName === 'sold') {
         if (isAvailableRecommendation(container)) continue;
         if (!hasSoldSignal(container)) continue;
