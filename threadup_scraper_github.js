@@ -364,17 +364,39 @@
     return false;
   }
 
+  function hasRecommendationSectionAncestor(container) {
+    let current = container;
+
+    for (let depth = 0; current && current !== document.body && depth < 8; depth += 1) {
+      const marker = Array.from(current.querySelectorAll('h1, h2, h3, h4'))
+        .find((node) => isRecommendationMarkerText(node.textContent));
+
+      if (marker) {
+        const markerPosition = marker.compareDocumentPosition(container);
+        const markerPrecedesContainer = Boolean(markerPosition & Node.DOCUMENT_POSITION_FOLLOWING);
+        if (markerPrecedesContainer || current === container.parentElement) {
+          return true;
+        }
+      }
+
+      current = current.parentElement;
+    }
+
+    return false;
+  }
+
   function isAvailableRecommendation(container) {
     const text = cleanText(container.textContent).toLowerCase();
     return text.includes('add to cart');
   }
 
-  function isRecommendationCard(container, href) {
+  function isRecommendationCard(filterName, container, href) {
     const url = cleanText(href).toLowerCase();
     if (!url) return true;
-    if (url.includes('/similar/')) return true;
     if (hasRecommendationLabel(container)) return true;
     if (hasNearbyRecommendationMarker(container)) return true;
+    if (hasRecommendationSectionAncestor(container)) return true;
+    if (filterName !== 'sold' && url.includes('/similar/')) return true;
     return false;
   }
 
@@ -500,7 +522,7 @@
         : '';
 
       if (!href) continue;
-      if (isRecommendationCard(container, href)) continue;
+      if (isRecommendationCard(filterName, container, href)) continue;
       if (filterName === 'sold') {
         if (isAvailableRecommendation(container)) continue;
       }
