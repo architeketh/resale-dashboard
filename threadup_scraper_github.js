@@ -82,56 +82,16 @@
   }
 
   function findContainers() {
-    const cards = Array.from(document.querySelectorAll('[class*="item-card"]'));
+    const links = Array.from(document.querySelectorAll('a[data-inp-label="link-item-card"]'));
     const containers = [];
 
-    cards.forEach((card) => {
-      let parent = card.parentElement;
-      while (parent && parent !== document.body) {
-        const hasImage = parent.querySelector('[class*="item-card-image"]');
-        const hasBody = parent.querySelector('[class*="item-card-body"]');
-        if (hasImage && hasBody) {
-          if (!containers.includes(parent)) containers.push(parent);
-          break;
-        }
-        parent = parent.parentElement;
-      }
+    links.forEach((link) => {
+      const card = link.closest('[class*="item-card"]');
+      if (!card) return;
+      if (!containers.includes(card)) containers.push(card);
     });
 
-    if (!containers.length) return [];
-
-    const containerSet = new Set(containers);
-    const checkedAncestors = new Set();
-    let bestGroup = containers;
-    let bestScore = 0;
-
-    containers.forEach((container) => {
-      let ancestor = container.parentElement;
-
-      while (ancestor && ancestor !== document.body) {
-        if (!checkedAncestors.has(ancestor)) {
-          checkedAncestors.add(ancestor);
-          const siblingMatches = Array.from(ancestor.children).filter((child) => containerSet.has(child));
-
-          if (siblingMatches.length >= 4) {
-            const realProductCount = siblingMatches.filter((child) => {
-              const link = child.querySelector('a[href*="/product/"]');
-              return Boolean(link);
-            }).length;
-
-            const score = (realProductCount * 100) + siblingMatches.length;
-            if (score > bestScore) {
-              bestScore = score;
-              bestGroup = siblingMatches;
-            }
-          }
-        }
-
-        ancestor = ancestor.parentElement;
-      }
-    });
-
-    return bestGroup;
+    return containers;
   }
 
   function dedupeItems(items) {
@@ -211,6 +171,48 @@
       brand: cleanText(fallback.brand),
       description: cleanText(fallback.description)
     };
+  }
+
+  function extractProductFromCardText(container, href) {
+    const text = cleanText(container.textContent);
+    if (!text) return { brand: '', description: '' };
+
+    const titleFromLink = cleanText(
+      container.querySelector('a[data-inp-label="link-item-card"]')?.textContent
+        .replace(/^View Product:\s*/i, '')
+    );
+
+    const compact = text
+      .replace(/^Image \d+ of \d+/i, '')
+      .replace(/\bSold\b/i, '')
+      .replace(/\bShop similar\b/i, '')
+      .replace(/\bDirect listing\b/i, '')
+      .replace(/\$[\d,]+(?:\.\d+)?/g, '')
+      .trim();
+
+    if (!compact) {
+      return parseAltText(titleFromLink);
+    }
+
+    const brandMatch = compact.match(/^(.+?)(One size|Size\b.*?)(.+)$/i);
+    if (brandMatch) {
+      return {
+        brand: cleanText(brandMatch[1]),
+        description: cleanText(brandMatch[3]) || titleFromLink
+      };
+    }
+
+    const parsedTitle = parseAltText(titleFromLink);
+    if (parsedTitle.brand || parsedTitle.description) return parsedTitle;
+
+    if (href.includes('/similar/')) {
+      return {
+        brand: cleanText(compact.split(' ')[0]),
+        description: titleFromLink
+      };
+    }
+
+    return { brand: '', description: titleFromLink };
   }
 
   function parseJson(text) {
@@ -529,9 +531,15 @@
 
       const listingProduct = extractProductFromContainer(container);
       let product = listingProduct;
+      if (!cleanText(product.brand) || !cleanText(product.description)) {
+        product = chooseBetterProductInfo(product, extractProductFromCardText(container, href));
+      }
       if (shouldFetchProductPage(listingProduct)) {
         const productPage = await fetchProductPageDetails(href);
         product = chooseBetterProductInfo(productPage, listingProduct);
+        if (!cleanText(product.brand) || !cleanText(product.description)) {
+          product = chooseBetterProductInfo(product, extractProductFromCardText(container, href));
+        }
       }
       const text = cleanText(container.textContent);
       const price = parseMoney(text);
