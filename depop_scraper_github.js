@@ -68,6 +68,37 @@
     if (target) target.innerHTML = message;
   }
 
+  async function autoScrollListings() {
+    let previousHeight = 0;
+    let stableRounds = 0;
+
+    for (let round = 0; round < 35; round += 1) {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+      const currentHeight = document.body.scrollHeight;
+
+      if (currentHeight === previousHeight) stableRounds += 1;
+      else stableRounds = 0;
+
+      previousHeight = currentHeight;
+      if (stableRounds >= 2) break;
+    }
+
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    await new Promise((resolve) => setTimeout(resolve, 400));
+  }
+
+  function exportJson(filename, rows) {
+    const blob = new Blob([JSON.stringify(rows, null, 2)], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(link.href);
+  }
+
   function isSoldItem(item) {
     const exactSoldBadge = Array.from(item.querySelectorAll('span, div, p'))
       .some((node) => cleanText(node.textContent).toLowerCase() === 'sold');
@@ -93,7 +124,7 @@
   function scrapeItems() {
     const recommendationMarker = getRecommendationMarker();
 
-    return Array.from(document.querySelectorAll('li'))
+    const rows = Array.from(document.querySelectorAll('li'))
       .filter((item) => item.querySelector('a[href*="/products/"]'))
       .filter((item) => {
         if (!recommendationMarker) return true;
@@ -122,15 +153,40 @@
         };
       })
       .filter(Boolean);
+
+    const seen = new Set();
+    return rows.filter((item) => {
+      const key = (item.url || item.sourceKey || '').toLowerCase();
+      if (!key) return false;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
   }
 
   async function main() {
     const overlay = buildOverlay();
 
     try {
+      setStatus('Scrolling profile to load listings...');
+      await autoScrollListings();
+
       setStatus('Collecting items from the current page...');
       const items = scrapeItems();
       if (!items.length) throw new Error('No depop items were found. Make sure you are on the profile grid and scroll to load the listings first.');
+
+      const soldCount = items.filter((item) => item.status === 'Sold').length;
+      const listedCount = items.filter((item) => item.status === 'For Sale').length;
+
+      exportJson('depop_export.json', items);
+      setStatus(`Found ${items.length} items.<br>Sold: ${soldCount}<br>For sale: ${listedCount}<br><br>Downloaded JSON export.`);
+
+      const shouldSync = window.confirm(`Found ${items.length} Depop items. Sold: ${soldCount}. For sale: ${listedCount}. Click OK to sync to Supabase now, or Cancel to export only.`);
+      if (!shouldSync) {
+        setStatus(`Export complete.<br><br>Items: ${items.length}<br>Sold: ${soldCount}<br>For sale: ${listedCount}<br>No sync was performed.`);
+        setTimeout(() => overlay.remove(), 8000);
+        return;
+      }
 
       setStatus(`Found ${items.length} items. Syncing to Supabase...`);
       const response = await fetch(FUNCTION_URL, {
@@ -141,7 +197,7 @@
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Sync failed');
 
-      setStatus(`Sync complete.<br><br>Items: ${items.length}<br>Newly stamped sold dates: ${result.newlyStampedSoldDates || 0}<br>Supabase inventory updated.`);
+      setStatus(`Sync complete.<br><br>Items: ${items.length}<br>Sold: ${soldCount}<br>For sale: ${listedCount}<br>Newly stamped sold dates: ${result.newlyStampedSoldDates || 0}<br>Supabase inventory updated.`);
       setTimeout(() => overlay.remove(), 6000);
     } catch (error) {
       setStatus(`Error: ${error.message}`);
